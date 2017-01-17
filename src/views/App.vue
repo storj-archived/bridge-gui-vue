@@ -1,7 +1,12 @@
 <template>
   <div id="app">
     <div> HAI </div>
-    <router-view>
+    <router-view
+      class="view"
+      keep-alive
+      transition
+      transition-mode="out-in"
+    >
     </router-view>
   </div>
 </template>
@@ -10,6 +15,9 @@
 export default {
   name: 'app',
   components: {
+  },
+  mounted () {
+    this.$vuetify.init();
   }
 };
 </script>
