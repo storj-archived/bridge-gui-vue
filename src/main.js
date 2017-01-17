@@ -28,7 +28,5 @@ const app = new Vue({
   ...App
 });
 
-// expose the app, the router and the store.
-// note we are not mounting the app here, since bootstrapping will be
-// different depending on whether we are in a browser or on the server.
-export { app, router, store };
+// actually mount to DOM
+app.$mount('#app');
