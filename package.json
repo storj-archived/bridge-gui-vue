@@ -13,7 +13,11 @@
   },
   "dependencies": {
     "vue": "^2.1.0",
-    "vuetify": "^0.8.6"
+    "vuetify": "^0.8.6",
+    "vuex": "^2.1.1",
+    "vue-router": "^2.1.1",
+    "vuex-router-sync": "^4.1.1",
+    "express": "^4.13.3"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
@@ -37,7 +41,6 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
     "eventsource-polyfill": "^0.9.6",
-    "express": "^4.13.3",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "friendly-errors-webpack-plugin": "^1.1.2",
@@ -53,11 +56,8 @@
     "shelljs": "^0.7.4",
     "url-loader": "^0.5.7",
     "vue-loader": "^10.0.0",
-    "vue-router": "^2.1.1",
     "vue-style-loader": "^1.0.0",
     "vue-template-compiler": "^2.1.0",
-    "vuex": "^2.1.1",
-    "vuex-router-sync": "^4.1.1",
     "webpack": "^1.13.2",
     "webpack-dev-middleware": "^1.8.3",
     "webpack-hot-middleware": "^2.12.2",
