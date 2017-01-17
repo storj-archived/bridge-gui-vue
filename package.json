@@ -49,6 +49,7 @@
     "http-proxy-middleware": "^0.17.2",
     "json-loader": "^0.5.4",
     "nightwatch": "^0.9.8",
+    "node-sass": "^4.3.0",
     "opn": "^4.0.2",
     "ora": "^0.3.0",
     "sass": "^0.5.0",
