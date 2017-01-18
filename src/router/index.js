@@ -17,6 +17,7 @@ Vue.use(Router);
 
 const router = new Router({
   mode: 'history',
+  scrollBehavior: () => ({ y: 0 }),
   routes: [
     // Open Routes
     { path: '/signup', component: SignupForm },
@@ -27,31 +28,31 @@ const router = new Router({
       component: Dashboard,
       children: [
         {
-          path: '/buckets',
+          path: 'buckets',
           component: Buckets
         },
         {
-          path: '/buckets/new',
+          path: 'buckets/new',
           component: NewBucket
         },
         {
-          path: '/buckets/:bucketId/edit',
+          path: 'buckets/:bucketId/edit',
           component: EditBucket
         },
         {
-          path: '/bucket/:bucketId/files',
+          path: 'bucket/:bucketId/files',
           component: FileBucket
         },
         {
-          path: '/api-docs',
+          path: 'api-docs',
           component: ApiDocs
         },
         {
-          path: '/support',
+          path: 'support',
           component: Support
         },
         {
-          path: '/billing',
+          path: 'billing',
           component: Billing
         }
       ]
