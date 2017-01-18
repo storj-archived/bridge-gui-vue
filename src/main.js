@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import App from './views/App';
-import Vuetify from 'vuetify';
 import * as filters from './filters';
 import store from './store';
 import router from './router';
@@ -11,8 +10,6 @@ import { sync } from 'vuex-router-sync';
 // sync the router with the vuex store.
 // this registers `store.state.route`
 sync(store, router);
-
-Vue.use(Vuetify);
 
 // register global utility filters.
 Object.keys(filters).forEach(key => {
