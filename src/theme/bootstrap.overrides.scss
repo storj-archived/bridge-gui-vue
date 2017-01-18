@@ -1,0 +1,198 @@
+/* Bootstrap Style Overrides
+ *
+ */
+
+@import 'variables';
+/* --------------------------------
+
+Fonts
+
+-------------------------------- */
+@font-face {
+	font-family: 'Avenir Next LT Pro Regular';
+	font-style: normal;
+	font-weight: normal;
+	src: local('Avenir Next LT Pro Regular'), url('../../static/fonts/AvenirNextLTPro-Regular.woff') format('woff');
+}
+@font-face {
+	font-family: 'Avenir Next LT Pro Demi';
+	font-style: normal;
+	font-weight: normal;
+	src: local('Avenir Next LT Pro Demi'), url('../../static/fonts/AvenirNextLTPro-Demi.woff') format('woff');
+}
+
+@font-face {
+	font-family: 'Avenir Next LT Pro Bold';
+	font-style: normal;
+	font-weight: normal;
+	src: local('Avenir Next LT Pro Bold'), url('../../static/fonts/AvenirNextLTPro-Bold.woff') format('woff');
+}
+
+h1, h2, h3, h4, h5, h6, a, p, span {
+	-webkit-font-feature-settings: 'kern' 1;
+	-moz-font-feature-settings: 'kern' 1;
+	-ms-font-feature-settings: 'kern' 1;
+	-o-font-feature-settings: 'kern' 1;
+	font-feature-settings: 'kern' 1;
+	text-rendering: optimizelegibility;
+	font-kerning: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: $gray;
+	letter-spacing: -1px;
+}
+
+.glyphicon {
+	color: $brand-primary;
+	opacity: 0.9;
+}
+
+a {
+	outline: none;
+}
+
+.btn {
+	font-family: 'Avenir Next LT Pro Demi';
+	border-width: 2px;
+	-webkit-transition: all 0.15s ease-in-out;
+	-moz-transition: all 0.15s ease-in-out;
+	-ms-transition: all 0.15s ease-in-out;
+	transition: all 0.15s ease-in-out;
+	padding: 12px 36px 10px;
+}
+
+.btn-link:focus {
+	outline:0;
+}
+
+.btn-xs {
+	padding: 6px 12px 6px;
+}
+
+.btn-sm {
+	padding: 10px 24px 8px;
+}
+
+.btn-lg {
+	padding: 14px 60px 12px;
+}
+
+.navbar-btn {
+	padding: 6px 36px; //navbar-btn top-bottom margins based on $input-height-base variable, set @ 6px
+}
+
+.navbar-default {
+	border: 0;
+	border-bottom: 2px solid $gray-lighter;
+	border-radius: 0;
+	background: #fff;
+}
+
+.navbar-default .nav>li>a {
+	text-align: center;
+}
+
+.navbar-default .navbar-nav {
+	margin-bottom: 0;
+	margin-top: 0;
+}
+.navbar-default .navbar-nav>li>a {
+	padding: 40px 16px;
+	width: 100%;
+    color: #8492a6;
+}
+.navbar-default .navbar-nav>li>a.active {
+	font-family: 'Avenir Next LT Pro Demi';
+}
+.navbar-default .navbar-nav>li>a:hover {
+	color: #2683ff;
+}
+
+.navbar-default .nav>li>a:hover,
+.navbar-default .nav>li>a:focus,
+.navbar-default .navbar-nav>li>a.active {
+  	box-shadow: 0 2px $brand-primary;
+}
+
+.navbar-default .navbar-toggle {
+	border: 2px solid $brand-primary;
+	margin-top: 22px;
+    margin-right: 22px;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: 0;
+}
+
+.navbar-brand {
+	margin: 25px;
+	margin-right: 10px;
+	height: auto;
+	padding: 0;
+}
+
+
+.form-control {
+	-webkit-box-shadow: none;
+    box-shadow: none;
+}
+.form-control:focus {
+	border-color: $brand-primary;
+}
+
+input, select {
+	border-radius: 3px;
+	font-size: 16px;
+	-webkit-transition: all 0.15s ease-in-out;
+	-moz-transition: all 0.15s ease-in-out;
+	-ms-transition: all 0.15s ease-in-out;
+	transition: all 0.15s ease-in-out;
+	padding: 12px 18px 10px;
+	color: $brand-primary;
+	background: #fbfbfb;
+}
+
+.input-sm {
+  	font-size: 12px;
+	padding: 10px 12px 8px;
+}
+
+.input-lg {
+  font-size: 24px;
+	padding: 16px 28px 12px;
+}
+
+input:focus, select:focus {
+    border-color: $brand-primary;
+    outline: 0;
+}
+
+.tooltip-inner {
+	max-width: 350px;
+	width: 350px;
+	padding: 10px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .navbar-default .navbar-brand {
+		margin-right: 0;
+	}
+}
+
+@media (max-width: 767px) {
+	.navbar-default .navbar-right {
+		text-align: center;
+		padding-bottom: 1em;
+	}
+	.navbar-default .navbar-nav>li>a {
+		padding: 16px;
+	}
+	.navbar-default .nav > li > a:hover, .navbar-default .nav > li > a:focus, .navbar-default .navbar-nav > li > a.active {
+	    box-shadow: none;
+	    background: #2683ff;
+	    color: #fff;
+	}
+}
+
+@import 'theme';
