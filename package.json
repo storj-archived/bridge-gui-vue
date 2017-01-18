@@ -12,12 +12,14 @@
     "lint": "eslint --ext .js,.vue src test/e2e/specs"
   },
   "dependencies": {
+    "bootstrap": "^3.3.7",
+    "express": "^4.13.3",
+    "jquery": "^3.1.1",
+    "storj-lib": "^6.0.13",
     "vue": "^2.1.0",
-    "vuetify": "^0.8.6",
-    "vuex": "^2.1.1",
     "vue-router": "^2.1.1",
-    "vuex-router-sync": "^4.1.1",
-    "express": "^4.13.3"
+    "vuex": "^2.1.1",
+    "vuex-router-sync": "^4.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.4.0",
@@ -52,22 +54,25 @@
     "node-sass": "^4.3.0",
     "opn": "^4.0.2",
     "ora": "^0.3.0",
+    "resolve-url-loader": "^1.6.1",
     "sass": "^0.5.0",
     "sass-loader": "^4.1.1",
     "selenium-server": "2.53.1",
     "semver": "^5.3.0",
+    "shebang-loader": "0.0.1",
     "shelljs": "^0.7.4",
+    "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
     "vue-loader": "^10.0.0",
     "vue-style-loader": "^1.0.0",
     "vue-template-compiler": "^2.1.0",
-    "webpack": "^1.13.2",
+    "webpack": "^1.14.0",
     "webpack-dev-middleware": "^1.8.3",
     "webpack-hot-middleware": "^2.12.2",
     "webpack-merge": "^0.14.1"
   },
   "engines": {
-    "node": ">= 4.0.0",
+    "node": ">= 6.9.4",
     "npm": ">= 3.0.0"
   }
 }
