@@ -1,29 +1,13 @@
-import Router from 'vue-router';
-import SignupForm from './SignupForm';
-import SignupSuccess from './SignupSuccess';
-import PasswordReset from './PasswordReset';
-import Dashboard from './Dashboard';
-import Buckets from './Buckets';
-import NewBucket from './NewBucket';
-import EditBucket from './EditBucket';
-import FileBucket from './FileBucket';
-import ApiDocs from './ApiDocs';
-import Support from './Support';
-import Billing from './Billing';
-import NotFound from './NotFound';
-
-export default {
-  Router,
-  SignupForm,
-  SignupSuccess,
-  PasswordReset,
-  Dashboard,
-  Buckets,
-  NewBucket,
-  EditBucket,
-  FileBucket,
-  ApiDocs,
-  Support,
-  Billing,
-  NotFound
-};
+export Router from 'vue-router';
+export SignupForm from './SignupForm';
+export SignupSuccess from './SignupSuccess';
+export PasswordReset from './PasswordReset';
+export Dashboard from './Dashboard';
+export Buckets from './Buckets';
+export NewBucket from './NewBucket';
+export EditBucket from './EditBucket';
+export FileBucket from './FileBucket';
+export ApiDocs from './ApiDocs';
+export Support from './Support';
+export Billing from './Billing';
+export NotFound from './NotFound';
