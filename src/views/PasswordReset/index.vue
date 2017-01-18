@@ -1,9 +1,12 @@
 <template>
+  <section>
+    password-reset
+  </section>
 </template>
 
 <script>
 export default {
-  name: 'signup-success'
+  name: 'password-reset'
 };
 </script>
 

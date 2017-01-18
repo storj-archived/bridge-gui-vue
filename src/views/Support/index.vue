@@ -1,9 +1,12 @@
 <template>
+  <div class="">
+    support
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'file-bucket'
+  name: 'support'
 };
 </script>
 

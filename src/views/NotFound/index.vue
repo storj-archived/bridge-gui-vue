@@ -1,9 +1,12 @@
 <template>
+  <div class="">
+    not-found
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'password-reset'
+  name: 'not-found'
 };
 </script>
 

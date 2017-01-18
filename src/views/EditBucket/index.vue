@@ -1,9 +1,12 @@
 <template>
+  <div class="">
+    edit-bucket
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'not-found'
+  name: 'edit-bucket'
 };
 </script>
 

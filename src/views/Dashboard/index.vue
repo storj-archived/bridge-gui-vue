@@ -1,9 +1,14 @@
 <template>
+  <div>
+    dashboard
+    <router-view>
+    </router-view>
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'edit-bucket'
+  name: 'dashboard'
 };
 </script>
 

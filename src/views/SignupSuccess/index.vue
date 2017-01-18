@@ -1,9 +1,12 @@
 <template>
+  <div class="">
+    signup-success
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'dashboard'
+  name: 'signup-success'
 };
 </script>
 

@@ -1,9 +1,12 @@
 <template>
+  <div>
+    api-docs
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'support'
+  name: 'api-docs'
 };
 </script>
 

@@ -1,9 +1,12 @@
 <template>
+  <div class="">
+    new=bucket
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'buckets'
+  name: 'new-bucket'
 };
 </script>
 

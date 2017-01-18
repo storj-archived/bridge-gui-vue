@@ -1,9 +1,12 @@
 <template>
+  <div>
+    buckets
+  </div>
 </template>
 
 <script>
 export default {
-  name: 'api-docs'
+  name: 'buckets'
 };
 </script>
 
