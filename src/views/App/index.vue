@@ -1,5 +1,6 @@
 <template>
   <section id="main">
+    <!-- Main View. Anything here _not_ in <router-view> will always show up -->
     <div> HAI </div>
     <router-view
       class="view"

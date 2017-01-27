@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import LoginForm from '../views/LoginForm';
 import SignupForm from '../views/SignupForm';
 import SignupSuccess from '../views/SignupSuccess';
 import PasswordReset from '../views/PasswordReset';
@@ -20,6 +21,7 @@ const router = new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     // Open Routes
+    { path: '/', component: LoginForm },
     { path: '/signup', component: SignupForm },
     { path: '/signup-success', component: SignupSuccess },
     { path: '/password-reset', component: PasswordReset },

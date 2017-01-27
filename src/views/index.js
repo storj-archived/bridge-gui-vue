@@ -1,4 +1,5 @@
 export Router from 'vue-router';
+export Login from './LoginForm';
 export SignupForm from './SignupForm';
 export SignupSuccess from './SignupSuccess';
 export PasswordReset from './PasswordReset';
