@@ -4,6 +4,12 @@
   "description": "A web-based GUI for Storj Bridge",
   "author": "Barbara Liau <bj.liau@gmail.com>",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/barbaraliau/bridge-gui-vue"
+  },
+  "license": "AGPL-3.0",
+  "homepage": "https://app.storj.io",
   "scripts": {
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
@@ -72,7 +78,7 @@
     "webpack-merge": "^0.14.1"
   },
   "engines": {
-    "node": ">= 6.9.4",
+    "node": ">= 6.9.5",
     "npm": ">= 3.0.0"
   }
 }
