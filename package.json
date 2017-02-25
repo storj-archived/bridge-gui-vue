@@ -22,9 +22,9 @@
     "express": "^4.13.3",
     "jquery": "^3.1.1",
     "storj-lib": "^6.0.13",
-    "vue": "^2.1.0",
-    "vue-router": "^2.1.1",
-    "vuex": "^2.1.1",
+    "vue": "^2.1.10",
+    "vue-router": "^2.2.1",
+    "vuex": "^2.1.2",
     "vuex-router-sync": "^4.1.1"
   },
   "devDependencies": {
