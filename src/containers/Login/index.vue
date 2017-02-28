@@ -8,15 +8,7 @@
             <div class="content">
               <!-- header -->
               <h1 class="title text-center form-group">
-                <span v-if="!passwordReset">
-                  Login
-                </span>
-                <span v-else>
-                 Success
-                 <p>
-                   Your password has been successfully changed. Please log in.
-                 </p>
-                </span>
+                Login
               </h1>
 
               <form>
@@ -36,9 +28,10 @@
 export default {
   name: 'login-form',
   data () {
+    return {
 
+    };
   }
-
 };
 </script>
 
