@@ -7,7 +7,7 @@ import NotFound from '@/views/Not-Found';
 import Dashboard from '@/views/Dashboard';
 import Buckets from '@/views/Buckets';
 import CreateBucket from '@/views/Create-Bucket';
-import EditBucket from '@/views/Edit-Bucket';
+import BucketSettings from '@/views/Bucket-Settings';
 import BucketFiles from '@/views/Bucket-Files';
 import Support from '@/views/Support';
 import Billing from '@/views/Billing';
@@ -38,7 +38,7 @@ const router = new Router({
     /* Dashboard - requires authenticated user */
     { path: '/dashboard',
       name: 'Dashboard',
-      component: Dashboard,
+      components: Dashboard,
       children: [
         {
           path: 'buckets',
@@ -46,18 +46,18 @@ const router = new Router({
           component: Buckets,
           children: [
             {
-              path: '/create',
-              name: 'CreateBuckets',
+              path: 'create',
+              name: 'Create-Buckets',
               component: CreateBucket
             },
             {
-              path: '/:bucketId/edit',
-              name: 'EditBucket',
-              component: EditBucket
+              path: ':bucketId/edit',
+              name: 'Bucket-Settings',
+              component: BucketSettings
             },
             {
-              path: '/:bucketId/files',
-              name: 'BucketFiles',
+              path: ':bucketId/files',
+              name: 'Bucket-Files',
               component: BucketFiles
             }
           ]
@@ -79,17 +79,18 @@ const router = new Router({
         }
       ]
     },
-
-    /* Redirect routes */
     {
       path: '/',
-      name: 'Login-Form',
-      component: LoginForm
+      redirect: '/login'
+    },
+    {
+      path: '/not-found',
+      name: 'Not-Found',
+      component: NotFound
     },
     {
       path: '*',
-      name: 'Not-Found',
-      component: NotFound
+      redirect: '/not-found'
     }
   ]
 });
