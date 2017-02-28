@@ -1,18 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import LoginForm from '../views/LoginForm';
-import SignupForm from '../views/SignupForm';
-import SignupSuccess from '../views/SignupSuccess';
-import PasswordReset from '../views/PasswordReset';
-import Dashboard from '../views/Dashboard';
-import Buckets from '../views/Buckets';
-import NewBucket from '../views/NewBucket';
-import EditBucket from '../views/EditBucket';
-import FileBucket from '../views/FileBucket';
-import ApiDocs from '../views/ApiDocs';
-import Support from '../views/Support';
-import Billing from '../views/Billing';
-import NotFound from '../views/NotFound';
+// import Hello from '@/components/Hello'
 
 Vue.use(Router);
 
