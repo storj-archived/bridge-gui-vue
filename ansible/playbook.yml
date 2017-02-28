@@ -1,0 +1,129 @@
+---
+- hosts: all
+  vars:
+    # TODO: lookup synced_dir from Vagrantfile
+    synced_dir: /vagrant
+    nvm:
+      install_script: '{{ synced_dir }}/ansible/roles/node/files/nvm-v0.30.1-install.sh'
+      node:
+        version: "{{ lookup('file', synced_dir + '/.nvmrc') }}"
+    npm:
+      # TODO: lookup bin name(s) from package.json
+#      bin: storj-bridge
+      path: '{{ ansible_env.HOME }}/.nvm/versions/node/v{{ nvm.node.version }}/bin/npm'
+    modules:
+      - git: core
+        npm: storj-lib
+      - git: mongodb-adapter
+        npm: storj-mongodb-adapter
+      - git: service-storage-models
+        npm: storj-service-storage-models
+      - git: service-middleware
+        npm: storj-service-middleware
+      - git: bridge
+        npm: storj-bridge
+      - git: billing
+        npm: storj-billing
+      - git: bridge-gui
+        npm: storj-bridge-gui
+
+  pre_tasks:
+    - include: tasks/mongodb.yml
+      become: yes #sudo
+      tags:
+        - link
+
+    - name: Install service-level dependencies
+      become: yes #sudo
+      apt:
+        name: '{{ item }}'
+        state: present
+        update_cache: yes
+      with_items:
+        - build-essential
+        - mongodb-org
+        - git
+
+  roles:
+    - rabbitmq
+    - node
+
+  tasks:
+    - name: Add motd instructions
+      copy:
+        src: ./files/motd
+        dest: /etc/motd
+      become: yes #sudo
+
+    - name: Tweak mongo config
+      lineinfile:
+        dest: /etc/mongod.conf
+        state: present
+        line: 'bind_ip = 0.0.0.0'
+        regexp: '^#?\s*bind_ip\s*=\s*\d+\.\d+\.\d+\.\d+'
+      become: yes #sudo
+      notify:
+        - Restart mongod
+      tags:
+        - mongo
+
+#    - name: Tweak .bash_profile - auto-cd to shared directory
+#      lineinfile:
+#        dest: ~/.profile
+#        line: 'cd {{ synced_dir }}'
+#        create: yes
+
+    - name: Tweak .bash_profile - export CONTACT_IP
+      lineinfile:
+        dest: ~/.profile
+        line: 'export CONTACT_IP=172.17.200.10  # SHOULD MATCH HOST-ONLY ADAPTER INTERFACE IP'
+        create: yes
+
+    - name: 'Install yarn'
+      npm:
+        path: '{{ synced_dir }}'
+        executable: '{{ npm.path }}'
+        global: yes
+        name: yarn
+      tags:
+        - npm
+        - install
+
+    - name: 'Install nodemon globally'
+      shell: 'yarn global add nodemon'
+
+    - name: 'Clean existing node_modules directories'
+      file:
+        path: '~/{{ item.git }}/node_modules'
+        state: absent
+      with_items: '{{ modules }}'
+
+    - name: 'Install project dependencies (npm install) - NOTE: THIS COULD TAKE A WHILE...'
+#      npm:
+#        path: '{{ synced_dir }}'
+#        executable: '{{ npm.path }}'
+      shell: 'cd ~/{{ item.git }} && yarn --ignore-engines'
+      with_items: '{{ modules }}'
+      ignore_errors: yes
+      tags:
+#        - npm
+        - yarn
+        - install
+
+    - include: tasks/link-node-modules.yml
+
+#    - name: Link project binaries (npm link)
+#      command: bash -lc 'npm link'
+#      when: which_bin_result.stdout | search('bin/{{ npm.bin }}') == false
+#      args:
+#        chdir: '{{ synced_dir }}'
+#      tags:
+#        - npm
+#        - link
+  handlers:
+    - name: Restart mongod
+      service:
+        name: mongod
+        state: restarted
+      become: yes #sudo
+

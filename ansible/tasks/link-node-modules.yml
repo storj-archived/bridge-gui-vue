@@ -1,0 +1,26 @@
+---
+- name: Remove existing storj node modules directories
+  file:
+    src: '/home/vagrant/{{ item[0].git }}'
+    path: '/home/vagrant/{{ item[1].git }}/node_modules/{{ item[0].npm }}'
+    state: absent
+  with_nested:
+   - '{{ modules }}'
+   - '{{ modules }}'
+
+- name: Link storj node modules
+  file:
+    src: '/home/vagrant/{{ item[0].git }}'
+    path: '/home/vagrant/{{ item[1].git }}/node_modules/{{ item[0].npm }}'
+    state: link
+  with_nested:
+   - '{{ modules }}'
+   - '{{ modules }}'
+#
+#- name: Remove recursive links
+#  file:
+#    src: '/home/vagrant/{{ item.git }}'
+#    path: '/home/vagrant/{{ item.git }}/node_modules/{{ item.npm }}'
+#    state: absent
+#  with_items: '{{ modules }}'
+
