@@ -1,7 +1,7 @@
 <template>
   <section id="main">
     <!-- Main View. Anything here _not_ in <router-view> will always show up -->
-    <div> HAI </div>
+    <div> APP.vue </div>
     <router-view
       class="view"
       keep-alive
@@ -22,9 +22,9 @@ export default {
 };
 </script>
 
-<style lang="scss" src="./../../theme/bootstrap.overrides.scss"></style>
-<style lang="scss" src="./../../theme/theme.scss"></style>
-<style lang="scss" src="./../../theme/shame.scss"></style>
+<style lang="scss" src="@/theme/bootstrap.overrides.scss"></style>
+<style lang="scss" src="@/theme/theme.scss"></style>
+<style lang="scss" src="@/theme/shame.scss"></style>
 <style lang="scss">
 #main {
   height: 100%;

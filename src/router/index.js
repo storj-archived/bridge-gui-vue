@@ -1,6 +1,17 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-// import Hello from '@/components/Hello'
+import LoginForm from '@/views/Login-Form';
+import SignupForm from '@/views/Signup-Form';
+import PasswordReset from '@/views/Password-Reset';
+import NotFound from '@/views/Not-Found';
+import Dashboard from '@/views/Dashboard';
+import Buckets from '@/views/Buckets';
+import CreateBucket from '@/views/Create-Bucket';
+import EditBucket from '@/views/Edit-Bucket';
+import BucketFiles from '@/views/Bucket-Files';
+import Support from '@/views/Support';
+import Billing from '@/views/Billing';
+import Referrals from '@/views/Referrals';
 
 Vue.use(Router);
 
@@ -8,47 +19,78 @@ const router = new Router({
   mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
   routes: [
-    // Open Routes
-    { path: '/', component: LoginForm },
-    { path: '/signup', component: SignupForm },
-    { path: '/signup-success', component: SignupSuccess },
-    { path: '/password-reset', component: PasswordReset },
-    // Routes requiring login
+    /* Open Authentication Routes */
+    {
+      path: '/login',
+      name: 'Login-Form',
+      component: LoginForm
+    },
+    {
+      path: '/signup',
+      name: 'Signup-Form',
+      component: SignupForm
+    },
+    {
+      path: '/password-reset',
+      name: 'Password-Reset',
+      component: PasswordReset
+    },
+    /* Dashboard - requires authenticated user */
     { path: '/dashboard',
+      name: 'Dashboard',
       component: Dashboard,
       children: [
         {
           path: 'buckets',
-          component: Buckets
-        },
-        {
-          path: 'buckets/new',
-          component: NewBucket
-        },
-        {
-          path: 'buckets/:bucketId/edit',
-          component: EditBucket
-        },
-        {
-          path: 'bucket/:bucketId/files',
-          component: FileBucket
-        },
-        {
-          path: 'api-docs',
-          component: ApiDocs
+          name: 'Buckets',
+          component: Buckets,
+          children: [
+            {
+              path: '/create',
+              name: 'CreateBuckets',
+              component: CreateBucket
+            },
+            {
+              path: '/:bucketId/edit',
+              name: 'EditBucket',
+              component: EditBucket
+            },
+            {
+              path: '/:bucketId/files',
+              name: 'BucketFiles',
+              component: BucketFiles
+            }
+          ]
         },
         {
           path: 'support',
+          name: 'Support',
           component: Support
         },
         {
           path: 'billing',
+          name: 'Billing',
           component: Billing
+        },
+        {
+          path: 'referrals',
+          name: 'Referrals',
+          component: Referrals
         }
       ]
     },
-    // Redirect routes
-    { path: '*', component: NotFound }
+
+    /* Redirect routes */
+    {
+      path: '/',
+      name: 'Login-Form',
+      component: LoginForm
+    },
+    {
+      path: '*',
+      name: 'Not-Found',
+      component: NotFound
+    }
   ]
 });
 

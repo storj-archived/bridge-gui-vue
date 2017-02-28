@@ -1,12 +1,12 @@
 <template>
-  <div>
-    api-docs
+  <div class="">
+    file-bucket
   </div>
 </template>
 
 <script>
 export default {
-  name: 'api-docs'
+  name: 'bucket-files'
 };
 </script>
 

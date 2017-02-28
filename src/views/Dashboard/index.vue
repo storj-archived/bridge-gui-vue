@@ -1,6 +1,6 @@
 <template>
   <div>
-    dashboard
+    <div> Dashboard.vue Navigation Bar </div>
     <router-view>
     </router-view>
   </div>

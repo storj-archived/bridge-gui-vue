@@ -6,7 +6,8 @@
 
 <script>
 export default {
-}
+  name: 'referrals'
+};
 </script>
 
 <style lang="scss">

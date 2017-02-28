@@ -1,12 +1,12 @@
 <template>
   <div class="">
-    new=bucket
+    create=bucket
   </div>
 </template>
 
 <script>
 export default {
-  name: 'new-bucket'
+  name: 'create-bucket'
 };
 </script>
 
