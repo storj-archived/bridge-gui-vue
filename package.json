@@ -19,10 +19,13 @@
     "lint": "eslint --ext .js,.vue src test/unit/specs test/e2e/specs"
   },
   "dependencies": {
+    "axios": "^0.15.3",
     "bootstrap": "^3.3.7",
-    "express": "^4.13.3",
+    "compression": "^1.6.2",
+    "express": "^4.15.0",
     "jquery": "^3.1.1",
-    "storj-lib": "^6.0.13",
+    "path": "^0.12.7",
+    "storj-lib": "^6.3.0",
     "vue": "^2.2.1",
     "vue-router": "^2.2.1",
     "vuex": "^2.1.2",

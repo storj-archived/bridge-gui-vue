@@ -1,22 +1,19 @@
-<template>
-  <section class="password-reset">
+<template lang="html">
+  <section class="login">
     <Nav-Authentication></Nav-Authentication>
     <div class="container auth">
       <div class="row">
-        <div class="col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12 text-center">
+        <div class="col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12
+          text-center">
           <div class="row">
             <div class="col-sm-12">
               <div class="content">
+                <!-- header -->
                 <h1 class="title text-center form-group">
-                  Forgot your password?
+                  Login
                 </h1>
 
                 <form>
-
-                  <p class="form-group">
-                    Enter your email address and a new password below, and we'll send you instructions on how to complete your password reset.
-                  </p>
-
                   <div class="form-group">
                     <input
                       type="email"
@@ -40,25 +37,30 @@
                   <div class="form-group">
                     <button
                       type="submit"
-                      @click.prevent="submitPasswordReset"
                       class="btn btn-block btn-green"
-                    />
-                      Reset My Password
+                      @click.prevent="handleSubmit"
+                    >
+                      Login
                     </button>
                   </div>
-
-                  <div v-if="error">
-                    <span class="text-danger">{{ error }}</span>
-                  </div>
-
                 </form>
 
-                <p>
-                  Go back to
-                  <router-link :to="{ name: 'Login' }">Login</router-link>
-                </p>
-
+                <div class="row">
+                  <div class="col-sm-6 text-right pull-right">
+                    <router-link :to="{ name: 'Password-Reset' }">
+                      Forgot Password?
+                    </router-link>
+                  </div>
+                </div>
               </div>
+
+              <p>
+                Don't have an account?
+                <router-link :to="{ name: 'Signup' }">
+                  Sign Up
+                </router-link>
+              </p>
+
             </div>
           </div>
         </div>
@@ -68,28 +70,39 @@
 </template>
 
 <script>
+/* eslint-disable no-undef */
 import NavAuthentication from '@/components/Nav-Authentication';
 
 export default {
-  name: 'password-reset',
+  name: 'login',
 
   components: { NavAuthentication },
 
   data () {
     return {
       email: '',
-      password: '',
-      error: ''
+      password: ''
     };
   },
 
-  methods: {
-    submitPasswordReset () {
+  beforeCreate () {
+    const privateKey = window.localStorage.getItem('privateKey');
+    console.log('privateKey', privateKey);
+  },
 
+  methods: {
+    handleSubmit () {
+      console.log('submitting');
+      const options = {
+        user: this.email,
+        password: this.password
+      };
+      this.$store.dispatch('loginUser', options);
     }
   }
 };
 </script>
 
-<style lang="sass">
+<style lang="scss" scoped>
+
 </style>

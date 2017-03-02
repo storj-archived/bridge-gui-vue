@@ -1,12 +1,12 @@
 <template>
-  <div>
-    signup
+  <div class="">
+    bucket-settings
   </div>
 </template>
 
 <script>
 export default {
-  name: 'signup-form'
+  name: 'bucket-settings'
 };
 </script>
 

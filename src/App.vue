@@ -1,7 +1,9 @@
 <template>
   <section id="main">
-    <!-- Main View. Anything here _not_ in <router-view> will always show up -->
-    <div> APP.vue </div>
+    <!--
+      Main View.
+      Anything here _not_ in <router-view> will always show up
+    -->
     <router-view
       class="view"
       keep-alive
@@ -15,26 +17,24 @@
 <script>
 export default {
   name: 'app',
+
   components: {
   },
+
   mounted () {
   }
 };
 </script>
 
-<style lang="scss" src="@/theme/bootstrap.overrides.scss"></style>
-<style lang="scss" src="@/theme/theme.scss"></style>
-<style lang="scss" src="@/theme/shame.scss"></style>
+<style lang="scss" src="@/theme/styles.scss"></style>
+
 <style lang="scss">
 #main {
+  font-family: 'Avenir Next LT Pro Regular';
   height: 100%;
   width: 100%;
 }
 
-.view {
-  height: 50%;
-  width: 50%s
-}
 .modal-scroll-body {
   & > .modal-dialog {
     height: 100%;
