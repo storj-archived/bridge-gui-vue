@@ -1,9 +1,5 @@
-import {
-  SET_USER,
-  SET_PRIVATE_KEY
-} from '@/store/mutation-types';
-import axios from 'axios';
-import { BILLING_URL } from '@/../config';
+import * as types from '@/store/mutation-types';
+import Promise from 'bluebird';
 
 const state = {
   email: '',
@@ -11,19 +7,31 @@ const state = {
 };
 
 const mutations = {
-  [SET_USER] (state, email) {
+  [types.SET_USER] (state, email) {
     state.email = email;
   },
 
-  [SET_PRIVATE_KEY] (state, privateKey) {
+  [types.SET_PRIVATE_KEY] (state, privateKey) {
     state.privateKey = privateKey;
   }
 };
 
 const actions = {
   loginUser ({ commit, state }, user) {
-    console.log('hello', user);
-    axios.post(BILLING_URL);
+    return new Promise((resolve, reject) => {
+      console.log('ACTION: loginUser', user);
+      // TO DO: storj.js code to log user in and create new Storj object to use
+      // and then save in store.then() -->
+      commit(types.SET_USER, user.email);
+
+      return resolve('data from here');
+    });
+  },
+
+  createUser ({ commit, state }, user) {
+    console.log('ACTION: creatingUser', user);
+    // TO DO: storj.js code to create user.then() -->
+    commit(types.SET_USER, user.email);
   }
 };
 

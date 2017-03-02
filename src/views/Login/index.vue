@@ -81,13 +81,19 @@ export default {
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      attemptLogin: true
     };
   },
 
   beforeCreate () {
     const privateKey = window.localStorage.getItem('privateKey');
     console.log('privateKey', privateKey);
+    if (!privateKey) {
+      this.$store.dispatch('verifyPrivateKey', privateKey);
+    } else {
+      this.attemptLogin = false;
+    }
   },
 
   methods: {
@@ -97,7 +103,10 @@ export default {
         user: this.email,
         password: this.password
       };
-      this.$store.dispatch('loginUser', options);
+      this.$store.dispatch('loginUser', options)
+        .then(function (data) {
+          console.log('back from promise action', data);
+        });
     }
   }
 };
