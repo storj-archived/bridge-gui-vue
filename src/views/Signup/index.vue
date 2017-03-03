@@ -1,7 +1,7 @@
 <template>
   <section class="container signup-form">
     <Nav-Authentication></Nav-Authentication>
-    <div v-if="!signupSuccess" class="container row">
+    <div v-if="!signupSuccess" class="container auth">
       <div class="row">
         <div class="col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12 text-center">
           <div class="row">

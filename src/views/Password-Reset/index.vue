@@ -1,5 +1,5 @@
 <template>
-  <section class="password-reset">
+  <section class="container password-reset">
     <Nav-Authentication></Nav-Authentication>
     <div class="container auth">
       <div class="row">
@@ -42,7 +42,7 @@
                       type="submit"
                       @click.prevent="submitPasswordReset"
                       class="btn btn-block btn-green"
-                    />
+                    >
                       Reset My Password
                     </button>
                   </div>

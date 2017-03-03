@@ -1,5 +1,5 @@
 <template lang="html">
-  <section class="login">
+  <section class="container login">
     <Nav-Authentication></Nav-Authentication>
     <div class="container auth">
       <div class="row">
@@ -7,7 +7,8 @@
           text-center">
           <div class="row">
             <div class="col-sm-12">
-              <div class="content">
+              <h2 v-if="attemptLogin" class="loading"> Loading . . . </h2>
+              <div v-else class="content">
                 <!-- header -->
                 <h1 class="title text-center form-group">
                   Login
@@ -15,16 +16,23 @@
 
                 <form>
                   <div class="form-group">
+                    <div v-show="errors.email" class="input-error">
+                      {{ errors.email }}
+                    </div>
                     <input
                       type="email"
                       class="form-control"
                       name="email"
                       placeholder="Email Address"
                       v-model="email"
+                      @keyup="validateEmail"
                     />
                   </div>
 
                   <div class="form-group">
+                    <div v-show="errors.password" class="input-error">
+                      {{ errors.password }}
+                    </div>
                     <input
                       type="password"
                       class="form-control"
@@ -52,15 +60,15 @@
                     </router-link>
                   </div>
                 </div>
+
+                <p>
+                  Don't have an account?
+                  <router-link :to="{ name: 'Signup' }">
+                    Sign Up
+                  </router-link>
+                </p>
+
               </div>
-
-              <p>
-                Don't have an account?
-                <router-link :to="{ name: 'Signup' }">
-                  Sign Up
-                </router-link>
-              </p>
-
             </div>
           </div>
         </div>
@@ -70,8 +78,23 @@
 </template>
 
 <script>
-/* eslint-disable no-undef */
+/**
+ * Login should:
+  - on load, check for private key, validate, and then log user in and redirect
+  - take in email address and password
+     - validate email is valid email address && is not empty
+     - validate password is not empty
+  - on submission
+    - submit email and password to storj.basicAuth
+    - create private key and store it
+    - re-authenticate with key auth
+    - direct to /dashboard
+ */
 import NavAuthentication from '@/components/Nav-Authentication';
+import { mapActions } from 'vuex';
+// import StorjClient from '';
+import * as validate from '@/utils/validation';
+import _ from 'lodash';
 
 export default {
   name: 'login',
@@ -82,36 +105,84 @@ export default {
     return {
       email: '',
       password: '',
-      attemptLogin: true
+      attemptLogin: true,
+      errors: {
+        email: '',
+        password: ''
+      }
     };
   },
 
-  beforeCreate () {
-    const privateKey = window.localStorage.getItem('privateKey');
-    console.log('privateKey', privateKey);
-    if (!privateKey) {
-      this.$store.dispatch('verifyPrivateKey', privateKey);
-    } else {
-      this.attemptLogin = false;
-    }
-  },
-
   methods: {
+    ...mapActions([ 'basicAuth', 'createKeypair', 'verifyPrivateKey' ]),
+
     handleSubmit () {
       console.log('submitting');
+      if (!this.validateInputs()) return;
+
       const options = {
         user: this.email,
         password: this.password
       };
-      this.$store.dispatch('loginUser', options)
-        .then(function (data) {
-          console.log('back from promise action', data);
-        });
+
+      this.basicAuth(options)
+        .then(() => this.createKeypair())
+        .then(() => this.$router.push('/dashboard'))
+        .catch((err) => this.handleError(err));
+    },
+
+    clearError () {
+      setTimeout(() => {
+        this.errors.email = '';
+        this.errors.password = '';
+      }, 2000);
+    },
+
+    handleError () {
+
+    },
+
+    validateEmail: _.debounce(function () {
+      const emailErrors = validate.email(this.email) || validate.required(this.email);
+      this.errors.email = emailErrors;
+
+      this.clearError();
+    }, 400),
+
+    validateInputs () {
+      console.log('validating');
+
+      this.errors.email = validate.email(this.email) || validate.required(this.email);
+      this.errors.password = validate.required(this.password);
+
+      if (this.errors.email || this.errors.password) {
+        this.clearError();
+        return false;
+      }
+
+      return true;
+    }
+  },
+
+  created () {
+    const privateKey = window.localStorage.getItem('privateKey');
+    console.log('privateKey', privateKey);
+    if (privateKey) {
+      this.verifyPrivateKey(privateKey)
+        .then(() => this.keypairAuth(privateKey))
+        .then(() => this.$router.push('/dashboard'))
+        .catch((err) => this.handleError(err));
+    } else {
+      console.log('no private key');
+      this.attemptLogin = false;
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
+.input-error {
+  color: darkred;
+  margin: 10px;
+}
 </style>

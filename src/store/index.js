@@ -3,6 +3,8 @@ import Vuex from 'vuex';
 import * as actions from './actions';
 import * as getters from './getters';
 import user from './modules/user';
+import keypair from './modules/keypair';
+import buckets from './modules/buckets';
 
 Vue.use(Vuex);
 
@@ -12,7 +14,9 @@ export default new Vuex.Store({
   actions,
   getters,
   modules: {
-    user
+    user,
+    keypair,
+    buckets
   },
   strict: debug,
   plugins: []
