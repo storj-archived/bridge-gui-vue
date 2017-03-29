@@ -1,58 +1,80 @@
 <template>
-  <section>
-    <Nav-Bar class="navbar-default" toggleable>
+  <section class="dashboard">
+    <!-- NAVBAR -->
+    <b-navbar class="navbar-default" toggleable>
 
-      <Nav-Toggle target="nav_collapse">
+      <b-nav-toggle target="nav_collapse">
         <span className="sr-only">Toggle navigation</span>
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
         <span className="icon-bar"></span>
-      </Nav-Toggle>
-        <router-link to="dashboard" class="navbar-brand">
-          <img src="static/img/logo-blue.svg" alt="Storj" class="logo" />
-        </router-link>
+      </b-nav-toggle>
 
-      <Collapse isNav id="nav_collapse">
-        <b-Nav isNavBar class="nav navbar-nav navbar-left">
+      <router-link to="dashboard" class="navbar-brand">
+        <img src="../../../static/img/logo-blue.svg" alt="Storj" class="logo" />
+      </router-link>
 
-          <Nav-Item @click="navigateTo('Buckets')">Buckets</Nav-Item>
-          <Nav-Item @click="navigateTo('Billing')">Billing</Nav-Item>
-          <Nav-Item @click="navigateTo('Referrals')">Referrals</Nav-Item>
-          <Nav-Item>Documentation</Nav-Item>
-          <Nav-Item>API</Nav-Item>
-          <Nav-Item>Support</Nav-Item>
-        </b-Nav>
-      </Collapse>
+      <b-collapse is-nav id="nav_collapse">
+        <b-nav is-nav-bar class="nav navbar-nav navbar-left">
+          <b-nav-item @click="navigateTo('Buckets')">Buckets</b-nav-item>
+          <b-nav-item @click="navigateTo('Billing')">Billing</b-nav-item>
+          <b-nav-item @click="navigateTo('Referrals')">Referrals</b-nav-item>
+          <b-nav-item>Documentation</b-nav-item>
+          <b-nav-item>API</b-nav-item>
+          <b-nav-item>Support</b-nav-item>
+        </b-nav>
 
-    </Nav-Bar>
+        <b-nav is-nav-bar class="ml-auto">
+            <b-nav-item @click="logout">Logout</b-nav-item>
+        </b-nav>
+
+      </b-collapse>
+
+    </b-navbar>
+
+    <!-- ROUTER VIEW FOR AUTHENTICATED VIEWS -->
+    <router-view
+      class="authenticated-views"
+      keep-alive
+      transition
+      transition-mode="out-in"
+    >
+    </router-view>
+
   </section>
 </template>
 
 <script>
-import Nav from 'bootstrap-vue/components/nav.vue';
-import NavBar from 'bootstrap-vue/components/navbar.vue';
-import NavToggle from 'bootstrap-vue/components/nav-toggle.vue';
-import NavItem from 'bootstrap-vue/components/nav-item.vue';
-import Collapse from 'bootstrap-vue/components/collapse.vue';
-
 export default {
   name: 'dashboard',
 
-  components: { bNav: Nav, NavBar, NavToggle, NavItem, Collapse },
-
   data () {
     return {
-      pages: ['Buckets', 'Billing', 'Referrals']
+
     };
   },
 
   methods: {
     navigateTo (page) {
       this.$router.push({ name: page });
+    },
+
+    logout () {
+      console.log('logging out');
     }
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+  .nav-item {
+    font-size: 1.75rem;
+    margin: 0 1rem;
+  }
+
+  .nav-item:hover {
+    cursor: pointer;
+  }
 </style>
+<!-- <style src="bootstrap/dist/css/bootstrap.css"></style>
+<style src="bootstrap-vue/dist/bootstrap-vue.css"></style> -->
