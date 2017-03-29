@@ -6,6 +6,7 @@ import PasswordReset from '@/views/Password-Reset';
 import NotFound from '@/views/Not-Found';
 import Dashboard from '@/views/Dashboard';
 import Buckets from '@/views/Buckets';
+import BucketList from '@/views/Bucket-List';
 import CreateBucket from '@/views/Create-Bucket';
 import BucketSettings from '@/views/Bucket-Settings';
 import BucketFiles from '@/views/Bucket-Files';
@@ -42,22 +43,28 @@ const router = new Router({
       children: [
         {
           path: 'buckets',
-          name: 'Buckets',
+          name: 'Buckets-All',
           component: Buckets,
           children: [
             {
+              // root bucket path
+              path: '/',
+              name: 'Buckets',
+              component: BucketList
+            },
+            {
               path: 'create',
-              name: 'Create-Buckets',
+              name: 'Create Bucket',
               component: CreateBucket
             },
             {
               path: ':bucketId/settings',
-              name: 'Bucket-Settings',
+              name: 'Bucket Settings',
               component: BucketSettings
             },
             {
               path: ':bucketId/files',
-              name: 'Bucket-Files',
+              name: 'Bucket Files',
               component: BucketFiles
             }
           ]
