@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import NavAuthentication from '@/components/Nav-Authentication';
+import NavAuthentication from '@/components/Nav-Authentication.vue';
 
 export default {
   name: 'password-reset',

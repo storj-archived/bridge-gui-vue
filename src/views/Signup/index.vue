@@ -98,7 +98,7 @@
 </template>
 
 <script>
-import NavAuthentication from '@/components/Nav-Authentication';
+import NavAuthentication from '@/components/Nav-Authentication.vue';
 import SignupSuccess from './Signup-Success';
 
 export default {

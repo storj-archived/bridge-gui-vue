@@ -90,7 +90,7 @@
     - re-authenticate with key auth
     - direct to /dashboard
  */
-import NavAuthentication from '@/components/Nav-Authentication';
+import NavAuthentication from '@/components/Nav-Authentication.vue';
 import { mapActions } from 'vuex';
 // import StorjClient from '';
 import * as validate from '@/utils/validation';

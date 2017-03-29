@@ -51,7 +51,7 @@ const router = new Router({
               component: CreateBucket
             },
             {
-              path: '/:bucketId/edit',
+              path: '/:bucketId/settings',
               name: 'Bucket-Settings',
               component: BucketSettings
             },
