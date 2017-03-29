@@ -6,9 +6,18 @@ import * as filters from './filters';
 import store from './store';
 import router from './router';
 import { sync } from 'vuex-router-sync';
-import jquery as $ from 'jquery';
 
-Vue.use($);
+// ES build is more efficient by reducing unneeded components with tree-shaking.
+// (Needs Webpack 2 or Rollup)
+import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm';
+
+// Import styles
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
+
+// Globally register components
+Vue.use(BootstrapVue);
+
 // sync the router with the vuex store.
 // this registers `store.state.route`
 sync(store, router);
