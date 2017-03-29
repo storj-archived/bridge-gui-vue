@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'usage-panel'
-}
+};
 </script>
 
 <style lang="scss">

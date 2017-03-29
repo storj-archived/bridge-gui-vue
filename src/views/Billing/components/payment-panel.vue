@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'payment-panel'
-}
+};
 </script>
 
 <style lang="scss">

@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'transaction-list'
-}
+};
 </script>
 
 <style lang="scss">

@@ -33,7 +33,8 @@ export default {
   components: {
     BalancePanel,
     PaymentPanel,
-    UsagePanel
+    UsagePanel,
+    TransactionList
   }
 };
 </script>

@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'balance-panel'
-}
+};
 </script>
 
 <style lang="css">
