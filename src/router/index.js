@@ -41,39 +41,39 @@ const router = new Router({
       component: Dashboard,
       children: [
         {
-          path: '/buckets',
+          path: 'buckets',
           name: 'Buckets',
           component: Buckets,
           children: [
             {
-              path: '/create',
+              path: 'create',
               name: 'Create-Buckets',
               component: CreateBucket
             },
             {
-              path: '/:bucketId/settings',
+              path: ':bucketId/settings',
               name: 'Bucket-Settings',
               component: BucketSettings
             },
             {
-              path: '/:bucketId/files',
+              path: ':bucketId/files',
               name: 'Bucket-Files',
               component: BucketFiles
             }
           ]
         },
         {
-          path: '/support',
+          path: 'support',
           name: 'Support',
           component: Support
         },
         {
-          path: '/billing',
+          path: 'billing',
           name: 'Billing',
           component: Billing
         },
         {
-          path: '/referrals',
+          path: 'referrals',
           name: 'Referrals',
           component: Referrals
         }
