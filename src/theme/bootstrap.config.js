@@ -1,3 +1,5 @@
+// TODO-Note: I think this can actually be taken out. Using bootstrap-vue does all this stuff
+
 /**
  * Bootstrap configuration for bootstrap-sass-loader
  *
