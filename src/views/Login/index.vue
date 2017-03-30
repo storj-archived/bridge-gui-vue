@@ -3,10 +3,10 @@
     <Nav-Authentication></Nav-Authentication>
     <div class="container auth">
       <div class="row">
-        <div class="col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12
+        <div class="col col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12
           text-center">
           <div class="row">
-            <div class="col-sm-12">
+            <div class="col col-sm-12">
               <h2 v-if="attemptLogin" class="loading"> Loading . . . </h2>
               <div v-else class="content">
                 <!-- header -->
@@ -54,7 +54,7 @@
                 </form>
 
                 <div class="row">
-                  <div class="col-sm-6 text-right pull-right">
+                  <div class="col col-sm-6 text-right pull-right">
                     <router-link :to="{ name: 'Password-Reset' }">
                       Forgot Password?
                     </router-link>
@@ -181,6 +181,27 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.auth .content {
+  padding: 2em 3em;
+}
+
+.auth .forgot-password {
+  display: block;
+  margin-top: 8px;
+}
+
+.auth .password .title {
+  margin-bottom: 0.6em;
+}
+
+.auth .password .content p {
+  margin-bottom: 2.5em;
+}
+
+.auth .checkbox label {
+  padding-left: 24px;
+}
+
 .input-error {
   color: darkred;
   margin: 10px;
