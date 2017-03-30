@@ -5,7 +5,7 @@
       Anything here _not_ in <router-view> will always show up
     -->
     <router-view
-      class="view"
+      class="views"
       keep-alive
       transition
       transition-mode="out-in"
