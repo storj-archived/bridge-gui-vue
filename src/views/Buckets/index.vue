@@ -1,14 +1,27 @@
 <template>
-  <div>
-    buckets
-  </div>
+  <section class="buckets">
+    <router-view
+      class="buckets-views"
+      keep-alive
+      transition
+      transition-mode="out-in"
+    >
+    <!-- CREATE BUCKET, BUCKET-SETTINGS, BUCKET-FILES -->
+    </router-view>
+  </section>
 </template>
 
 <script>
 export default {
-  name: 'buckets'
+  name: 'buckets',
+
+  data () {
+    return {
+    };
+  }
 };
 </script>
 
-<style lang="sass">
+<style lang="scss" scoped>
+
 </style>
