@@ -10,7 +10,7 @@
         <span className="icon-bar"></span>
       </b-nav-toggle>
 
-      <router-link to="dashboard" class="navbar-brand">
+      <router-link :to="'/dashboard'" class="navbar-brand">
         <img src="../../../static/img/logo-blue.svg" alt="Storj" class="logo" />
       </router-link>
 
@@ -25,7 +25,7 @@
         </b-nav>
 
         <b-nav is-nav-bar class="ml-auto">
-            <b-nav-item @click="logout">Logout</b-nav-item>
+          <b-nav-item @click="logout">Logout</b-nav-item>
         </b-nav>
 
       </b-collapse>
@@ -34,7 +34,7 @@
 
     <!-- ROUTER VIEW FOR AUTHENTICATED VIEWS -->
     <router-view
-      class="authenticated-views"
+      class="authenticated-views container-fluid"
       keep-alive
       transition
       transition-mode="out-in"
@@ -67,9 +67,13 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+  .dashboard {
+    background: #f9f9f9;
+    padding-bottom: 3em;
+  }
+
   .nav-item {
-    font-size: 1.75rem;
-    margin: 0 1rem;
+    margin: 0 0.5rem;
   }
 
   .nav-item:hover {
