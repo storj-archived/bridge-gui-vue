@@ -6,7 +6,7 @@
 
           <div class="row">
             <div class="col col-sm-12">
-              <h1 class="title pull-left">Create Bucket</h1>
+              <h1 class="title float-left">Create Bucket</h1>
             </div>
           </div>
 

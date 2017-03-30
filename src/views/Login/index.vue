@@ -54,7 +54,7 @@
                 </form>
 
                 <div class="row">
-                  <div class="col col-sm-6 text-right pull-right">
+                  <div class="col col-sm-6 text-right float-right">
                     <router-link :to="{ name: 'Password-Reset' }">
                       Forgot Password?
                     </router-link>

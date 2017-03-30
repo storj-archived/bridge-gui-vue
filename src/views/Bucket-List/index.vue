@@ -2,9 +2,9 @@
   <section class="bucket-list container">
     <div class="row">
       <div class="col col-xs-12">
-        <h1 class="title pull-left">Buckets</h1>
+        <h1 class="title float-left">Buckets</h1>
         <router-link :to="{ name: 'Create Bucket' }">
-          <button class="btn btn-green btn-action pull-right">
+          <button class="btn btn-green btn-action float-right">
               Create Bucket
           </button>
         </router-link>

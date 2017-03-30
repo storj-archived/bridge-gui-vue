@@ -6,12 +6,12 @@
 
           <div class="row">
             <div class="col col-sm-12">
-              <h1 class="title pull-left">Files</h1>
+              <h1 class="title float-left">Files</h1>
               <router-link :to="{
                 name: 'Bucket Settings',
                 params: { bucketId }
               }">
-                <button class="btn btn-blue">Edit Bucket</button>
+                <button class="btn btn-blue float-right">Edit Bucket</button>
               </router-link>
             </div>
           </div>
