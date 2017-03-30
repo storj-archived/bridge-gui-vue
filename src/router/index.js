@@ -37,7 +37,9 @@ const router = new Router({
       component: PasswordReset
     },
     /* Dashboard - requires authenticated user */
-    { path: '/dashboard',
+    {
+      path: '/dashboard',
+      redirect: '/dashboard/buckets',
       name: 'Dashboard',
       component: Dashboard,
       children: [
