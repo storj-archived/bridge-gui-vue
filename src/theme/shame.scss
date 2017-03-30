@@ -7,72 +7,11 @@
 
 html {
 	-webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-body.page {
-	background: #f9f9f9;
-	padding-bottom: 3em;
-}
-.content {
-	border: 1px solid #eee;
-    background: #fff;
-    border-radius: 5px;
-    padding: 2em;
-    margin-bottom: 2em;
-}
 label {
 	margin-bottom: 0.8em;
-}
-.table {
-	margin-bottom: 0;
-}
-.table-responsive.content {
-	padding: 0;
-}
-tr {
-	-webkit-transition: all 0.15s ease-in-out;
-    -moz-transition: all 0.15s ease-in-out;
-    -ms-transition: all 0.15s ease-in-out;
-    transition: all 0.15s ease-in-out;
-}
-th, td {
-	padding: 1.8em !important;
-}
-
-.table>thead>tr>th {
-    border-bottom: 1px solid #eee;
-}
-.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
-    border-top: 1px solid #eee;
-}
-.bucket-plan a {
-	font-family: 'Avenir Next LT Pro Demi';
-	text-decoration: none;
-}
-.bucket-icon {
-	padding: 22px 0 0 26px !important;
-    margin: 0;
-    width: 70px;
-}
-.bucket-icon img {
-	width: 42px;
-    padding: 0;
-    margin: 0;
-}
-.bucket-label a {
-	font-family: 'Avenir Next LT Pro Demi';
-}
-.clickable-row {
-	cursor: pointer;
-}
-.btn-create-bucket {
-	margin-bottom: 2em;
-}
-.bucket-pricing-icon {
-	height: 50px;
-	width: 50px;
-	margin: 15px;
 }
 
 .btn-block {
@@ -86,8 +25,9 @@ input.parent-code {
 	line-height: 1.8em;
 }
 
-tbody a {
-	cursor: pointer;
+.title {
+	margin-top: 0.5em;
+  margin-bottom: 0.75em;
 }
 
 .loader {
@@ -105,23 +45,38 @@ tbody a {
   margin-bottom: 0;
 }
 
-.title {
-	margin-top: 0.5em;
-  margin-bottom: 0.75em;
-}
-
 .btn-menu {
 	margin-top: 25px;
 	padding: 12px 32px 10px;
 }
 .btn-action {
 	margin-top: 8px;
-    padding: 12px 36px 10px;
+  padding: 12px 36px 10px;
 }
 .btn-link:focus, .btn-link:active {
 	outline:0 !important;
 }
 
+// TODO Connect these variables to the main style sheet
+
+$brand-warning: #f0ad4e;
+$brand-danger: #d9534f;
+$brand-success: #91D127;
+
+.hidden {
+  display: none !important;
+}
+.has-error {
+  color: $brand-danger;
+}
+.has-success {
+  border-color: $brand-success;
+}
+
+.alert-warning {
+  color: darken($brand-warning, 40%);
+  background-color: $brand-warning;
+}
 /* --------------------------------
 
 Media Queries
