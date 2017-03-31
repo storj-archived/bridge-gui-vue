@@ -1,0 +1,58 @@
+#!/usr/bin/env node
+
+'use strict';
+
+const program = require('commander');
+const shell = require('shelljs');
+
+const info = console.info.bind(this);
+const log = console.log.bind(this);
+const error = console.error.bind(this);
+
+program
+  .command('init', '')
+  .action(init);
+
+program
+  .command('up', '')
+  .action(up);
+
+program
+  .command('build', '')
+  .action(build);
+
+program.parse(process.argv);
+
+function up() {
+  log('Starting up the development environment.') 
+  shell.exec('docker-compose -f ./dockerfiles/bridge-gui-development.yml up')
+}
+
+function build() {
+  log('Starting up the storj-base container.')
+  shell.exec('docker-compose -f ./storj-base/docker-compose.yml run build')
+}
+
+function init() {
+  gitSubmoduleInit();
+  gitSubmoduleUpdate();
+
+  const ops = require('./storj-base/start');
+  ops.init();
+}
+
+function yarn(command, pwd) {
+  pwd = pwd || '.';
+  shell.exec('cd ' + pwd + ' && yarn ' + command);
+}
+
+function gitSubmoduleInit(submodule) {
+  submodule = submodule || '.';
+  shell.exec('git submodule init ' + submodule);
+}
+
+function gitSubmoduleUpdate(submodule) {
+  submodule = submodule || '.';
+  shell.exec('git submodule update ' + submodule);
+}
+
