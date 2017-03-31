@@ -33,6 +33,7 @@ export default {
   font-family: 'Avenir Next LT Pro Regular';
   height: 100%;
   width: 100%;
+  background-color: #f9f9f9;
 }
 
 .modal-scroll-body {
