@@ -2,7 +2,7 @@
  * Promisified storj methods for convenience
  */
 
-import Storj from 'storj.js';
+// import Storj from 'storj.js';
 import error from 'storj-service-error-types';
 import Promise from 'bluebird';
 
@@ -65,4 +65,3 @@ export const authenticateWithKeyPairAuth = (keypair) => {
     return reject(new errors.InternalError('Error authenticating with key'));
   });
 };
-

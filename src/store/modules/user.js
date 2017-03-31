@@ -1,4 +1,5 @@
 import * as types from '@/store/mutation-types';
+// import axios from 'axios';
 // import Promise from 'bluebird';
 
 const state = {
@@ -12,9 +13,10 @@ const mutations = {
 };
 
 const actions = {
-  createUser ({ commit, state }, user) {
+  createUser ({ commit, state, rootState }, user) {
     console.log('ACTION: creatingUser', user);
-    // TO DO: storj.js code to create user.then() -->
+    // TO DO: add endpoint to billing server to create user.then() -->
+    // axios.post(BILLING_URL + '/api/user/create')
     commit(types.SET_USER, user.email);
   }
 };
@@ -24,4 +26,3 @@ export default {
   mutations,
   actions
 };
-

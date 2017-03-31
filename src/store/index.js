@@ -5,6 +5,7 @@ import * as getters from './getters';
 import user from './modules/user';
 import keypair from './modules/keypair';
 import buckets from './modules/buckets';
+import storj from './modules/storj-instance';
 
 Vue.use(Vuex);
 
@@ -16,7 +17,8 @@ export default new Vuex.Store({
   modules: {
     user,
     keypair,
-    buckets
+    buckets,
+    storj
   },
   strict: debug,
   plugins: []
