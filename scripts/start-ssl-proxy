@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# Pull the nginx-ssl-proxy container
+docker pull storjlabs/nginx-ssl-proxy:latest
+
+echo "Stopping and removing any existing bridge-gui-ssl-proxy containers"
+docker stop bridge-gui-ssl-proxy
+docker rm bridge-gui-ssl-proxy
+
+# You must have jq installed for this to work
+BRIDGE_GUI_IP=$(docker inspect bridge-gui | jq -r '.[0].NetworkSettings.Networks.bridge.IPAddress')
+
+echo "Bridge GUI's IP is $BRIDGE_GUI_IP"
+
+# Run the container with self signed certificates
+# Need to remove the path and static IP from this command to make it useful elsewhere
+docker run -d --name bridge-gui-ssl-proxy -e ENABLE_SSL=true -e TARGET_SERVICE=$BRIDGE_GUI_IP:8080 -v $PWD/dockerfiles/scripts/certs.dev/cert.pem:/etc/secrets/tls.crt -v $PWD/dockerfiles/scripts/certs.dev/key.pem:/etc/secrets/tls.key -v $PWD/dockerfiles/scripts/certs.dev/dhparams.pem:/etc/secrets/tls.dhparam -p 443:443 storjlabs/nginx-ssl-proxy:latest

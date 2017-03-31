@@ -1,0 +1,6 @@
+#!/bin/bash
+
+docker stop bridge-gui
+docker rm bridge-gui
+
+docker run -d --env-file ./scripts/local.env --name bridge-gui -p 8080:8080 storjlabs/bridge-gui:latest ./dockerfiles/scripts/start-bridge-gui
