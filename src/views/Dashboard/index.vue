@@ -34,7 +34,7 @@
 
     <!-- ROUTER VIEW FOR AUTHENTICATED VIEWS -->
     <router-view
-      class="authenticated-views container-fluid"
+      class="authenticated-views container"
       keep-alive
       transition
       transition-mode="out-in"
@@ -70,6 +70,15 @@ export default {
   .dashboard {
     background: #f9f9f9;
     padding-bottom: 3em;
+    height: 100%;
+    width: 100%;
+  }
+
+  .authenticated-views {
+    background: #f9f9f9;
+    height: 100%;
+    width: 100%;
+    padding: 3rem 10rem;
   }
 
   .nav-item {

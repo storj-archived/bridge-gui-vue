@@ -58,28 +58,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-.btn-action {
-  margin-top: 8px;
-  padding: 12px 36px 10px;
-}
-
-.content {
-  border: 1px solid #eee;
-    background: #fff;
-    border-radius: 5px;
-    padding: 2em;
-    margin-bottom: 2em;
-}
-
-.table-responsive.content {
-  padding: 0;
-}
-
-@media (max-width: 480px) {
-	.btn-action {
-		padding-left: 10px;
-		padding-right: 10px;
-	}
-}
 </style>

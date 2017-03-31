@@ -15,7 +15,7 @@
               <tr v-for="file in files" :key="file.id">
                 <td>
                   <!-- file icon mimetype stuff -->
-                  <span @click="handleClick">{{ file.filename }}</span>
+                  <span>{{ file.filename }}</span>
                 </td>
                 <td>
                   <span>{{ file.size }}B</span>

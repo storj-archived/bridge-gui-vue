@@ -30,7 +30,7 @@
 
             <div class="row">
               <div class="col col-xs-6">
-                <Sj-Go-Back-Btn go-to="Dashboard"></Sj-Go-Back-Btn>
+                <Sj-Go-Back-Btn name="Buckets"></Sj-Go-Back-Btn>
               </div>
 
               <div class="col col-xs-6">
