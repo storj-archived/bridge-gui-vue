@@ -1,19 +1,21 @@
 <template lang="html">
-  <router-link :to="{ name: goTo }">
-    <button class="btn btn-block btn-transparent">
-      <span class="go-back">Go Back</span>
-    </button>
-  </router-link>
+  <button class="btn btn-block btn-transparent" @click="goBack">
+    <span class="go-back">Go Back</span>
+  </button>
 </template>
 
 <script>
 export default {
   name: 'sj-go-back-btn',
 
-  props: {
-    goTo: {
-      type: String,
-      required: true
+  props: [ 'name', 'params' ],
+
+  methods: {
+    goBack () {
+      this.$router.push({
+        name: this.name,
+        params: this.params
+      });
     }
   }
 };
