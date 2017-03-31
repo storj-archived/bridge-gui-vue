@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# On build, variables are set to contain [VAR_NAME]_ENV
+# The dist build happens and the bridge-gui app puts the "[VAR_NAME]_ENV" values in the compiled source
+# On run, the inject script (scripts/inject_static_secrets.sh) replaces "[VAR_NAME]_ENV" with
+# the variables defined in [VAR_NAME]_VAL if defined or [VAR_NAME]_DEFAULT if not
+
+# Set the config replacement values if we have an ENV var set for it
+# otherwise, use the default
+export APIHOST_VAL="${APIHOST_VAL:-$APIHOST_DEFAULT}"
+export APIPORT_VAL="${APIPORT_VAL:-$APIPORT_DEFAULT}"
+export APIPROTOCOL_VAL="${APIPROTOCOL_VAL:-$APIPROTOCOL_DEFAULT}"
+export NODE_ENV_VAL="${NODE_ENV_VAL:-$NODE_ENV_DEFAULT}"
+export STRIPE_PUBLISHABLE_KEY_VAL="${STRIPE_PUBLISHABLE_KEY_VAL:-$STRIPE_PUBLISHABLE_KEY_DEFAULT}"
+export APOLLO_CLIENT_URL_VAL="${APOLLO_CLIENT_URL_VAL:-$APOLLO_CLIENT_URL_DEFAULT}"
+export OUTPUT_PUBLIC_PATH_URL_VAL="${OUTPUT_PUBLIC_PATH_URL_VAL:-$OUTPUT_PUBLIC_PATH_URL_DEFAULT}"
+export OUTPUT_PUBLIC_PATH_PROTOCOL_VAL="${OUTPUT_PUBLIC_PATH_PROTOCOL_VAL:-$OUTPUT_PUBLIC_PATH_PROTOCOL_DEFAULT}"
+
+# Replace params in static content with desired values
+echo "Injecting secrets into Statically generated content"
+. ./build/inject_static_secrets.sh \
+  APIHOST \
+  APIPORT \
+  APIPROTOCOL \
+  NODE_ENV \
+  STRIPE_PUBLISHABLE_KEY \
+  APOLLO_CLIENT_URL \
+  OUTPUT_PUBLIC_PATH_PROTOCOL \
+  OUTPUT_PUBLIC_PATH_URL
+
+# Hack to fix build until refactor has been completed
+sed -i -E 's/isValidUTF8.Validation.isValidUTF8/isValidUTF8/g' static/dist/main-*.js
+
+# Start the Bridge GUI
+echo "Starting Bridge GUI"
+npm run start-prod

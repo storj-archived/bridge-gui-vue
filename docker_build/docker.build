@@ -1,0 +1,30 @@
+#!/bin/bash
+
+NAMESPACE=storjlabs
+APP=bridge-gui
+VERSION=$(git rev-parse --short HEAD)
+IMAGE=$NAMESPACE/$APP
+
+APIHOST=ENV_APIHOST
+APIPORT=ENV_APIPORT
+APIPROTOCOL=ENV_APIPROTOCOL
+NODE_ENV=ENV_NODE_ENV
+STRIPE_PUBLISHABLE_KEY=ENV_STRIPE_PUBLISHABLE_KEY
+APOLLO_CLIENT_URL=ENV_APOLLO_CLIENT_URL
+
+BUILD_ARGS="--build-arg APIHOST=${APIHOST} \
+            --build-arg APIPORT=${APIPORT} \
+            --build-arg APIPROTOCOL=${APIPROTOCOL} \
+            --build-arg NODE_ENV=${NODE_ENV} \
+            --build-arg STRIPE_PUBLISHABLE_KEY=${STRIPE_PUBLISHABLE_KEY} \
+            --build-arg APOLLO_CLIENT_URL=${APOLLO_CLIENT_URL}"
+echo "Building docker image for $APP under namespace $NAMESPACE with version $VERSION";
+echo "Please wait...";
+
+docker build $BUILD_ARGS -t ${IMAGE}:${VERSION} . | tee build.log 2>&1 > /dev/null || exit 1
+ID=$(tail -1 build.log | awk '{print $3;}')
+echo "ID for this docker build is $ID";
+docker tag $ID ${IMAGE}:latest 2>&1 > /dev/null
+echo "Tagged image with version and latest";
+
+docker images | grep ${IMAGE}

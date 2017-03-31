@@ -1,0 +1,11 @@
+{
+  "storage": {
+    "host": "mongo",
+    "port": 27017,
+    "name": "__storj-bridge-test",
+    "user": null,
+    "pass": null,
+    "mongos": false,
+    "ssl": false
+  }
+}
