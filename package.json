@@ -21,7 +21,7 @@
   "dependencies": {
     "axios": "^0.15.3",
     "bluebird": "^3.4.7",
-    "bootstrap": "^3.3.7",
+    "bootstrap": "^4.0.0-alpha.6",
     "bootstrap-vue": "^0.11.0",
     "compression": "^1.6.2",
     "express": "^4.15.0",
