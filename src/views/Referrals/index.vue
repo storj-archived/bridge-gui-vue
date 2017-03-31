@@ -1,6 +1,6 @@
 <template lang="html">
   <section class="referrals container">
-    <div class="row">
+    <div class="row justify-content-center">
 
       <Referral-Info></Referral-Info>
 

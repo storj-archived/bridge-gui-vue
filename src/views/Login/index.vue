@@ -2,7 +2,7 @@
   <section class="container login">
     <Nav-Authentication></Nav-Authentication>
     <div class="container auth">
-      <div class="row">
+      <div class="row justify-content-center">
         <div class="col col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12
           text-center">
           <div class="row">
@@ -54,21 +54,21 @@
                 </form>
 
                 <div class="row">
-                  <div class="col col-sm-6 text-right float-right">
+                  <div class="col text-right float-right">
                     <router-link :to="{ name: 'Password-Reset' }">
                       Forgot Password?
                     </router-link>
                   </div>
                 </div>
-
-                <p>
-                  Don't have an account?
-                  <router-link :to="{ name: 'Signup' }">
-                    Sign Up
-                  </router-link>
-                </p>
-
               </div>
+
+              <p>
+                Don't have an account?
+                <router-link :to="{ name: 'Signup' }">
+                  Sign Up
+                </router-link>
+              </p>
+              
             </div>
           </div>
         </div>

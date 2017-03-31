@@ -58,6 +58,10 @@ export default {
   }
 
   .referral-email > .content {
-    min-height: 240px;
+    min-height: 260px;
+  }
+
+  .referral-email > .content button {
+    margin-top: 20px;
   }
 </style>

@@ -41,7 +41,12 @@ export default {
   .referral-link__text {
     min-height: 50px;
   }
+
   .referral-link > .content {
-    min-height: 240px;
+    min-height: 260px;
+  }
+
+  .referral-link > .content button {
+    margin-top: 20px;
   }
 </style>
