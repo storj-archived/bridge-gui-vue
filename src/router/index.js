@@ -45,7 +45,6 @@ const router = new Router({
       children: [
         {
           path: 'buckets',
-          name: 'Buckets-All',
           component: Buckets,
           children: [
             {
