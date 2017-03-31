@@ -8,3 +8,14 @@ test/e2e/reports
 selenium-debug.log
 package.box
 .vagrant
+.idea/
+logs/
+*.iml
+webpack-assets.json
+webpack-stats.json
+build.log
+gems/
+.cache
+.node-gyp
+.env
+yarn.lock
