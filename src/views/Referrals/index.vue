@@ -1,12 +1,33 @@
 <template lang="html">
-  <div class="referrals">
-    referrals
-  </div>
+  <section class="referrals container">
+    <div class="row">
+
+      <Referral-Info></Referral-Info>
+
+      <div class="row">
+        <Referral-Email></Referral-Email>
+        <Referral-Link :referralLink="referralLink"></Referral-Link>
+      </div>
+
+    </div>
+  </section>
 </template>
 
 <script>
+import ReferralInfo from './Referral-Info';
+import ReferralEmail from './Referral-Email';
+import ReferralLink from './Referral-Link';
+
 export default {
-  name: 'referrals'
+  name: 'referrals',
+
+  components: { ReferralInfo, ReferralEmail, ReferralLink },
+
+  data () {
+    return {
+      referralLink: 'haiha-hai'
+    };
+  }
 };
 </script>
 
