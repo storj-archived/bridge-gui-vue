@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const config = require('./config');
+const history = require('connect-history-api-fallback');
 
 const app = express();
 
@@ -17,8 +18,8 @@ app.use(helmet());
 app.use(helmet.contentSecurityPolicy({
   directives: {
     defaultSrc: [ "'self'" ],
-    scriptSrc: [ "'self'", 'https://js.stripe.com' ],
-    styleSrc: [ "'self'", "'unsafe-inlline'" ],
+    scriptSrc: [ "'self'", 'https://js.stripe.com', "'unsafe-eval'" ],
+    styleSrc: [ "'self'", "'unsafe-inline'", 'https://maxcdn.bootstrapcdn.com' ],
     objectSrc: [ "'none'" ],
     frameSrc: [ 'https://js.stripe.com', 'https://storj.github.io' ],
     childSrc: [ 'https://js.stripe.com', 'https://storj.github.io' ],
@@ -27,6 +28,7 @@ app.use(helmet.contentSecurityPolicy({
 }));
 
 /* Static App */
+app.use(history());
 app.use(express.static(__dirname + '/dist'));
 
 app.listen(config.dev.port, function() {
