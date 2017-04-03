@@ -100,6 +100,7 @@
 <script>
 import NavAuthentication from '@/components/Nav-Authentication.vue';
 import SignupSuccess from './Signup-Success';
+import axios from 'axios';
 
 export default {
   name: 'signup',
@@ -124,7 +125,13 @@ export default {
     },
 
     handleSubmit () {
-
+      console.log('submitting');
+      axios.post('http://localhost:3000/graphql/api/users/create', {
+        email: 'test@test.com',
+        password: 'test'
+      })
+      .then((result) => console.log('result', result))
+      .catch((err) => console.log('err', err));
     },
 
     openEula () {
@@ -134,5 +141,5 @@ export default {
 };
 </script>
 
-<style lang="sass">
+<style lang="scss">
 </style>
