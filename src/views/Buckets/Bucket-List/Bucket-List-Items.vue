@@ -16,7 +16,7 @@
       <tbody v-for="bucket in buckets" :key="bucket.id">
         <tr class="clickable-row"  @click="navigateToBucket(bucket.id)">
           <td class="bucket-icon hidden-xs">
-            <img src="../../../static/img/icon-bucket.svg" alt="">
+            <img src="../../../../static/img/icon-bucket.svg" alt="">
           </td>
           <td class="bucket-label">
             <a @click="navigateToBucket">{{ bucket.name }}</a>
