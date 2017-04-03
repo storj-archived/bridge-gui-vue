@@ -12,6 +12,7 @@
   "homepage": "https://app.storj.io",
   "scripts": {
     "dev": "node build/dev-server.js",
+    "dev-w": "webpack --config build/webpack.dev.vm.conf.js --watch",
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
@@ -21,9 +22,11 @@
   "dependencies": {
     "axios": "^0.15.3",
     "bluebird": "^3.4.7",
+    "body-parser": "^1.17.1",
     "bootstrap": "^4.0.0-alpha.6",
     "bootstrap-vue": "^0.11.0",
     "compression": "^1.6.2",
+    "helmet": "^3.5.0",
     "jquery": "^3.1.1",
     "lodash": "^4.17.4",
     "path": "^0.12.7",
