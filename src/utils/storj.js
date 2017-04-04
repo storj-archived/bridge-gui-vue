@@ -1,10 +1,29 @@
+/* global Storj */
+/* eslint no-undef: ["error", { "typeof": false }] */
 /**
  * Promisified storj methods for convenience
  */
 
 // import Storj from 'storj.js';
-import error from 'storj-service-error-types';
+import errors from 'storj-service-error-types';
+// import config from '../../config';
 import Promise from 'bluebird';
+
+/**
+ * Verifies Storj is authenticated until an isAuthenticated method is
+ * implemented on storj.js
+ */
+export const isStorjAuthenticated = (storj) => {
+  console.log('checking storj authentication');
+  return new Promise((resolve, reject) => {
+    storj.getKeyList(function (err) {
+      if (err) {
+        return reject(err);
+      }
+      resolve(true);
+    });
+  });
+};
 
 /**
  * Authenticates with basic auth
@@ -15,6 +34,7 @@ import Promise from 'bluebird';
 export const authenticateWithBasicAuth = (credentials) => {
   return new Promise((resolve, reject) => {
     const options = {
+      // bridge: config.app.BRIDGE_URL,
       basicAuth: {
         user: credentials.email,
         password: credentials.password
@@ -32,13 +52,13 @@ export const authenticateWithBasicAuth = (credentials) => {
 
 /**
  * Registers public key with Storj network
- */
+*/
 export const registerKey = (storj, keypair) => {
   return new Promise((resolve, reject) => {
     storj.registerKey(keypair.getPublicKey(), function (err) {
       if (err) {
         console.error(err.message);
-        return reject(new error.InternalError(err));
+        return reject(new errors.InternalError(err));
       }
       return resolve(storj);
     });
@@ -54,7 +74,7 @@ export const authenticateWithKeyPairAuth = (keypair) => {
   return new Promise((resolve, reject) => {
     const options = {
       key: keypair.getPrivateKey()
-    }
+    };
 
     const storj = new Storj(options);
 
