@@ -10,16 +10,19 @@
 
                 <h1 class="title text-center form-group">Sign Up</h1>
 
+
+                <NewReferralUserBanner v-if="showReferralBanner">
+                </NewReferralUserBanner>
+
+                <NewUserBanner v-else></NewUserBanner>
+
                 <form>
-                  <div class="form-group">
-                    <input
-                      type="email"
-                      class="form-control"
-                      name="email"
-                      placeholder="Email Address"
-                      v-model="email"
-                    />
-                  </div>
+                  <b-form-input
+                    v-model="email"
+                    type="email"
+                    placeholder="Email Address"
+                    class="form-group"
+                  ></b-form-input>
 
                   <div class="form-group">
                     <input
@@ -41,12 +44,13 @@
                     />
                   </div>
 
-                  <div v-if="!passwordsMatch" class="text-danger">
+                  <!-- <div v-if="!passwordsMatch" class="text-danger">
 
-                  </div>
+                  </div> -->
 
                   <div class="form-group">
                     <button
+                      :disabled="fieldsComplete"
                       type="submit"
                       @click.prevent="handleSubmit"
                       class="btn btn-block btn-green"
@@ -55,7 +59,7 @@
                     </button>
                   </div>
 
-                  <div class="form-group checkbox">
+                  <div class="form-group checkbox eula-checkbox">
                     <label>
                       <p>
                         <input
@@ -98,17 +102,34 @@
 </template>
 
 <script>
-import NavAuthentication from '@/components/Nav-Authentication.vue';
+import NavAuthentication from '@/components/Nav-Authentication';
+import NewReferralUserBanner from './New-Referral-User-Banner';
+import NewUserBanner from './New-User-Banner';
 import SignupSuccess from './Signup-Success';
-// import mapActions from 'vuex';
+import { mapActions } from 'vuex';
+import { sha256 } from '@/utils';
 
 export default {
   name: 'signup',
 
-  components: { NavAuthentication, SignupSuccess },
+  components: {
+    NavAuthentication,
+    NewReferralUserBanner,
+    NewUserBanner,
+    SignupSuccess
+  },
+
+  created () {
+    if (this.$route.query.referralLink) {
+      this.showReferralBanner = true;
+    } else {
+      this.showReferralBanner = false;
+    }
+  },
 
   data () {
     return {
+      showReferralBanner: false,
       email: '',
       initialPassword: '',
       confirmPassword: '',
@@ -119,20 +140,43 @@ export default {
     };
   },
 
-  methods: {
-    handleSubmit () {
-      console.log('handleSubmit');
-      this.$store.dispatch('createUser', {
-        email: this.email,
-        password: this.initialPassword
-      }).then((result) => {
-        console.log('result', result);
-        this.signupSuccess = true;
-      });
-    },
+  computed: {
+    fieldsComplete: function () {
+      return false;
+      // if (!this.email) {
+      //   return false;
+      // }
+      //
+      // if (this.initialPassword !== this.confirmPassword) {
+      //   return false;
+      // }
+      //
+      // if (!this.initialPassword) {
+      //   return false;
+      // }
+    }
+  },
 
-    passwordsMatch () {
-      return true;
+  methods: {
+    ...mapActions([ 'createUser' ]),
+
+    handleSubmit () {
+      if (!this.eula) {
+        this.eulaError = 'Please accept the Terms of Service to proceed';
+        return;
+      }
+
+      this.eulaError = '';
+
+      this.createUser({
+        email: this.email,
+        password: sha256(this.initialPassword)
+      }).then((result) => {
+        this.signupSuccess = true;
+      }).catch((err) => {
+        const message = err.message.response.data.error;
+        this.error = message;
+      });
     },
 
     openEula () {
@@ -143,4 +187,7 @@ export default {
 </script>
 
 <style lang="scss">
+  .eula-checkbox {
+    margin-bottom: 0;
+  }
 </style>
