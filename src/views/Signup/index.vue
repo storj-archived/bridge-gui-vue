@@ -100,7 +100,7 @@
 <script>
 import NavAuthentication from '@/components/Nav-Authentication.vue';
 import SignupSuccess from './Signup-Success';
-import axios from 'axios';
+// import mapActions from 'vuex';
 
 export default {
   name: 'signup',
@@ -120,18 +120,19 @@ export default {
   },
 
   methods: {
-    passwordsMatch () {
-      return true;
+    handleSubmit () {
+      console.log('handleSubmit');
+      this.$store.dispatch('createUser', {
+        email: this.email,
+        password: this.initialPassword
+      }).then((result) => {
+        console.log('result', result);
+        this.signupSuccess = true;
+      });
     },
 
-    handleSubmit () {
-      console.log('submitting');
-      axios.post('http://localhost:3000/graphql/api/users/create', {
-        email: 'test@test.com',
-        password: 'test'
-      })
-      .then((result) => console.log('result', result))
-      .catch((err) => console.log('err', err));
+    passwordsMatch () {
+      return true;
     },
 
     openEula () {
