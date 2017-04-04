@@ -8,17 +8,16 @@ const state = {
 
 const mutations = {
   [types.SET_USER] (state, email) {
+    console.log('commiting SET_USER', email);
     state.email = email;
+
+    // save user to localStorage
+    window.localStorage.setItem('email', email);
   }
 };
 
 const actions = {
-  createUser ({ commit, state, rootState }, user) {
-    console.log('ACTION: creatingUser', user);
-    // TO DO: add endpoint to billing server to create user.then() -->
-    // axios.post(BILLING_URL + '/api/user/create')
-    commit(types.SET_USER, user.email);
-  }
+
 };
 
 export default {
