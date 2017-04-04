@@ -3,12 +3,16 @@
     <Nav-Authentication></Nav-Authentication>
     <div class="container auth">
       <div class="row justify-content-center">
-        <div class="col col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12
-          text-center">
+
+        <h2 v-if="attemptLogin" class="loading"> Loading . . . </h2>
+
+        <div v-else
+          class="col col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12
+          text-center"
+        >
           <div class="row">
             <div class="col col-sm-12">
-              <h2 v-if="attemptLogin" class="loading"> Loading . . . </h2>
-              <div v-else class="content">
+              <div class="content">
                 <!-- header -->
                 <h1 class="title text-center form-group">
                   Login
@@ -44,11 +48,13 @@
 
                   <div class="form-group">
                     <button
+                      :disabled="submitting"
                       type="submit"
                       class="btn btn-block btn-green"
                       @click.prevent="handleSubmit"
                     >
-                      Login
+                      <span v-show="!submitting">Login</span>
+                      <span v-show="submitting">Submitting . . .</span>
                     </button>
                   </div>
                 </form>
@@ -60,6 +66,10 @@
                     </router-link>
                   </div>
                 </div>
+
+                <div v-show="errors.login" class="login-error input-error">
+                  {{ errors.login }}
+                </div>
               </div>
 
               <p>
@@ -68,7 +78,7 @@
                   Sign Up
                 </router-link>
               </p>
-              
+
             </div>
           </div>
         </div>
@@ -103,32 +113,39 @@ export default {
 
   data () {
     return {
+      submitting: false,
       email: '',
       password: '',
       attemptLogin: true,
       errors: {
         email: '',
-        password: ''
+        password: '',
+        login: ''
       }
     };
   },
 
   methods: {
-    ...mapActions([ 'basicAuth', 'createKeypair', 'verifyPrivateKey' ]),
+    ...mapActions([ 'authenticateUserBasic', 'createKeypair', 'verifyPrivateKey' ]),
 
     handleSubmit () {
-      console.log('submitting');
       if (!this.validateInputs()) return;
 
+      this.submitting = true;
+
       const options = {
-        user: this.email,
+        email: this.email,
         password: this.password
       };
 
-      this.basicAuth(options)
-        .then(() => this.createKeypair())
-        .then(() => this.$router.push('/dashboard'))
+      this.authenticateUserBasic(options)
+        .then(() => {
+          console.log('login');
+          this.submitting = false;
+          this.$router.push('/dashboard');
+        })
         .catch((err) => this.handleError(err));
+        // .then(() => this.createKeypair())
     },
 
     clearError () {
@@ -138,8 +155,10 @@ export default {
       }, 2000);
     },
 
-    handleError () {
-
+    handleError (err) {
+      console.log('err');
+      this.submitting = false;
+      this.errors.login = err.message;
     },
 
     validateEmail: _.debounce(function () {
@@ -168,10 +187,11 @@ export default {
     const privateKey = window.localStorage.getItem('privateKey');
     console.log('privateKey', privateKey);
     if (privateKey) {
-      this.verifyPrivateKey(privateKey)
-        .then(() => this.keypairAuth(privateKey))
-        .then(() => this.$router.push('/dashboard'))
-        .catch((err) => this.handleError(err));
+      // this.verifyPrivateKey(privateKey)
+      //   .then(() => this.keypairAuth(privateKey))
+      //   .then(() => this.$router.push('/dashboard'))
+      //   .catch((err) => this.handleError(err));
+      this.attemptLogin = false;
     } else {
       console.log('no private key');
       this.attemptLogin = false;
