@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as actions from './actions';
-import * as getters from './getters';
+// import * as getters from './getters';
 import user from './modules/user';
 import keypair from './modules/keypair';
 import buckets from './modules/buckets';
@@ -13,7 +13,7 @@ const debug = process.env.NODE_ENV !== 'production';
 
 export default new Vuex.Store({
   actions,
-  getters,
+  // getters,
   modules: {
     user,
     keypair,
