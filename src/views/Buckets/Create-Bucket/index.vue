@@ -14,16 +14,20 @@
             <div class="row">
               <div class="col col-sm-12">
                 <div class="content">
-                  <div class="form-group">
-                    <label for="name">Bucket Name</label>
-                    <input
+                  <b-form-fieldset
+                    class="form-group"
+                    label="Bucket Name"
+                    :label-size="1"
+                    :state="this.bucketName.length ? 'success' : ''"
+                  >
+                    <b-form-input
                       type="text"
                       class="form-control"
                       name="bucket-name"
-                      placeholder="Bucket Name"
                       v-model="bucketName"
-                    >
-                  </div>
+                      placeholder="Enter a name for your bucket"
+                    ></b-form-input>
+                  </b-form-fieldset>
                 </div>
               </div>
             </div>
