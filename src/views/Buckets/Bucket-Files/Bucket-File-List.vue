@@ -3,7 +3,12 @@
     <div class="col col-sm-12">
       <div class="content table-responsive files-container">
         <div class="form-group">
-          <table class="table table-hover table-files">
+
+          <div v-if="!files.length" class="content text-center">
+            No files in this bucket!
+          </div>
+
+          <table v-else class="table table-hover table-files">
             <thead>
               <tr>
                 <th>Name</th>
@@ -26,6 +31,7 @@
               </tr>
             </tbody>
           </table>
+
         </div>
       </div>
     </div>
@@ -36,7 +42,7 @@
 export default {
   name: 'bucket-file-list',
 
-  props: [ 'files', 'handleClick' ]
+  props: [ 'files' ]
 };
 </script>
 
