@@ -38,7 +38,7 @@ module.exports = {
   app: {
     NAME: 'storj-bridge-gui',
     BRIDGE_URL: process.env.NODE_ENV === 'development'
-      ? 'http://bridge-ssl-proxy' : 'https://api.storj.io',
+      ? 'http://localhost:6382' : 'https://api.storj.io',
     BILLING_URL: process.env.NODE_ENV === 'development'
       ? 'localhost:3000/graphql' : ''
   }
