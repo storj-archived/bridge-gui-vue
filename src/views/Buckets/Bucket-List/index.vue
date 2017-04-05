@@ -12,12 +12,12 @@
     </div>
 
     <div class="row">
-      <div class="col col-xs-12">
+      <div v-if="loading">
+        Loading . . .
+      </div>
+      <div v-else class="col col-xs-12">
         <div class="table-responsive content">
-          <div v-if="loading">
-            Loading . . .
-          </div>
-          <Bucket-List-Items v-else :buckets="buckets">
+          <Bucket-List-Items :buckets="buckets">
           </Bucket-List-Items>
         </div>
       </div>
@@ -27,6 +27,7 @@
 
 <script>
 import BucketListItems from './Bucket-List-Items';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'bucket-list',
@@ -37,23 +38,26 @@ export default {
 
   data () {
     return {
-      loading: false,
+      loading: true
       // TODO: buckets should come from store
-      buckets: [{
-        id: 1,
-        name: 'hai',
-        storage: 0,
-        transfer: 0,
-        status: 'Active'
-      }, {
-        id: 2,
-        name: 'bucket two',
-        storage: 0,
-        transfer: 0,
-        status: 'Active'
-      }]
+
     };
+  },
+
+  computed: mapState({
+    buckets: state => state.buckets.all
+  }),
+
+  methods: {
+    ...mapActions([ 'getBuckets' ])
+  },
+
+  created () {
+    this.getBuckets().then(() => {
+      this.loading = false;
+    });
   }
+
 };
 </script>
 
