@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col col-sm-12">
             <h1 class="title float-left">
-              Files in {{ $route.params.bucketId }}
+              Files in {{ bucket.name }}
             </h1>
             <router-link :to="{
               name: 'Bucket Settings',
@@ -27,28 +27,37 @@
 <script>
 import SjGoBackBtn from '@/components/Sj-Go-Back-Btn';
 import BucketFileList from './Bucket-File-List';
+import { mapState, mapActions } from 'vuex';
+import Promise from 'bluebird';
 
 export default {
   name: 'bucket-files',
 
   components: { SjGoBackBtn, BucketFileList },
 
+  created () {
+    const bucketId = this.$route.params.bucketId;
+    return Promise.join(
+      this.getBucket(bucketId),
+      this.getFileList(bucketId),
+      function (bucket, files) {
+        return;
+      });
+  },
+
   data () {
     return {
-      // this be dummy data to test rendering
-      files: [{
-        id: 11,
-        filename: 'file-filename',
-        mimetype: 'jpg',
-        size: 11
-      }, {
-        id: 12,
-        filename: 'name-file',
-        mimetype: 'doc',
-        size: 123
-      }]
     };
-  }
+  },
+
+  methods: {
+    ...mapActions([ 'getBucket', 'getFileList' ])
+  },
+
+  computed: mapState({
+    bucket: state => state.buckets.current.meta,
+    files: state => state.buckets.current.files
+  })
 };
 </script>
 
