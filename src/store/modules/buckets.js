@@ -5,7 +5,7 @@ import * as types from '../mutation-types';
 
 const state = {
   all: [],
-  currentBucket: {}
+  current: {}
 };
 
 const mutations = {
@@ -21,7 +21,7 @@ const mutations = {
 
   [types.SET_CURRENT_BUCKET] (state, bucket) {
     console.log('set current bucket', bucket);
-    state.currentBucket = bucket;
+    state.current = bucket;
   }
 };
 
@@ -43,12 +43,31 @@ const actions = {
   createBucket ({ commit, state, dispatch }, bucketName) {
     return new Promise((resolve, reject) => {
       dispatch('keypairAuth').then((storj) => {
-        storj.createBucket(bucketName, function (err, meta) {
+        storj.createBucket(bucketName, function (err, bucket) {
           if (err) {
             return reject(new errors.InternalError(err));
           }
-          console.log('meta for bucket', meta);
-          return resolve(meta);
+          console.log('created bucket', bucket);
+          commit(types.SET_CURRENT_BUCKET, bucket);
+          return resolve(bucket.name);
+        });
+      });
+    });
+  },
+
+  getBucket ({ commit, state, dispatch }, bucketId) {
+    return new Promise((resolve, reject) => {
+      if (!bucketId) {
+        return reject(new errors.BadRequestError('No bucket ID'));
+      }
+
+      dispatch('keypairAuth').then((storj) => {
+        storj.getBucket(bucketId, function (err, bucket) {
+          if (err) {
+            return reject(new errors.InternalError(err));
+          }
+          commit(types.SET_CURRENT_BUCKET, bucket);
+          return resolve(bucket);
         });
       });
     });
