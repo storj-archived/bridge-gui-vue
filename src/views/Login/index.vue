@@ -102,7 +102,6 @@
  */
 import NavAuthentication from '@/components/Nav-Authentication.vue';
 import { mapActions } from 'vuex';
-// import StorjClient from '';
 import * as validate from '@/utils/validation';
 import _ from 'lodash';
 
@@ -125,27 +124,37 @@ export default {
     };
   },
 
+  created () {
+    // const privateKey = window.localStorage.getItem('privateKey');
+    // console.log('privateKey', privateKey);
+    // if (privateKey) {
+    //   this.attemptLogin = true;
+    //   this.keypairAuth(privateKey)
+    //     .then(() => this.$router.push('/dashboard'))
+    //     .catch((err) => this.handleError(err));
+    // } else {
+    //   console.log('no private key');
+    //   this.attemptLogin = false;
+    // }
+    this.attemptLogin = false;
+  },
+
   methods: {
-    ...mapActions([ 'authenticateUserBasic', 'createKeypair', 'verifyPrivateKey' ]),
+    ...mapActions([ 'login' ]),
 
     handleSubmit () {
       if (!this.validateInputs()) return;
 
       this.submitting = true;
 
-      const options = {
+      const credentials = {
         email: this.email,
         password: this.password
       };
 
-      this.authenticateUserBasic(options)
-        .then(() => {
-          console.log('login');
-          this.submitting = false;
-          this.$router.push('/dashboard');
-        })
+      this.login(credentials)
+        .then(() => this.$router.push('/dashboard'))
         .catch((err) => this.handleError(err));
-        // .then(() => this.createKeypair())
     },
 
     clearError () {
@@ -156,8 +165,9 @@ export default {
     },
 
     handleError (err) {
-      console.log('err');
+      console.log('err', err);
       this.submitting = false;
+      this.attemptLogin = false;
       this.errors.login = err.message;
     },
 
@@ -180,21 +190,6 @@ export default {
       }
 
       return true;
-    }
-  },
-
-  created () {
-    const privateKey = window.localStorage.getItem('privateKey');
-    console.log('privateKey', privateKey);
-    if (privateKey) {
-      // this.verifyPrivateKey(privateKey)
-      //   .then(() => this.keypairAuth(privateKey))
-      //   .then(() => this.$router.push('/dashboard'))
-      //   .catch((err) => this.handleError(err));
-      this.attemptLogin = false;
-    } else {
-      console.log('no private key');
-      this.attemptLogin = false;
     }
   }
 };
