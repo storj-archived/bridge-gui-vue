@@ -5,7 +5,10 @@ import * as types from '../mutation-types';
 
 const state = {
   all: [],
-  current: {}
+  current: {
+    meta: {},
+    files: []
+  }
 };
 
 const mutations = {
@@ -19,10 +22,16 @@ const mutations = {
     state.all = newBucketList;
   },
 
-  [types.SET_CURRENT_BUCKET] (state, bucket) {
+  [types.SET_CURRENT_BUCKET_META] (state, bucket) {
     console.log('set current bucket', bucket);
-    state.current = bucket;
+    state.current.meta = bucket;
+  },
+
+  [types.SET_CURRENT_BUCKET_FILES] (state, files) {
+    console.log('set current bucket files', files);
+    state.current.files = files;
   }
+
 };
 
 const actions = {
