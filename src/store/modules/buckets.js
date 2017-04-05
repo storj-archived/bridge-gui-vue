@@ -57,7 +57,7 @@ const actions = {
             return reject(new errors.InternalError(err));
           }
           console.log('created bucket', bucket);
-          commit(types.SET_CURRENT_BUCKET, bucket);
+          commit(types.SET_CURRENT_BUCKET_META, bucket);
           return resolve(bucket.name);
         });
       });
@@ -75,8 +75,26 @@ const actions = {
           if (err) {
             return reject(new errors.InternalError(err));
           }
-          commit(types.SET_CURRENT_BUCKET, bucket);
+          commit(types.SET_CURRENT_BUCKET_META, bucket);
           return resolve(bucket);
+        });
+      });
+    });
+  },
+
+  getFileList ({ commit, state, dispatch }, bucketId) {
+    return new Promise((resolve, reject) => {
+      if (!bucketId) {
+        return reject(new errors.BadRequestError('No bucket ID'));
+      }
+
+      dispatch('keypairAuth').then((storj) => {
+        storj.getFileList(bucketId, function (err, files) {
+          if (err) {
+            return reject(new errors.InternalError(err));
+          }
+          commit(types.SET_CURRENT_BUCKET_FILES, files);
+          return resolve(files);
         });
       });
     });
