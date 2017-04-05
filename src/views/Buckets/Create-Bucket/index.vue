@@ -18,7 +18,7 @@
                     class="form-group"
                     label="Bucket Name"
                     :label-size="1"
-                    :state="this.bucketName.length ? 'success' : ''"
+                    :state="state"
                   >
                     <b-form-input
                       type="text"
@@ -28,6 +28,10 @@
                       placeholder="Enter a name for your bucket"
                     ></b-form-input>
                   </b-form-fieldset>
+
+                  <div v-if="error" class="has-error create-bucket-error">
+                    {{ error }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -39,7 +43,8 @@
 
               <div class="col col-xs-6">
                 <button
-                  @click="createBucket"
+                  @click.prevent="handleSubmit"
+                  :disabled="disabled"
                   class="btn btn-block btn-green btn-create-bucket"
                 >
                   Save Bucket
@@ -56,6 +61,7 @@
 
 <script>
 import SjGoBackBtn from '@/components/Sj-Go-Back-Btn';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'create-bucket',
@@ -64,13 +70,44 @@ export default {
 
   data () {
     return {
-      bucketName: ''
+      bucketName: '',
+      disabled: true,
+      error: ''
     };
   },
 
+  computed: {
+    state () {
+      if (this.error) {
+        return 'warning';
+      }
+
+      if (this.bucketName.length) {
+        this.disabled = false;
+        return 'success';
+      }
+
+      if (!this.bucketName.length) {
+        this.disabled = true;
+      }
+
+      return '';
+    }
+  },
+
   methods: {
-    createBucket () {
-      console.log('create Bucket');
+    ...mapActions([ 'createBucket' ]),
+
+    handleSubmit () {
+      this.disabled = false;
+      this.createBucket(this.bucketName)
+        .then((bucketId) => this.$router.push({
+          name: 'Bucket Files',
+          params: { bucketId }
+        }))
+        .catch((err) => {
+          this.error = err;
+        });
     }
   }
 };
@@ -79,5 +116,9 @@ export default {
 <style lang="scss" scoped>
   .btn-create-bucket {
     margin-bottom: 2em;
+  }
+
+  .create-bucket-error {
+    text-align: center;
   }
 </style>
