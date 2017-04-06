@@ -14,7 +14,7 @@
             <h1 class="title float-left">
               Files in {{ bucket.name }}
             </h1>
-            <!-- Waiting for updateBucketById method in storj.js -->
+            <!-- NB: Waiting for updateBucketById method in storj.js -->
             <!-- <router-link :to="{
               name: 'Bucket Settings',
               params: { bucketId: $route.params.bucketId }
