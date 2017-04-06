@@ -1,6 +1,12 @@
 <template>
   <section class="bucket-files container">
-    <div class="row">
+    <div v-if="loading" class="row">
+      <div class="col">
+        <Sj-Loading class="loading"></Sj-Loading>
+      </div>
+    </div>
+
+    <div v-else class="row">
       <div class="col col-xs-12">
 
         <div class="row">
@@ -27,6 +33,7 @@
 
 <script>
 import SjGoBackBtn from '@/components/Sj-Go-Back-Btn';
+import SjLoading from '@/components/Sj-Loading';
 import BucketFileList from './Bucket-File-List';
 import { mapState, mapActions } from 'vuex';
 import Promise from 'bluebird';
@@ -34,20 +41,23 @@ import Promise from 'bluebird';
 export default {
   name: 'bucket-files',
 
-  components: { SjGoBackBtn, BucketFileList },
+  components: { SjGoBackBtn, SjLoading, BucketFileList },
 
   created () {
     const bucketId = this.$route.params.bucketId;
+    const self = this;
     return Promise.join(
       this.getBucket(bucketId),
       this.getFileList(bucketId),
       function (bucket, files) {
+        self.loading = false;
         return;
       });
   },
 
   data () {
     return {
+      loading: true
     };
   },
 
@@ -62,5 +72,8 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+  .loading {
+    padding-top: 10rem;
+  }
 </style>
