@@ -5,7 +5,6 @@ import * as actions from './actions';
 import user from './modules/user';
 import keypair from './modules/keypair';
 import buckets from './modules/buckets';
-import storj from './modules/storj-instance';
 import auth from './modules/auth';
 
 Vue.use(Vuex);
@@ -19,8 +18,7 @@ export default new Vuex.Store({
     auth,
     user,
     keypair,
-    buckets,
-    storj
+    buckets
   },
   strict: debug,
   plugins: []
