@@ -35,17 +35,15 @@ const mutations = {
 };
 
 const actions = {
-  generateKeypair ({ commit, state, rootState }, privateKey) {
+  generateKeypair ({ commit, state, rootState }, storj) {
     return new Promise((resolve, reject) => {
-      console.log('ACTION: generateKeyPair', rootState.storj.instance);
-
-      const storj = rootState.storj.instance;
+      console.log('ACTION: generateKeyPair');
 
       if (!storj) {
         return reject(new errors.BadRequestError('No Storj instance'));
       }
 
-      const keypair = storj.generateKeyPair(privateKey);
+      const keypair = storj.generateKeyPair();
 
       commit(types.SET_PRIVATE_KEY, keypair.getPrivateKey());
 
@@ -84,15 +82,14 @@ const actions = {
       const privateKey = window.localStorage.getItem('privateKey');
 
       if (!privateKey) {
-        return resolve('No private key');
+        return resolve();
       }
-
       // Regenerate public key from stored private key
       const keypair = storj.generateKeyPair(privateKey);
 
       storj.removeKey(keypair.getPublicKey(), function (err) {
         if (err) {
-          return reject(new errors.InternalError(err));
+          return reject(new errors.InternalError(err.message));
         }
         console.log('Removing private key');
         commit(types.CLEAR_PRIVATE_KEY);
