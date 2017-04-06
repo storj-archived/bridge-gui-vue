@@ -1,10 +1,12 @@
 <template lang="html">
-  <img
-    src="//localhost:3001/static/img/storj-loader.svg"
-    alt="Storj"
-    :width="width"
-    :style="style"
-  />
+  <div>
+    <img
+      src="//localhost:3001/static/img/storj-loader.svg"
+      alt="Storj"
+      :width="width"
+      :style="style"
+    />
+  </div>
 </html>
 
 </template>
