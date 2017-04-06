@@ -48,9 +48,18 @@ const actions = {
 
   logout ({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
-      dispatch('unregisterKey')
-        .then(() => commit(types.CLEAR_USER))
-        .catch(() => commit(types.CLEAR_USER));
+      console.log('logging out');
+      dispatch('keypairAuth').then((storj) => {
+        dispatch('unregisterKey', storj)
+        .then(() => {
+          commit(types.CLEAR_USER);
+          resolve();
+        })
+        .catch(() => {
+          commit(types.CLEAR_USER);
+          reject();
+        });
+      });
     });
   },
 
@@ -105,6 +114,11 @@ const actions = {
     return new Promise((resolve, reject) => {
       const privateKey = rootState.keypair.privateKey;
       console.log('ACTION: keypairAuth', privateKey);
+
+      if (!privateKey) {
+        return reject('No private key');
+      }
+
       const options = {
         bridge: config.app.BRIDGE_URL,
         key: privateKey
