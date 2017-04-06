@@ -6,6 +6,7 @@ import user from './modules/user';
 import keypair from './modules/keypair';
 import buckets from './modules/buckets';
 import auth from './modules/auth';
+import billing from './modules/billing';
 
 Vue.use(Vuex);
 
@@ -18,7 +19,8 @@ export default new Vuex.Store({
     auth,
     user,
     keypair,
-    buckets
+    buckets,
+    billing
   },
   strict: debug,
   plugins: []
