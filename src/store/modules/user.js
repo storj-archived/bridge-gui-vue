@@ -5,7 +5,9 @@ import config from '../../../config';
 import errors from 'storj-service-error-types';
 
 const state = {
-  email: ''
+  email: window && window.localStorage
+    ? window.localStorage.getItem('email')
+    : ''
 };
 
 const mutations = {
