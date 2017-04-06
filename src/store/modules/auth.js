@@ -27,13 +27,12 @@ const actions = {
   unauthenticateAll ({ commit, rootState }) {
     commit(types.SET_AUTHENTICATION, false);
     commit(types.CLEAR_USER);
-    commit(types.CLEAR_STORJ_INSTANCE);
   },
 
   login ({ commit, dispatch }, credentials) {
     return new Promise((resolve, reject) => {
       dispatch('basicAuth', credentials).then((storj) => {
-        dispatch('unregisterKey', storj)
+        return dispatch('unregisterKey', storj)
           .then(() => dispatch('generateKeypair', storj))
           .then((keypair) => dispatch('registerKey', {
             publicKey: keypair.getPublicKey(),
@@ -42,7 +41,7 @@ const actions = {
           .then(() => resolve())
           .catch((err) => reject(err));
       })
-      .catch((err) => console.log('login error', err));
+      .catch((err) => reject(err));
     });
   },
 
