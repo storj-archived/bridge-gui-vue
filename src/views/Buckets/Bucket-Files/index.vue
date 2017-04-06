@@ -45,6 +45,7 @@ export default {
 
   created () {
     const bucketId = this.$route.params.bucketId;
+    console.log('bucketId', bucketId);
     const self = this;
     return Promise.join(
       this.getBucket(bucketId),

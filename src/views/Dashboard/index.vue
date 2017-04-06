@@ -25,7 +25,7 @@
         </b-nav>
 
         <b-nav is-nav-bar class="ml-auto">
-          <b-nav-item @click="logout">Logout</b-nav-item>
+          <b-nav-item @click="handleClick">Logout</b-nav-item>
         </b-nav>
 
       </b-collapse>
@@ -45,22 +45,22 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'dashboard',
 
-  data () {
-    return {
-
-    };
-  },
-
   methods: {
-    navigateTo (page) {
-      this.$router.push({ name: page });
+    ...mapActions([ 'logout' ]),
+
+    handleClick () {
+      this.logout()
+        .then(() => this.$router.push({ name: 'Login' }))
+        .catch(() => this.$router.push({ name: 'Login' }));
     },
 
-    logout () {
-      console.log('logging out');
+    navigateTo (page) {
+      this.$router.push({ name: page });
     }
   }
 };
