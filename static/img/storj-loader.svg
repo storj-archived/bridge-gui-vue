@@ -27,7 +27,7 @@
                     type="rotate"
                     from="0 116 131"
                     to="360 116 131"
-                    dur="1.4s"
+                    dur="3s"
                     repeatCount="indefinite"
                 />
             </g>
