@@ -62,6 +62,6 @@ export default {
 
 <style lang="scss" scoped>
   .loading {
-    margin: 2rem auto;
+    margin: 5rem auto;
   }
 </style>
