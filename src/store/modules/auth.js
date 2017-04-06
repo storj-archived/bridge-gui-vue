@@ -32,12 +32,25 @@ const actions = {
 
   login ({ commit, dispatch }, credentials) {
     return new Promise((resolve, reject) => {
-      dispatch('basicAuth', credentials)
-      .then(() => dispatch('unregisterKey'))
-      .then(() => dispatch('generateKeypair'))
-      .then((keypair) => dispatch('registerKey'))
-      .then(() => resolve())
+      dispatch('basicAuth', credentials).then((storj) => {
+        dispatch('unregisterKey', storj)
+          .then(() => dispatch('generateKeypair', storj))
+          .then((keypair) => dispatch('registerKey', {
+            publicKey: keypair.getPublicKey(),
+            storj: storj
+          }))
+          .then(() => resolve())
+          .catch((err) => reject(err));
+      })
       .catch((err) => console.log('login error', err));
+    });
+  },
+
+  logout ({ commit, dispatch }) {
+    return new Promise((resolve, reject) => {
+      dispatch('unregisterKey')
+        .then(() => commit(types.CLEAR_USER))
+        .catch(() => commit(types.CLEAR_USER));
     });
   },
 
@@ -78,7 +91,7 @@ const actions = {
         dispatch('isStorjAuthenticated', storj)
           .then(() => {
             dispatch('authenticateAll', credentials.email);
-            resolve();
+            resolve(storj);
           })
           .catch((err) => {
             dispatch('unauthenticateAll');
@@ -100,7 +113,13 @@ const actions = {
       const storj = new Storj(options);
 
       storj.on('ready', function () {
+        console.log('ready');
         return resolve(storj);
+      });
+
+      storj.on('error', function (err) {
+        console.log('errror', err);
+        return reject(err);
       });
     });
   }
