@@ -10,7 +10,10 @@
             </div>
           </div>
 
-          <form>
+          <form
+            @keydown.enter.prevent="handleSubmit"
+            @submit.prevent="handleSubmit"
+          >
             <div class="row">
               <div class="col col-sm-12">
                 <div class="content">
@@ -29,7 +32,7 @@
                     ></b-form-input>
                   </b-form-fieldset>
 
-                  <div v-if="error" class="has-error create-bucket-error">
+                  <div v-if="error" class="has-error text-center">
                     {{ error }}
                   </div>
                 </div>
@@ -43,7 +46,7 @@
 
               <div class="col col-xs-6">
                 <button
-                  @click.prevent="handleSubmit"
+                  type="submit"
                   :disabled="disabled"
                   class="btn btn-block btn-green btn-create-bucket"
                 >
@@ -114,6 +117,9 @@ export default {
         }))
         .catch((err) => {
           this.error = err.message;
+          setTimeout(() => {
+            this.error = '';
+          }, 2500);
         });
     }
   }
@@ -123,9 +129,5 @@ export default {
 <style lang="scss" scoped>
   .btn-create-bucket {
     margin-bottom: 2em;
-  }
-
-  .create-bucket-error {
-    text-align: center;
   }
 </style>
