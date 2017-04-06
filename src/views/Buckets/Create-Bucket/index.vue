@@ -78,7 +78,14 @@ export default {
 
   computed: {
     state () {
+      const validBucketName = new RegExp(/^\S*$/).test(this.bucketName);
+
       if (this.error) {
+        return 'warning';
+      }
+
+      if (!validBucketName) {
+        this.disabled = true;
         return 'warning';
       }
 
@@ -106,7 +113,7 @@ export default {
           params: { bucketId }
         }))
         .catch((err) => {
-          this.error = err;
+          this.error = err.message;
         });
     }
   }
