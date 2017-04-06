@@ -8,7 +8,7 @@ import Dashboard from '@/views/Dashboard';
 import Buckets from '@/views/Buckets';
 import BucketList from '@/views/Buckets/Bucket-List';
 import CreateBucket from '@/views/Buckets/Create-Bucket';
-import BucketSettings from '@/views/Buckets/Bucket-Settings';
+// import BucketSettings from '@/views/Buckets/Bucket-Settings';
 import BucketFiles from '@/views/Buckets/Bucket-Files';
 import Support from '@/views/Support';
 import Billing from '@/views/Billing';
@@ -58,11 +58,12 @@ const router = new Router({
               name: 'Create Bucket',
               component: CreateBucket
             },
-            {
-              path: ':bucketId/settings',
-              name: 'Bucket Settings',
-              component: BucketSettings
-            },
+            // NB: No settings until updateBucketById is added to storj.js
+            // {
+            //   path: ':bucketId/settings',
+            //   name: 'Bucket Settings',
+            //   component: BucketSettings
+            // },
             {
               path: ':bucketId/files',
               name: 'Bucket Files',
