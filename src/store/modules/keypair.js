@@ -8,8 +8,7 @@ import Promise from 'bluebird';
 const state = {
   privateKey: window && window.localStorage
     ? window.localStorage.getItem('privateKey')
-    : '',
-  publicKey: ''
+    : ''
 };
 
 const mutations = {
@@ -23,11 +22,6 @@ const mutations = {
     if (window && window.localStorage) {
       window.localStorage.setItem('privateKey', privateKey);
     }
-  },
-
-  [types.SET_PUBLIC_KEY] (state, publicKey) {
-    console.log('SET_PUBLIC_KEY');
-    state.publicKey = publicKey;
   },
 
   [types.CLEAR_PRIVATE_KEY] (state) {
@@ -54,7 +48,6 @@ const actions = {
       const keypair = storj.generateKeyPair(privateKey);
 
       commit(types.SET_PRIVATE_KEY, keypair.getPrivateKey());
-      commit(types.SET_PUBLIC_KEY, keypair.getPublicKey());
 
       return resolve(keypair);
     });
@@ -63,16 +56,15 @@ const actions = {
   /**
    * Registers public key with Storj network
   */
-  registerKey ({ commit, state, rootState }) {
+  registerKey ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
       console.log('registeringKey');
-      const storj = rootState.storj.instance;
 
-      if (!storj) {
+      if (!data.storj) {
         return reject(new errors.BadRequestError('No Storj instance'));
       }
 
-      storj.registerKey(state.publicKey, function (err) {
+      data.storj.registerKey(data.publicKey, function (err) {
         if (err) {
           return reject(new errors.InternalError(err));
         }
@@ -86,18 +78,13 @@ const actions = {
    * Unregister public key with Storj network and clear private key from
    * Vuex state
    */
-  unregisterKey ({ commit, dispatch, rootState }) {
+  unregisterKey ({ commit, dispatch }, storj) {
     return new Promise((resolve, reject) => {
       console.log('unregisterKey');
-      const storj = rootState.storj.instance;
       const privateKey = window.localStorage.getItem('privateKey');
 
       if (!privateKey) {
         return resolve('No private key');
-      }
-
-      if (!storj) {
-        return reject(new errors.BadRequestError('No Storj instance'));
       }
 
       // Regenerate public key from stored private key
