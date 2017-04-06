@@ -54,11 +54,11 @@ const actions = {
       dispatch('keypairAuth').then((storj) => {
         storj.createBucket(bucketName, function (err, bucket) {
           if (err) {
-            return reject(new errors.InternalError(err));
+            return reject(new errors.InternalError(err.message));
           }
           console.log('created bucket', bucket);
           commit(types.SET_CURRENT_BUCKET_META, bucket);
-          return resolve(bucket.name);
+          return resolve(bucket.id);
         });
       });
     });
