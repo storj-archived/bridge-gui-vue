@@ -30,10 +30,15 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'usage-panel',
 
-  props: [ 'storage', 'bandwidth' ]
+  computed: mapState({
+    storage: state => state.billing.storage,
+    bandwidth: state => state.billing.bandwidth
+  })
 };
 </script>
 
