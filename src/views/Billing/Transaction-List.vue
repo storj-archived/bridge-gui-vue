@@ -35,10 +35,33 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'transaction-list',
 
-  props: [ 'transactions' ]
+  created () {
+    this.transactions();
+  },
+
+  computed: {
+    ...mapState({
+      credits: state => state.billing.credits,
+      debits: state => state.billing.debits
+    })
+  },
+
+  data () {
+    return {
+
+    };
+  },
+
+  methods: {
+    transactions () {
+      console.log('this.credits', this.credits, 'debits', this.debits);
+    }
+  }
 };
 </script>
 
