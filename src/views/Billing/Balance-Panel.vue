@@ -15,10 +15,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   name: 'balance-panel',
 
-  props: [ 'balance' ]
+  computed: mapState({
+    balance: state => state.billing.balance
+  })
 };
 </script>
 
