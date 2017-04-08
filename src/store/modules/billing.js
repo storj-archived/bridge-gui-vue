@@ -1,10 +1,14 @@
 const state = {
-  credits: [],
+  credits: [{
+    id: 1,
+    amount: 1000,
+    created: new Date()
+  }],
   debits: [],
   usage: 0,
-  balance: 0,
-  storage: 0,
-  bandwidth: 0
+  balance: 1000,
+  storage: 2020,
+  bandwidth: 123123
 };
 
 const mutations = {
