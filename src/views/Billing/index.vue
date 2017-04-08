@@ -18,8 +18,8 @@
 
       <div class="container">
         <div class="row">
-          <Balance-Panel :balance="balance"></Balance-Panel>
-          <Usage-Panel :bandwidth="bandwidth" :storage="storage"></Usage-Panel>
+          <Balance-Panel></Balance-Panel>
+          <Usage-Panel></Usage-Panel>
         </div>
       </div>
 
@@ -64,9 +64,6 @@ export default {
       loading: true,
       hasPaymentInfo: false,
       // dummy data for testing rendering,
-      balance: '112312312.99',
-      bandwidth: '12312',
-      storage: '12312',
       transactions: [{
         id: 1,
         created: new Date(),
