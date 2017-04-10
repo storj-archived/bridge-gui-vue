@@ -6,7 +6,7 @@
         <div class="col">
           <p class="text-muted">Current Balance</p>
           <h2 class="mb0 blue">
-            <b>${{ balance || '0.00' }}</b>
+            <b>${{ balance | setToTwoDecimalPlaces }}</b>
           </h2>
         </div>
       </div>
@@ -28,7 +28,7 @@ export default {
 
   data () {
     return {
-      balance: 0
+      balance: '0.00'
     };
   },
 
@@ -40,11 +40,13 @@ export default {
     calculateBalance () {
       console.log('calculateBalance', this.credits, this.debits);
       const debitSum = getSum(this.debits, 'amount');
-      const promoCreditSum = getSum(this.credits, 'promo_amountl');
+      const promoCreditSum = getSum(this.credits, 'promo_amount');
       const paidCreditSum = getSum(this.credits, 'paid_amount');
       const creditSum = paidCreditSum + promoCreditSum;
       const balance = debitSum - creditSum;
-      return balance;
+      const balanceInDollars = balance / 100;
+
+      this.balance = balanceInDollars;
     }
   }
 };
