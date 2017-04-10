@@ -25,3 +25,16 @@ export const getAverage = function (sum, numItems) {
 
   return avg;
 };
+
+export const getSum = function (arr, field) {
+  if (!arr || Array.isArray(arr) && arr.length <= 0) {
+    return 0;
+  }
+
+  const sum = arr.reduce((acc, i) => {
+    const add = typeof i[field] === 'undefined' ? 0 : i[field];
+    return acc + add;
+  }, 0)
+
+  return sum;
+};
