@@ -1,12 +1,12 @@
 <template lang="html">
   <section class="usage-panel col col-xs-12 col-sm-6">
-    <h2 class="title">Usage This Month</h2>
+    <h2 class="title">Avg. Usage This Month</h2>
     <div class="content">
       <div class="row">
         <div class="col col-xs-6">
           <div>
             <h4>Storage</h4>
-            <span class="mb0 blue">{{ storage || '0.00' }}</span>
+            <span class="mb0 blue">{{ storage }}</span>
             <div class="text-muted unit-text">
               <div> / 25GB </div>
               <div>free</div>
@@ -17,7 +17,7 @@
         <div class="col col-xs-6">
           <div>
             <h4>Bandwidth</h4>
-            <span class="mb0 blue">{{ bandwidth || '0.00' }}</span>
+            <span class="mb0 blue">{{ bandwidth }}</span>
             <div class="text-muted unit-text">
               <div> / 25GB </div>
               <div>free</div>
@@ -31,14 +31,41 @@
 
 <script>
 import { mapState } from 'vuex';
+import { getSum, roundToGBAmount, getAverage } from '@/utils';
+const GB = 1000000000;
 
 export default {
   name: 'usage-panel',
 
-  computed: mapState({
-    storage: state => state.billing.storage,
-    bandwidth: state => state.billing.bandwidth
-  })
+  computed: {
+    ...mapState({
+      debits: state => state.billing.debits
+    }),
+
+    storage () {
+      if (this.debits.length <= 0) {
+        return '0.00';
+      }
+
+      const storageInGB = getSum(this.debits, 'storage') / GB;
+      const avgStorage = getAverage(storageInGB, this.debits.length);
+      const roundStorage = roundToGBAmount(avgStorage);
+
+      return roundStorage;
+    },
+
+    bandwidth () {
+      if (this.debits.length <= 0) {
+        return '0.00';
+      }
+
+      const bandwidthInGB = getSum(this.debits, 'bandwidth') / GB;
+      const avgBandwidth = getAverage(bandwidthInGB, this.debits.length);
+      const roundBandwidth = roundToGBAmount(avgBandwidth);
+
+      return roundBandwidth;
+    }
+  }
 };
 </script>
 
@@ -53,5 +80,4 @@ export default {
   min-height: 180px;
   max-height: 180px;
 }
-
 </style>
