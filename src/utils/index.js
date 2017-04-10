@@ -15,3 +15,13 @@ export const fromLocalStorage = function (item) {
   }
   return '';
 };
+
+export const getAverage = function (sum, numItems) {
+  if (!sum) {
+    return 0;
+  }
+
+  const avg = sum / numItems;
+
+  return avg;
+};
