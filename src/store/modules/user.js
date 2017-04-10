@@ -1,4 +1,7 @@
-import * as types from '@/store/mutation-types';
+import {
+  SET_USER,
+  CLEAR_USER
+} from '@/store/mutation-types';
 import axios from 'axios';
 import Promise from 'bluebird';
 import config from '../../../config';
@@ -11,7 +14,7 @@ const state = {
 };
 
 const mutations = {
-  [types.SET_USER] (state, email) {
+  [SET_USER] (state, email) {
     console.log('commiting SET_USER', email);
     state.email = email;
 
@@ -19,7 +22,7 @@ const mutations = {
     window.localStorage.setItem('email', email);
   },
 
-  [types.CLEAR_USER] (state) {
+  [CLEAR_USER] (state) {
     console.log('commiting CLEAR_USER');
     state.email = '';
 
@@ -37,7 +40,7 @@ const actions = {
       axios.post(config.app.BRIDGE_URL + '/users', credentials)
         .then((result) => {
           if (result.status < 400) {
-            commit(types.SET_USER, credentials.email);
+            commit(SET_USER, credentials.email);
             return resolve();
           }
         })

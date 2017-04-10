@@ -1,7 +1,12 @@
 /* eslint no-undef: ["error", { "typeof": false }] */
 import errors from 'storj-service-error-types';
 import Promise from 'bluebird';
-import * as types from '../mutation-types';
+import {
+  SET_BUCKETS,
+  ADD_BUCKET,
+  SET_CURRENT_BUCKET_META,
+  SET_CURRENT_BUCKET_FILES
+} from '../mutation-types';
 
 const state = {
   all: [],
@@ -12,22 +17,22 @@ const state = {
 };
 
 const mutations = {
-  [types.SET_BUCKETS] (state, buckets) {
+  [SET_BUCKETS] (state, buckets) {
     state.all = buckets;
   },
 
-  [types.ADD_BUCKET] (state, bucket) {
+  [ADD_BUCKET] (state, bucket) {
     const newBucketList = state.all.concat([bucket]);
     console.log('newBucketlist', newBucketList);
     state.all = newBucketList;
   },
 
-  [types.SET_CURRENT_BUCKET_META] (state, bucket) {
+  [SET_CURRENT_BUCKET_META] (state, bucket) {
     console.log('set current bucket', bucket);
     state.current.meta = bucket;
   },
 
-  [types.SET_CURRENT_BUCKET_FILES] (state, files) {
+  [SET_CURRENT_BUCKET_FILES] (state, files) {
     console.log('set current bucket files', files);
     state.current.files = files;
   }
@@ -42,7 +47,7 @@ const actions = {
           if (err) {
             return reject(err);
           }
-          commit(types.SET_BUCKETS, buckets);
+          commit(SET_BUCKETS, buckets);
           return resolve();
         });
       });
@@ -57,7 +62,7 @@ const actions = {
             return reject(new errors.InternalError(err.message));
           }
           console.log('created bucket', bucket);
-          commit(types.SET_CURRENT_BUCKET_META, bucket);
+          commit(SET_CURRENT_BUCKET_META, bucket);
           return resolve(bucket.id);
         });
       });
@@ -75,7 +80,7 @@ const actions = {
           if (err) {
             return reject(new errors.InternalError(err));
           }
-          commit(types.SET_CURRENT_BUCKET_META, bucket);
+          commit(SET_CURRENT_BUCKET_META, bucket);
           return resolve(bucket);
         });
       });
@@ -93,7 +98,7 @@ const actions = {
           if (err) {
             return reject(new errors.InternalError(err));
           }
-          commit(types.SET_CURRENT_BUCKET_FILES, files);
+          commit(SET_CURRENT_BUCKET_FILES, files);
           return resolve(files);
         });
       });

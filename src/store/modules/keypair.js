@@ -1,6 +1,9 @@
 /* eslint no-undef: ["error", { "typeof": false }] */
 
-import * as types from '@/store/mutation-types';
+import {
+  SET_PRIVATE_KEY,
+  CLEAR_PRIVATE_KEY
+} from '@/store/mutation-types';
 // import config from '../../../config';
 import errors from 'storj-service-error-types';
 import Promise from 'bluebird';
@@ -15,7 +18,7 @@ const mutations = {
   /**
    * Saves private key to store and also sets it on Local Storage
    */
-  [types.SET_PRIVATE_KEY] (state, privateKey) {
+  [SET_PRIVATE_KEY] (state, privateKey) {
     console.log('SET_PRIVATE_KEY');
     state.privateKey = privateKey;
 
@@ -24,7 +27,7 @@ const mutations = {
     }
   },
 
-  [types.CLEAR_PRIVATE_KEY] (state) {
+  [CLEAR_PRIVATE_KEY] (state) {
     console.log('CLEAR_PRIVATE_KEY');
     state.privateKey = '';
 
@@ -45,7 +48,7 @@ const actions = {
 
       const keypair = storj.generateKeyPair();
 
-      commit(types.SET_PRIVATE_KEY, keypair.getPrivateKey());
+      commit(SET_PRIVATE_KEY, keypair.getPrivateKey());
 
       return resolve(keypair);
     });
@@ -92,7 +95,7 @@ const actions = {
           return reject(new errors.InternalError(err.message));
         }
         console.log('Removing private key');
-        commit(types.CLEAR_PRIVATE_KEY);
+        commit(CLEAR_PRIVATE_KEY);
         return resolve('Private key removed');
       });
     });

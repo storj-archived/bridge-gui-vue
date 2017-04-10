@@ -2,7 +2,11 @@
 /* eslint no-undef: ["error", { "typeof": false }] */
 
 import Promise from 'bluebird';
-import * as types from '../mutation-types';
+import {
+  SET_AUTHENTICATION,
+  SET_USER,
+  CLEAR_USER
+} from '../mutation-types';
 import config from '../../../config';
 import errors from 'storj-service-error-types';
 
@@ -11,7 +15,7 @@ const state = {
 };
 
 const mutations = {
-  [types.SET_AUTHENTICATION] (state, authenticated) {
+  [SET_AUTHENTICATION] (state, authenticated) {
     state.authenticated = authenticated;
   }
 };
@@ -19,14 +23,14 @@ const mutations = {
 const actions = {
   authenticateAll ({ commit }, email) {
     if (email) {
-      commit(types.SET_USER, email);
+      commit(SET_USER, email);
     }
-    commit(types.SET_AUTHENTICATION, true);
+    commit(SET_AUTHENTICATION, true);
   },
 
   unauthenticateAll ({ commit, rootState }) {
-    commit(types.SET_AUTHENTICATION, false);
-    commit(types.CLEAR_USER);
+    commit(SET_AUTHENTICATION, false);
+    commit(CLEAR_USER);
   },
 
   login ({ commit, dispatch }, credentials) {
@@ -51,11 +55,11 @@ const actions = {
       dispatch('keypairAuth').then((storj) => {
         dispatch('unregisterKey', storj)
         .then(() => {
-          commit(types.CLEAR_USER);
+          commit(CLEAR_USER);
           resolve();
         })
         .catch(() => {
-          commit(types.CLEAR_USER);
+          commit(CLEAR_USER);
           reject();
         });
       });
