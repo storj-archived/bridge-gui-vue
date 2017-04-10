@@ -59,6 +59,8 @@ const state = {
     type: 'bandwidth',
     bandwidth: 123123
   }],
+  // debits: [],
+  // credits: [],
   usage: 0,
   storage: 2020,
   bandwidth: 123123
