@@ -1,37 +1,35 @@
 <template>
-  <section class="billing container">
-    <div>
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <Sj-Loading class="loading"></Sj-Loading>
-          </div>
+  <section class="billing">
+    <div v-if="loading" class="col">
+      <div class="row">
+        <div class="col">
+          <Sj-Loading class="loading"></Sj-Loading>
         </div>
       </div>
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <h1 class="title float-left">Billing</h1>
-          </div>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="row">
-          <Balance-Panel></Balance-Panel>
-          <Usage-Panel></Usage-Panel>
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="row">
-          <AddCardForm v-if="hasPaymentInfo"></AddCardForm>
-          <Payment-Panel v-else></Payment-Panel>
-        </div>
-      </div>
-
-      <Transaction-List :transactions="transactions"></Transaction-List>
     </div>
+
+    <div v-else class="col">
+      <div class="row">
+        <div class="col">
+          <h1 class="title float-left">Billing</h1>
+        </div>
+      </div>
+
+      <div class="row">
+        <Balance-Panel></Balance-Panel>
+        <Usage-Panel></Usage-Panel>
+      </div>
+
+      <div class="row">
+        <AddCardForm v-if="hasPaymentInfo"></AddCardForm>
+        <Payment-Panel v-else></Payment-Panel>
+      </div>
+
+      <div class="row">
+        <Transaction-List></Transaction-List>
+      </div>
+    </div>
+
   </section>
 </template>
 
@@ -56,7 +54,9 @@ export default {
   },
 
   created () {
-
+    return setTimeout(() => {
+      this.loading = false;
+    });
   },
 
   data () {
