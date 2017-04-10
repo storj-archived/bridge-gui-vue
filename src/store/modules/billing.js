@@ -1,3 +1,8 @@
+import {
+  SET_CREDITS,
+  SET_DEBITS
+} from '../mutation-types';
+
 const state = {
   credits: [{
     id: 1,
@@ -58,16 +63,19 @@ const state = {
     created: new Date(),
     type: 'bandwidth',
     bandwidth: 123123
-  }],
+  }]
   // debits: [],
   // credits: [],
-  usage: 0,
-  storage: 2020,
-  bandwidth: 123123
 };
 
 const mutations = {
+  [SET_CREDITS] (state, credits) {
+    state.credits = credits;
+  },
 
+  [SET_DEBITS] (state, debits) {
+    state.debits = debits;
+  }
 };
 
 const actions = {
