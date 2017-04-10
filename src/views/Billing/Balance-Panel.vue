@@ -16,13 +16,33 @@
 
 <script>
 import { mapState } from 'vuex';
+import { getSum } from '@/utils';
 
 export default {
   name: 'balance-panel',
 
   computed: mapState({
-    balance: state => state.billing.balance
-  })
+    credits: state => state.billing.credits,
+    debits: state => state.billing.debits
+  }),
+
+  data () {
+    return {
+      balance: 0
+    }
+  },
+
+  methods: {
+    calculateBalance () {
+      console.log('calculateBalance', this.credits, this.debits);
+      const debitSum = this.getSum(this.debits, 'amount');
+      const promoCreditSum = this.getSum(this.credits, 'promo_amountl');
+      const paidCreditSum = this.getSum(this.credits, 'paid_amount');
+      const creditSum = paidCreditSum + promoCreditSum;
+      const balance = debitSum - creditSum;
+      return balance;
+    }
+  }
 };
 </script>
 
