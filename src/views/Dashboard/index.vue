@@ -78,7 +78,7 @@ export default {
     background: #f9f9f9;
     height: 100%;
     width: 100%;
-    padding: 3rem 10rem;
+    padding: 3rem;
   }
 
   .nav-item {
