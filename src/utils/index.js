@@ -34,7 +34,7 @@ export const getSum = function (arr, field) {
   const sum = arr.reduce((acc, i) => {
     const add = typeof i[field] === 'undefined' ? 0 : i[field];
     return acc + add;
-  }, 0)
+  }, 0);
 
   return sum;
 };
