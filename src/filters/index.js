@@ -1,28 +1,60 @@
-/**
- * Prettifies the amount printed in billing history.
- * Returns either a string that lets the user know that the amount that
- * has been used is than 0.01 GB or rounds the amount to two decimal
- * places.
- * @param {Number} num - number in bytes or GB
- * @param {String} type - optional - undefined or 'bytes'
- */
-export function roundToGBAmount (num, type) {
-  const GB = 1000000000;
+import moment from 'moment';
 
-  const numInGB = type === 'bytes' ? num / GB : num;
-  const modNum = setToTwoDecimalPlaces(numInGB);
-
-  // Checks to see if the amount is less than one cent
-  if (modNum.indexOf('0.00') === 0) {
-    const lessThanOneCent = '< 0.01';
-    return lessThanOneCent;
+export const prettifyAmount = function (amount) {
+  if (typeof (amount) !== 'number') {
+    return '0.00';
   }
-  return `${modNum}`;
+
+  const modAmount = (amount / 100).toFixed(6);
+
+  // Handles any 0.000000 debits
+  if (modAmount.indexOf('0.000000') === 0) {
+    return '0.00';
+  }
+
+  // Trims zeros if all are 6
+  if (modAmount.substr(-6) === '000000') {
+    const setToTwoPlaces = (amount / 100).toFixed(2);
+    return setToTwoPlaces;
+  }
+
+  // Return all the decimal places if it's less than $1
+  // Looks weird otherwise
+  if (modAmount.indexOf('0.') === 0) {
+    return modAmount;
+  }
+
+  // Otherwise, if amount is > $1, then trim the zeros
+  const trimmedAmount = trimOffZeros(modAmount);
+
+  return trimmedAmount;
 };
 
-export function setToTwoDecimalPlaces (num) {
-  const roundedToTwoPlaces = Math.round(num * 100) / 100;
-  const setToTwoPlaces = roundedToTwoPlaces.toFixed(2);
+function trimOffZeros (amount) {
+  const trimmed = amount.toString().replace(/0+$/, '');
 
-  return setToTwoPlaces;
+  if (trimmed.substr(-1) === '.') {
+    const addTwoZeros = trimmed.concat('00');
+    return addTwoZeros;
+  }
+
+  return trimmed;
+}
+
+export const addDollarSign = function (amount) {
+  if (amount.indexOf('-') === 0) {
+    var modAmount = amount.slice(1, amount.length);
+    return `-$${modAmount}`;
+  }
+  return `$${amount}`;
+};
+
+export const dateFormat = function (date, formatType) {
+  switch (formatType) {
+    case 'long':
+      return `${moment.utc((date)).format('MMM DD, YYYY - HH:mm')} UTC`;
+
+    default:
+      return `${moment.utc((date)).format('MMM DD, YYYY - HH:mm')} UTC`;
+  }
 };
