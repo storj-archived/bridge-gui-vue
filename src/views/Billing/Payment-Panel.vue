@@ -42,7 +42,20 @@ import SjCryptoPaymentBtn from '@/components/Sj-Crypto-Payment-Btn';
 export default {
   name: 'payment-panel',
 
-  components: { SjCryptoPaymentBtn }
+  components: { SjCryptoPaymentBtn },
+
+  data () {
+    return {
+      merchant: '',
+      lastFour: ''
+    };
+  },
+
+  methods: {
+    removeCard () {
+
+    }
+  }
 };
 </script>
 
