@@ -39,9 +39,9 @@ export default {
   methods: {
     calculateBalance () {
       console.log('calculateBalance', this.credits, this.debits);
-      const debitSum = this.getSum(this.debits, 'amount');
-      const promoCreditSum = this.getSum(this.credits, 'promo_amountl');
-      const paidCreditSum = this.getSum(this.credits, 'paid_amount');
+      const debitSum = getSum(this.debits, 'amount');
+      const promoCreditSum = getSum(this.credits, 'promo_amountl');
+      const paidCreditSum = getSum(this.credits, 'paid_amount');
       const creditSum = paidCreditSum + promoCreditSum;
       const balance = debitSum - creditSum;
       return balance;
