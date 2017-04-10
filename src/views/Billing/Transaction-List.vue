@@ -22,9 +22,11 @@
                 :key="transaction.id"
                 class="clickable-row"
               >
-                <td>{{ transaction.created }}</td>
+                <td>{{ transaction.created | dateFormat('long') }}</td>
                 <td>{{ transaction.description }}</td>
-                <td>{{ transaction.amount }}</td>
+                <td :class="{ 'text-success': transaction.amount <= 0 }">
+                  {{ transaction.amount | prettifyAmount | addDollarSign }}
+                </td>
               </tr>
             </tbody>
           </table>
@@ -36,12 +38,17 @@
 
 <script>
 import { mapState } from 'vuex';
+import { roundToGBAmount, promoCodes } from '@/utils';
+import moment from 'moment';
 
 export default {
   name: 'transaction-list',
 
   created () {
-    this.transactions();
+    if (this.debits.length > 0 || this.credits.length > 0) {
+      return this.calculateTransactions();
+    }
+    return true;
   },
 
   computed: {
@@ -53,13 +60,60 @@ export default {
 
   data () {
     return {
-
+      transactions: []
     };
   },
 
   methods: {
-    transactions () {
+    calculateTransactions () {
       console.log('this.credits', this.credits, 'debits', this.debits);
+      let temp = [];
+
+      const convertedCredits = this.credits
+        .filter((c) => !c.promo_amount)
+        .map((credit) => {
+          const transaction = {...credit};
+          transaction.amount = -credit.paid_amount;
+          const titleizedType = credit.type
+            .replace(/^\w/, (w) => (w.toUpperCase()));
+          transaction.description = `${titleizedType} payment - Thank you!`;
+          transaction.timestamp = moment.utc(credit.created).valueOf();
+          return transaction;
+        });
+
+      const convertedDebits = this.debits.map((debit) => {
+        let amountUsed;
+
+        /**
+         * This check is here to control for any 'adjustment' types
+         * Converts bytes to gigabytes
+         */
+        if (debit.type === 'storage' || debit.type === 'bandwidth') {
+          amountUsed = roundToGBAmount(debit[debit.type], 'bytes');
+        }
+
+        const transaction = {...debit};
+        transaction.description = amountUsed
+          ? `${amountUsed} GB of ${debit.type} used`
+          : `Adjustment of ${debit.amount}`;
+        transaction.timestamp = Date.parse(debit.created);
+        return transaction;
+      });
+
+      const convertedPromoCredits = this.credits
+        .filter((c) => c.promo_amount)
+        .map((credit) => {
+          const transaction = {...credit};
+          transaction.amount = -credit.promo_amount;
+          const titleizedType = promoCodes(credit.promo_code);
+          transaction.description = `${titleizedType} credit applied`;
+          transaction.timestamp = moment.utc(credit.created).valueOf();
+          return transaction;
+        });
+
+      temp = [...convertedCredits, ...convertedDebits, ...convertedPromoCredits];
+
+      this.transactions = temp.sort((t1, t2) => (t2.timestamp - t1.timestamp));
     }
   }
 };
