@@ -6,7 +6,7 @@
         <div class="col">
           <p class="text-muted">Current Balance</p>
           <h2 class="mb0 blue">
-            <b>${{ balance | setToTwoDecimalPlaces }}</b>
+            <b>${{ balance }}</b>
           </h2>
         </div>
       </div>
@@ -16,31 +16,18 @@
 
 <script>
 import { mapState } from 'vuex';
-import { getSum } from '@/utils';
+import { getSum, setToTwoDecimalPlaces } from '@/utils';
 
 export default {
   name: 'balance-panel',
 
-  computed: mapState({
-    credits: state => state.billing.credits,
-    debits: state => state.billing.debits
-  }),
+  computed: {
+    ...mapState({
+      credits: state => state.billing.credits,
+      debits: state => state.billing.debits
+    }),
 
-  data () {
-    return {
-      balance: '0.00'
-    };
-  },
-
-  created () {
-    if (this.debits.length > 0 || this.credits.length > 0) {
-      return this.calculateBalance();
-    }
-    return true;
-  },
-
-  methods: {
-    calculateBalance () {
+    balance () {
       console.log('calculateBalance');
       const debitSum = getSum(this.debits, 'amount');
       const promoCreditSum = getSum(this.credits, 'promo_amount');
@@ -49,7 +36,7 @@ export default {
       const balance = debitSum - creditSum;
       const balanceInDollars = balance / 100;
 
-      this.balance = balanceInDollars;
+      return setToTwoDecimalPlaces(balanceInDollars);
     }
   }
 };
