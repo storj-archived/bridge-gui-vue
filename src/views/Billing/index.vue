@@ -80,7 +80,19 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.unit-numbers {
+  font-size: 40px;
+  letter-spacing: -2px;
+}
+
+.unit-text {
+  font-size: 15px;
+  padding-left: 10px;
+  letter-spacing: 0;
+  display: inline-block;
+}
+
 .mb0 {
   font-size: 40px;
 }
