@@ -33,12 +33,15 @@ export default {
   },
 
   created () {
-    return this.calculateBalance();
+    if (this.debits.length > 0 || this.credits.length > 0) {
+      return this.calculateBalance();
+    }
+    return true;
   },
 
   methods: {
     calculateBalance () {
-      console.log('calculateBalance', this.credits, this.debits);
+      console.log('calculateBalance');
       const debitSum = getSum(this.debits, 'amount');
       const promoCreditSum = getSum(this.credits, 'promo_amount');
       const paidCreditSum = getSum(this.credits, 'paid_amount');
