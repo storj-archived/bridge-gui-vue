@@ -29,7 +29,11 @@ export default {
   data () {
     return {
       balance: 0
-    }
+    };
+  },
+
+  created () {
+    return this.calculateBalance();
   },
 
   methods: {
