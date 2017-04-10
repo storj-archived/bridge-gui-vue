@@ -8,11 +8,9 @@
       </div>
     </div>
 
-    <div v-else class="col">
+    <div v-else class="container">
       <div class="row">
-        <div class="col">
-          <h1 class="title float-left">Billing</h1>
-        </div>
+        <h1 class="container title float-left">Billing</h1>
       </div>
 
       <div class="row">
@@ -54,9 +52,9 @@ export default {
   },
 
   created () {
-    return setTimeout(() => {
+    setTimeout(() => {
       this.loading = false;
-    });
+    }, 2000);
   },
 
   data () {
