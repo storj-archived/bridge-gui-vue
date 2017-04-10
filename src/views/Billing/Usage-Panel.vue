@@ -1,27 +1,31 @@
 <template lang="html">
-  <section class="usage-panel col col-xs-12 col-sm-6">
+  <section class="usage-panel col col-sm-12 col-md-6">
     <h2 class="title">Avg. Usage This Month</h2>
     <div class="content">
       <div class="row">
         <div class="col col-xs-6">
-          <div>
-            <h4>Storage</h4>
-            <span class="mb0 blue">{{ storage }}</span>
-            <div class="text-muted unit-text">
-              <div> / 25GB </div>
-              <div>free</div>
-            </div>
+          <div className="mb0">
+            <p>Storage</p>
+            <h4 class="mb0 blue unit-numbers">
+              <b>{{ storage }}</b>
+              <div class="text-muted unit-text">
+                <div> / 25GB </div>
+                <div>free</div>
+              </div>
+            </h4>
           </div>
         </div>
 
         <div class="col col-xs-6">
           <div>
-            <h4>Bandwidth</h4>
-            <span class="mb0 blue">{{ bandwidth }}</span>
-            <div class="text-muted unit-text">
-              <div> / 25GB </div>
-              <div>free</div>
-            </div>
+            <p>Bandwidth</p>
+            <h4 class="mb0 blue unit-numbers">
+              <b>{{ bandwidth }}</b>
+              <div class="text-muted unit-text">
+                <div> / 25GB </div>
+                <div>free</div>
+              </div>
+            </h4>
           </div>
         </div>
       </div>
@@ -70,12 +74,6 @@ export default {
 </script>
 
 <style lang="scss">
-.unit-text {
-  font-size: 15px;
-  padding-left: 10px;
-  display: inline-block;
-}
-
 .usage-panel > .content {
   min-height: 180px;
   max-height: 180px;

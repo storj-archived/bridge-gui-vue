@@ -1,11 +1,11 @@
 <template lang="html">
-  <section class="balance-panel col col-sm-6">
+  <section class="balance-panel col col-xs-12 col-sm-12 col-md-6">
     <h2 class="title">Your Balance</h2>
     <div class="content">
       <div class="row">
-        <div class="col">
-          <p class="text-muted">Current Balance</p>
-          <h2 class="mb0 blue">
+        <div class="col col-xs-6">
+          <p>Current Balance</p>
+          <h2 class="mb0 blue unit-numbers">
             <b>${{ balance }}</b>
           </h2>
         </div>
