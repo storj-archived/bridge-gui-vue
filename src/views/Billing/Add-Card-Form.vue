@@ -24,7 +24,8 @@
                       name="cc-number"
                       type="text"
                       v-model="fields.ccNumber.value"
-                      @keyup="validateCCNumber"
+                      :state="'has-success'"
+                      @keyup="isValidCCNumber"
                     ></b-form-input>
                     <small v-show="fields.ccNumber.error" class="has-error">
                       {{ fields.ccNumber.error }}
@@ -40,7 +41,7 @@
                       type="text"
                       autoComplete="cc-csc"
                       v-model="fields.cvv.value"
-                      @keyup="validateCVV"
+                      @keyup="isValidCVV"
                     ></b-form-input>
                     <small v-show="fields.cvv.error" class="has-error">
                       {{ fields.cvv.error }}
@@ -57,7 +58,7 @@
                     name="cc-exp"
                     type="text"
                     v-model="fields.ccExp.value"
-                    @keyup="validateCCExp"
+                    @keyup="isValidCCExp"
                   ></b-form-input>
                   <small v-show="fields.ccExp.error" class="has-error">
                     {{ fields.ccExp.error }}
@@ -108,6 +109,12 @@
 
 <script>
 import SjCryptoPaymentBtn from '@/components/Sj-Crypto-Payment-Btn';
+import {
+  validateCCNumber,
+  validateCCForm,
+  validateCVV,
+  validateCCExp
+} from '@/utils/validation';
 import { mapActions } from 'vuex';
 import { debounce } from 'lodash';
 const debounceTime = 800;
@@ -146,86 +153,26 @@ export default {
   methods: {
     ...mapActions([ 'addPaymentMethod' ]),
 
-    validateCCNumber: debounce(function () {
-      const { ccNumber } = this.fields;
-      ccNumber.error = '';
-
-      // Validation regexes
-      const visa = /^4[0-9]{12}(?:[0-9]{3})?$/.test(ccNumber.value);
-      const mastercard = /^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/.test(ccNumber.value);
-      const amex = /^3[47][0-9]{13}$/.test(ccNumber.value);
-      const discover = /^6(?:011|5[0-9]{2})[0-9]{12}$/.test(ccNumber.value);
-      const jcb = /^(?:2131|1800|35\d{3})\d{11}$/.test(ccNumber.value);
-      const dinersclub = /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/.test(ccNumber.value);
-
-      if (!ccNumber.value) {
-        ccNumber.error = 'No credit card number provided';
-      }
-
-      if (!visa && !mastercard && !amex && !discover && !jcb && !dinersclub) {
-        ccNumber.error = 'Enter a valid credit card number';
-      }
-
+    isValidCCNumber: debounce(function () {
+      this.fields.ccNumber = validateCCNumber(this.fields.ccNumber);
       this.validateForm();
     }, debounceTime),
 
-    validateCVV: debounce(function () {
-      const { cvv } = this.fields;
-      const cvvIsValid = /^([0-9]{3,4})$/.test(cvv.value);
-      cvv.error = '';
-
-      if (!cvv.value) {
-        cvv.error = 'No CVV number provided';
-      }
-
-      if (!cvvIsValid) {
-        cvv.error = 'Please enter a valid CVV';
-      }
-
+    isValidCVV: debounce(function () {
+      this.fields.cvv = validateCVV(this.fields.cvv);
       this.validateForm();
     }, debounceTime),
 
-    validateCCExp: debounce(function () {
-      const { ccExp } = this.fields;
-      const ccExpIsValidYear = /^((0[1-9])|(1[0-2]))\/((2017)|(20[1-4][0-9]))$/.test(ccExp.value);
-      ccExp.error = '';
-
-      if (!ccExp.value) {
-        ccExp.error = 'Enter an expiration date';
-      }
-
-      if (!ccExpIsValidYear) {
-        ccExp.error = 'Please enter a valid expiration date (MM/YYYY)';
-      }
-
+    isValidCCExp: debounce(function () {
+      this.fields.ccExp = validateCCExp(this.fields.ccExp);
       this.validateForm();
     }, debounceTime),
 
     validateForm () {
-      const { ccNumber, cvv, ccExp } = this.fields;
-      this.submitError = '';
-
-      if (cvv.error || ccExp.error || ccNumber.error || !cvv.value || !ccExp.value || !ccNumber.value) {
-        this.okToSubmit = false;
-      } else {
-        this.okToSubmit = true;
-      }
+      this.okToSubmit = validateCCForm(this.fields);
     },
 
     handleSubmit () {
-      const { ccNumber, cvv, ccExp } = this.fields;
-
-      if (!ccNumber.value && !cvv.value && !ccExp.value) {
-        this.submitError = 'Please fill out all Credit Card Details';
-        setTimeout(() => {
-          this.submitError = '';
-        }, 2000);
-        return;
-      }
-
-      if (!this.okToSubmit) {
-        return console.log('not ok');
-      }
     }
   }
 };
