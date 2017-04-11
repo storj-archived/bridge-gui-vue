@@ -26,7 +26,8 @@
                 @click.prevent="handleClick"
                 class="float-right remove-card-btn"
               >
-                Remove Card
+                <span v-show="!submitting">Remove Card</span>
+                <span v-show="submitting">Removing . . .</span>
               </b-button>
             </div>
           </div>
