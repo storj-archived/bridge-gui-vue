@@ -100,7 +100,7 @@ const actions = {
     });
   },
 
-  addPaymentMethod ({ commit, dispatch }) {
+  addPaymentMethod ({ commit, dispatch }, fields) {
     return new Promise((resolve, reject) => {
       // const obj = {
       //   id: 123,
