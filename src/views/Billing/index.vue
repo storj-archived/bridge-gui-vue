@@ -19,7 +19,7 @@
       </div>
 
       <div class="row">
-        <AddCardForm v-if="hasPaymentInfo"></AddCardForm>
+        <AddCardForm v-if="defaultPaymentMethod"></AddCardForm>
         <Payment-Panel v-else></Payment-Panel>
       </div>
 
@@ -38,6 +38,7 @@ import UsagePanel from '@/views/Billing/Usage-Panel';
 import TransactionList from '@/views/Billing/Transaction-List';
 import AddCardForm from '@/views/Billing/Add-Card-Form';
 import SjLoading from '@/components/Sj-Loading';
+import { mapState } from 'vuex';
 
 export default {
   name: 'billing',
@@ -59,10 +60,13 @@ export default {
 
   data () {
     return {
-      loading: true,
-      hasPaymentInfo: false,
+      loading: true
     };
-  }
+  },
+
+  computed: mapState({
+    defaultPaymentMethod: state => state.billing.defaultPaymentMethod
+  })
 };
 </script>
 
