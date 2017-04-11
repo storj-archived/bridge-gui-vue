@@ -19,8 +19,8 @@
       </div>
 
       <div class="row">
-        <AddCardForm v-if="defaultPaymentMethod"></AddCardForm>
-        <Payment-Panel v-else></Payment-Panel>
+        <Payment-Panel v-if="hasPaymentMethod"></Payment-Panel>
+        <Add-Card-Form v-else></Add-Card-Form>
       </div>
 
       <div class="row">
@@ -55,7 +55,7 @@ export default {
   created () {
     setTimeout(() => {
       this.loading = false;
-    }, 2000);
+    }, 1000);
   },
 
   data () {
@@ -65,7 +65,7 @@ export default {
   },
 
   computed: mapState({
-    defaultPaymentMethod: state => state.billing.defaultPaymentMethod
+    hasPaymentMethod: state => state.billing.defaultPaymentMethod.id
   })
 };
 </script>
