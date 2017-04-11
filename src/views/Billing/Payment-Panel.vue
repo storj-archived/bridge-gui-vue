@@ -21,8 +21,9 @@
             </div>
             <div class="col">
               <b-button
+                :disabled="submitting"
                 type="submit"
-                @click="removeCard"
+                @click.prevent="handleClick"
                 class="float-right remove-card-btn"
               >
                 Remove Card
@@ -37,6 +38,7 @@
 
 <script>
 import SjCryptoPaymentBtn from '@/components/Sj-Crypto-Payment-Btn';
+import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'payment-panel',
@@ -45,14 +47,23 @@ export default {
 
   data () {
     return {
-      merchant: '',
-      lastFour: '0000'
+      submitting: false
     };
   },
 
-  methods: {
-    removeCard () {
+  computed: mapState({
+    merchant: ({ billing }) => billing.defaultPaymentMethod.merchant,
+    lastFour: ({ billing }) => billing.defaultPaymentMethod.lastFour
+  }),
 
+  methods: {
+    ...mapActions([ 'removeCard' ]),
+
+    handleClick () {
+      this.submitting = true;
+      this.removeCard().then(() => {
+        this.submitting = false;
+      });
     }
   }
 };
