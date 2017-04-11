@@ -40,6 +40,7 @@
                       type="text"
                       autoComplete="cc-csc"
                       v-model="fields.cvv.value"
+                      @keyup="validateCVV"
                     ></b-form-input>
                     <small v-show="fields.cvv.error" class="has-error">
                       {{ fields.cvv.error }}
@@ -108,6 +109,7 @@
 import SjCryptoPaymentBtn from '@/components/Sj-Crypto-Payment-Btn';
 import { mapActions } from 'vuex';
 import { debounce } from 'lodash';
+const debounceTime = 1000;
 
 export default {
   name: 'add-card-form',
@@ -162,7 +164,20 @@ export default {
       if (!visa && !mastercard && !amex && !discover && !jcb && !dinersclub) {
         ccNumber.error = 'Enter a valid credit card number';
       }
-    }, 1000),
+    }, debounceTime),
+
+    validateCVV: debounce(function () {
+      const { cvv } = this.fields;
+      const cvvIsValid = /^([0-9]{3,4})$/.test(cvv.value);
+
+      if (!cvv.value) {
+        cvv.error = 'No CVV number provided';
+      }
+
+      if (!cvvIsValid) {
+        cvv.error = 'Please enter a valid CVV';
+      }
+    }, debounceTime),
 
     validateForm () {
       const { ccNumber, cvv, ccExp } = this.fields;
@@ -171,7 +186,6 @@ export default {
       ccExp.error = '';
       this.submitError = '';
 
-      const cvvIsValid = /^([0-9]{3,4})$/.test(cvv.value);
       const ccExpIsValidYear = /^((0[1-9])|(1[0-2]))\/((2017)|(20[1-4][0-9]))$/.test(ccExp.value);
 
       if (!ccNumber.value && !cvv.value && !ccExp.value) {
@@ -182,20 +196,12 @@ export default {
         return;
       }
 
-      if (!cvv.value) {
-        cvv.error = 'No CVV number provided';
-      }
-
       if (!ccExp.value) {
         ccExp.error = 'Enter an expiration date';
       }
 
       if (!ccExpIsValidYear) {
         ccExp.error = 'Please enter a valid expiration date (MM/YYYY)';
-      }
-
-      if (!cvvIsValid) {
-        cvv.error = 'Please enter a valid CVV';
       }
 
       console.log('blah blah blah');
