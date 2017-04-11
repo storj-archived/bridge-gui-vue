@@ -23,8 +23,11 @@
                       placeholder="Credit card number"
                       name="cc-number"
                       type="text"
-                      v-model="fields.ccNumber"
+                      v-model="fields.ccNumber.value"
                     ></b-form-input>
+                    <small v-show="fields.ccNumber.error" class="has-error">
+                      {{ fields.ccNumber.error }}
+                    </small>
                   </b-form-fieldset>
                 </div>
                 <div class="col">
@@ -35,8 +38,11 @@
                       name="cc-cvc"
                       type="text"
                       autoComplete="cc-csc"
-                      v-model="fields.cvv"
+                      v-model="fields.cvv.value"
                     ></b-form-input>
+                    <small v-show="fields.cvv.error" class="has-error">
+                      {{ fields.cvv.error }}
+                    </small>
                   </b-form-fieldset>
                 </div>
               </div>
@@ -48,8 +54,11 @@
                     placeholder="Expires MM / YYYY"
                     name="cc-exp"
                     type="text"
-                    v-model="fields.ccExp"
+                    v-model="fields.ccExp.value"
                   ></b-form-input>
+                  <small v-show="fields.ccExp.error" class="has-error">
+                    {{ fields.ccExp.error }}
+                  </small>
                 </b-form-fieldset>
               </div>
               <div class="col">
@@ -59,7 +68,7 @@
                     placeholder="Please enter a name for this credit card"
                     type="text"
                     name="cc-name"
-                    v-model="fields.ccName"
+                    v-model="fields.ccName.value"
                   ></b-form-input>
                 </b-form-fieldset>
               </div>
@@ -70,17 +79,21 @@
             <div class="row">
               <div class="col">
                 <button
+                  :disabled="submitting"
                   class="btn btn-block btn-green"
                   type="submit"
-                  name="submit"
-                  @click="submitCreditCard"
+                  @click.prevent="handleSubmit"
                 >
-                  Save Credit Card
+                  <span v-show="!submitting">Save Credit Card</span>
+                  <span v-show="submitting">Submitting . . .</span>
                 </button>
+                <div v-show="submitError" class="has-error help-block">
+                  {{ submitError }}
+                </div>
               </div>
             </div>
 
-            <div class="spcaer10"></div>
+            <div class="spacer10"></div>
 
           </form>
 
@@ -92,6 +105,7 @@
 
 <script>
 import SjCryptoPaymentBtn from '@/components/Sj-Crypto-Payment-Btn';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'add-card-form',
@@ -101,9 +115,86 @@ export default {
   data () {
     return {
       fields: {
-        ccNumber: null
-      }
+        ccNumber: {
+          value: '',
+          error: ''
+        },
+        cvv: {
+          value: '',
+          error: ''
+        },
+        ccExp: {
+          value: '',
+          error: ''
+        },
+        ccName: {
+          value: '',
+          error: ''
+        }
+      },
+      submitting: false,
+      submitError: ''
     };
+  },
+
+  methods: {
+    ...mapActions([ 'addPaymentMethod' ]),
+
+    handleSubmit () {
+      const { ccNumber, cvv, ccExp } = this.fields;
+      ccNumber.error = '';
+      cvv.error = '';
+      ccExp.error = '';
+      this.submitError = '';
+
+      // Validation regexes
+      const visa = /^4[0-9]{12}(?:[0-9]{3})?$/.test(ccNumber.value);
+      const mastercard = /^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/.test(ccNumber.value);
+      const amex = /^3[47][0-9]{13}$/.test(ccNumber.value);
+      const discover = /^6(?:011|5[0-9]{2})[0-9]{12}$/.test(ccNumber.value);
+      const jcb = /^(?:2131|1800|35\d{3})\d{11}$/.test(ccNumber.value);
+      const dinersclub = /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/.test(ccNumber.value);
+      const cvvIsValid = /^([0-9]{3,4})$/.test(cvv.value);
+      const ccExpIsValidYear = /^((0[1-9])|(1[0-2]))\/((2017)|(20[1-2][0-9]))$/.test(cvv.value);
+
+      if (!ccNumber.value && !cvv.value && !ccExp.value) {
+        this.submitError = 'Please fill out all Credit Card Details';
+        setTimeout(() => {
+          this.submitError = '';
+        }, 2000);
+        return;
+      }
+
+      if (!ccNumber.value) {
+        ccNumber.error = 'No credit card number provided';
+      }
+
+      if (!visa && !mastercard && !amex && !discover && !jcb && !dinersclub) {
+        ccNumber.error = 'Enter a valid credit card number';
+      }
+
+      if (ccNumber.value.length < 16) {
+        ccNumber.error = 'Enter a valid credit card number';
+      }
+
+      if (!cvv.value) {
+        cvv.error = 'No CVV number provided';
+      }
+
+      if (!ccExp.value) {
+        ccExp.error = 'Enter an expiration date';
+      }
+
+      if (!ccExpIsValidYear) {
+        ccExp.error = 'Please enter a valid expiration date (MM/YYYY)';
+      }
+
+      if (!cvvIsValid) {
+        cvv.error = 'Please enter a valid CVV';
+      }
+
+      console.log('blah blah blah');
+    }
   }
 };
 </script>
