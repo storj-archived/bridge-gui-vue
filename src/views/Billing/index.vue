@@ -61,18 +61,6 @@ export default {
     return {
       loading: true,
       hasPaymentInfo: false,
-      // dummy data for testing rendering,
-      transactions: [{
-        id: 1,
-        created: new Date(),
-        description: 'so much transactions',
-        amount: 100000
-      }, {
-        id: 2,
-        created: new Date(),
-        description: 'fwhehjehsjdjfdkl',
-        amount: 12312312
-      }]
     };
   }
 };
