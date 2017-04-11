@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col">
         <div class="content">
-          <form @keyup="validateForm">
+          <form>
             <input type="hidden" name="utf8" value="✓">
             <input type="hidden" name="authenticity_token" value="">
 
@@ -57,6 +57,7 @@
                     name="cc-exp"
                     type="text"
                     v-model="fields.ccExp.value"
+                    @keyup="validateCCExp"
                   ></b-form-input>
                   <small v-show="fields.ccExp.error" class="has-error">
                     {{ fields.ccExp.error }}
@@ -109,7 +110,7 @@
 import SjCryptoPaymentBtn from '@/components/Sj-Crypto-Payment-Btn';
 import { mapActions } from 'vuex';
 import { debounce } from 'lodash';
-const debounceTime = 1000;
+const debounceTime = 800;
 
 export default {
   name: 'add-card-form',
@@ -164,11 +165,14 @@ export default {
       if (!visa && !mastercard && !amex && !discover && !jcb && !dinersclub) {
         ccNumber.error = 'Enter a valid credit card number';
       }
+
+      this.validateForm();
     }, debounceTime),
 
     validateCVV: debounce(function () {
       const { cvv } = this.fields;
       const cvvIsValid = /^([0-9]{3,4})$/.test(cvv.value);
+      cvv.error = '';
 
       if (!cvv.value) {
         cvv.error = 'No CVV number provided';
@@ -177,24 +181,14 @@ export default {
       if (!cvvIsValid) {
         cvv.error = 'Please enter a valid CVV';
       }
+
+      this.validateForm();
     }, debounceTime),
 
-    validateForm () {
-      const { ccNumber, cvv, ccExp } = this.fields;
-      ccNumber.error = '';
-      cvv.error = '';
-      ccExp.error = '';
-      this.submitError = '';
-
+    validateCCExp: debounce(function () {
+      const { ccExp } = this.fields;
       const ccExpIsValidYear = /^((0[1-9])|(1[0-2]))\/((2017)|(20[1-4][0-9]))$/.test(ccExp.value);
-
-      if (!ccNumber.value && !cvv.value && !ccExp.value) {
-        this.submitError = 'Please fill out all Credit Card Details';
-        setTimeout(() => {
-          this.submitError = '';
-        }, 2000);
-        return;
-      }
+      ccExp.error = '';
 
       if (!ccExp.value) {
         ccExp.error = 'Enter an expiration date';
@@ -204,15 +198,31 @@ export default {
         ccExp.error = 'Please enter a valid expiration date (MM/YYYY)';
       }
 
-      console.log('blah blah blah');
+      this.validateForm();
+    }, debounceTime),
 
-      if (!cvv.error && !ccExp.error && !ccNumber.error) {
+    validateForm () {
+      const { ccNumber, cvv, ccExp } = this.fields;
+      this.submitError = '';
+
+      if (cvv.error || ccExp.error || ccNumber.error || !cvv.value || !ccExp.value || !ccNumber.value) {
+        this.okToSubmit = false;
+      } else {
         this.okToSubmit = true;
-        return;
       }
     },
 
     handleSubmit () {
+      const { ccNumber, cvv, ccExp } = this.fields;
+
+      if (!ccNumber.value && !cvv.value && !ccExp.value) {
+        this.submitError = 'Please fill out all Credit Card Details';
+        setTimeout(() => {
+          this.submitError = '';
+        }, 2000);
+        return;
+      }
+
       if (!this.okToSubmit) {
         return console.log('not ok');
       }
