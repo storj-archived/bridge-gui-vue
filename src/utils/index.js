@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import moment from 'moment';
 
 export const sha256 = function (i) {
   return crypto.createHash('sha256').update(i).digest('hex');
@@ -68,7 +69,7 @@ export function setToTwoDecimalPlaces (num) {
   return setToTwoPlaces;
 };
 
-export function promoCodes (code) {
+export const promoCodes = function (code) {
   switch (code) {
     case 'referral-recipient':
     case 'referral-sender':
@@ -80,4 +81,39 @@ export function promoCodes (code) {
     default:
       return 'Storj';
   }
+};
+
+export const getRange = function (offset = 1, billingDate = new Date()) {
+  const format = 'YYYY-MM-DD HH:mm:ss.SSS';
+  const today = new Date();
+  const currentYearMonth = [
+    today.getUTCFullYear(),
+    // plus 1 for 0 index to 1 index conversion; minus 1 for constant previous month
+    today.getUTCMonth() // + 1 - 1
+  ];
+
+  const dateThisMonthString = (date) => {
+    return `${currentYearMonth.concat([date]).join('-')} 00:00:00.000`;
+  };
+
+  const daysInMonth = moment
+    .utc(dateThisMonthString(1), format)
+    .subtract(offset, 'month')
+    .add(1, 'month')
+    .subtract(1, 'day')
+    .date();
+
+  const startDayOfMonth = (billingDate > daysInMonth) ? daysInMonth : billingDate;
+  const startDate = moment
+    .utc(dateThisMonthString(startDayOfMonth), format)
+    .subtract(offset, 'month')
+    .valueOf();
+
+  const endDate = (moment(startDate).add('1', 'month').valueOf());
+  console.log('getRange startDate: endDate', startDate, endDate);
+
+  return {
+    startDate,
+    endDate
+  };
 };
