@@ -173,6 +173,13 @@ export default {
     },
 
     handleSubmit () {
+      this.submitting = true;
+      this.addPaymentMethod()
+        .catch((err) => {
+          this.submitting = false;
+          this.okToSubmit = false;
+          this.submitError = err.message;
+        });
     }
   }
 };
