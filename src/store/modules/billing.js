@@ -4,6 +4,7 @@ import {
   SET_DEFAULT_PAYMENT_METHOD,
   CLEAR_DEFAULT_PAYMENT_METHOD
 } from '../mutation-types';
+import errors from 'storj-service-error-types';
 
 const state = {
   credits: [{
@@ -68,11 +69,7 @@ const state = {
   }],
   // debits: [],
   // credits: [],
-  defaultPaymentMethod: {
-    id: '123',
-    merchant: 'Visa',
-    lastFour: '1234'
-  }
+  defaultPaymentMethod: {}
 };
 
 const mutations = {
@@ -99,6 +96,22 @@ const actions = {
       setTimeout(function () {
         commit(CLEAR_DEFAULT_PAYMENT_METHOD);
         console.log('hai hai hai');
+      }, 2000);
+    });
+  },
+
+  addPaymentMethod ({ commit, dispatch }) {
+    return new Promise((resolve, reject) => {
+      // const obj = {
+      //   id: 123,
+      //   merchant: 'Visa',
+      //   lastFour: '1234'
+      // };
+
+      setTimeout(function () {
+        // commit(SET_DEFAULT_PAYMENT_METHOD, obj);
+        console.log('heeelllooo');
+        reject(new errors.BadRequestError('No soup for you'));
       }, 2000);
     });
   }
