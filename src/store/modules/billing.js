@@ -1,6 +1,8 @@
 import {
   SET_CREDITS,
-  SET_DEBITS
+  SET_DEBITS,
+  SET_DEFAULT_PAYMENT_METHOD,
+  CLEAR_DEFAULT_PAYMENT_METHOD
 } from '../mutation-types';
 
 const state = {
@@ -66,7 +68,11 @@ const state = {
   }],
   // debits: [],
   // credits: [],
-  defaultPaymentMethod: {}
+  defaultPaymentMethod: {
+    id: '123',
+    merchant: 'Visa',
+    lastFour: '1234'
+  }
 };
 
 const mutations = {
@@ -76,11 +82,26 @@ const mutations = {
 
   [SET_DEBITS] (state, debits) {
     state.debits = debits;
+  },
+
+  [SET_DEFAULT_PAYMENT_METHOD] (state, method) {
+    state.defaultPaymentMethod = method;
+  },
+
+  [CLEAR_DEFAULT_PAYMENT_METHOD] (state) {
+    state.defaultPaymentMethod = {};
   }
 };
 
 const actions = {
-
+  removeCard ({ commit, dispatch }) {
+    return new Promise((resolve, reject) => {
+      setTimeout(function () {
+        commit(CLEAR_DEFAULT_PAYMENT_METHOD);
+        console.log('hai hai hai');
+      }, 2000);
+    });
+  }
 };
 
 export default {
