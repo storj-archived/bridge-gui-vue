@@ -63,9 +63,10 @@ const state = {
     created: new Date(),
     type: 'bandwidth',
     bandwidth: 123123
-  }]
+  }],
   // debits: [],
   // credits: [],
+  defaultPaymentMethod: {}
 };
 
 const mutations = {
