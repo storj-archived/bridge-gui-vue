@@ -174,7 +174,7 @@ export default {
 
     handleSubmit () {
       this.submitting = true;
-      this.addPaymentMethod(this.fields)
+      this.addPaymentMethod(this.fields, 'stripe')
         .catch((err) => {
           this.submitting = false;
           this.okToSubmit = false;
