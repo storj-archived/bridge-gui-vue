@@ -5,7 +5,7 @@ import axios from 'axios';
 import config from '../../config';
 import { fromLocalStorage } from '@/utils';
 import uuid from 'uuid/v4';
-import querystring from 'querystring';
+import qs from 'qs';
 
 /**
  * Authenticates requests sent to Billing. Only keypair authentication
@@ -68,7 +68,7 @@ class BillingClient {
 
       // Stringify according to type of request
       const payload = ['GET'].indexOf(options.method) !== -1
-        ? querystring.stringify(options.params)
+        ? qs.stringify(options.params)
         : JSON.stringify(options.json);
 
       // Create contract string in format of <METHOD>\<PATH>\n<PARAMS>
