@@ -53,6 +53,15 @@ class BillingClient {
         return reject(new errors.NotImplementedError('Method not implemented'));
       }
 
+      const nonce = uuid();
+
+      // Add nonce to either params or json
+      if (['GET'].indexOf(options.method) !== -1) {
+        options.params.__nonce = nonce;
+      } else {
+        options.json.__nonce = nonce;
+      }
+
       // Stringify according to type of request
       const payload = ['GET'].indexOf(options.method) !== -1
         ? querystring.stringify(options.params)
@@ -62,7 +71,6 @@ class BillingClient {
       const contract = [options.method, options.path, payload].join('\n');
 
       //
-      const nonce = uuid();
 
       const billingRequest = axios.create({
         baseURL: config.app.BILLING_URL,
