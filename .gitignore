@@ -18,4 +18,5 @@ gems/
 .cache
 .node-gyp
 .env
+.env.*
 yarn.lock
