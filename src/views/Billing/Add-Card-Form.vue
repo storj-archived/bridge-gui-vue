@@ -17,14 +17,13 @@
               <legend>Credit Card Details</legend>
               <div class="row">
                 <div class="col">
-                  <b-form-fieldset>
+                  <b-form-fieldset label="Card Number">
                     <b-form-input
                       class="form-control"
                       placeholder="Credit card number"
                       name="cc-number"
                       type="text"
                       v-model="fields.ccNumber.value"
-                      :state="'has-success'"
                       @keyup="isValidCCNumber"
                     ></b-form-input>
                     <small v-show="fields.ccNumber.error" class="has-error">
@@ -33,7 +32,7 @@
                   </b-form-fieldset>
                 </div>
                 <div class="col">
-                  <b-form-fieldset>
+                  <b-form-fieldset label="CVV">
                     <b-form-input
                       class="form-control"
                       placeholder="CVV"
@@ -51,10 +50,10 @@
               </div>
               <div class="row">
                 <div class="col">
-                <b-form-fieldset>
+                <b-form-fieldset label="Expiration Date (MM/YY)">
                   <b-form-input
                     class="form-control"
-                    placeholder="Expires MM / YYYY"
+                    placeholder="MM/YY"
                     name="cc-exp"
                     type="text"
                     v-model="fields.ccExp.value"
@@ -66,13 +65,14 @@
                 </b-form-fieldset>
               </div>
               <div class="col">
-                <b-form-fieldset>
+                <b-form-fieldset label="Billing Zip Code">
                   <b-form-input
                     class="form-control"
-                    placeholder="Please enter a name for this credit card"
+                    placeholder="Billing zip code"
                     type="text"
-                    name="cc-name"
-                    v-model="fields.ccName.value"
+                    name="zip-code"
+                    v-model="fields.zip.value"
+                    @keyup="validateForm"
                   ></b-form-input>
                 </b-form-fieldset>
               </div>
@@ -127,22 +127,11 @@ export default {
   data () {
     return {
       fields: {
-        ccNumber: {
-          value: '',
-          error: ''
-        },
-        cvv: {
-          value: '',
-          error: ''
-        },
-        ccExp: {
-          value: '',
-          error: ''
-        },
-        ccName: {
-          value: '',
-          error: ''
-        }
+        ccNumber: { value: '', error: '' },
+        cvv: { value: '', error: '' },
+        ccExp: { value: '', error: '' },
+        ccName: { value: '', error: '' },
+        zip: { value: '' }
       },
       submitting: false,
       submitError: '',
