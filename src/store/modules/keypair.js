@@ -2,7 +2,8 @@
 
 import {
   SET_PRIVATE_KEY,
-  CLEAR_PRIVATE_KEY
+  SET_PUBLIC_KEY,
+  CLEAR_KEYS
 } from '@/store/mutation-types';
 // import config from '../../../config';
 import errors from 'storj-service-error-types';
@@ -27,12 +28,22 @@ const mutations = {
     }
   },
 
-  [CLEAR_PRIVATE_KEY] (state) {
-    console.log('CLEAR_PRIVATE_KEY');
+  [SET_PUBLIC_KEY] (state, publicKey) {
+    state.publicKey = publicKey;
+
+    if (window && window.localStorage) {
+      window.localStorage.setItem('publicKey', publicKey);
+    }
+  },
+
+  [CLEAR_KEYS] (state) {
+    console.log('CLEAR_KEYS');
     state.privateKey = '';
+    state.publicKey = '';
 
     if (window && window.localStorage) {
       window.localStorage.removeItem('privateKey');
+      window.localStorage.removeItem('publicKey');
     }
   }
 };
@@ -49,6 +60,7 @@ const actions = {
       const keypair = storj.generateKeyPair();
 
       commit(SET_PRIVATE_KEY, keypair.getPrivateKey());
+      commit(SET_PUBLIC_KEY, keypair.getPublicKey());
 
       return resolve(keypair);
     });
@@ -83,19 +95,18 @@ const actions = {
     return new Promise((resolve, reject) => {
       console.log('unregisterKey');
       const privateKey = window.localStorage.getItem('privateKey');
+      const publicKey = window.localStorage.getItem('publicKey');
 
-      if (!privateKey) {
+      if (!privateKey || !publicKey) {
         return resolve();
       }
-      // Regenerate public key from stored private key
-      const keypair = storj.generateKeyPair(privateKey);
 
-      storj.removeKey(keypair.getPublicKey(), function (err) {
+      storj.removeKey(publicKey, function (err) {
         if (err) {
           return reject(new errors.InternalError(err.message));
         }
         console.log('Removing private key');
-        commit(CLEAR_PRIVATE_KEY);
+        commit(CLEAR_KEYS);
         return resolve('Private key removed');
       });
     });
