@@ -5,7 +5,6 @@ import {
   SET_PUBLIC_KEY,
   CLEAR_KEYS
 } from '@/store/mutation-types';
-// import config from '../../../config';
 import errors from 'storj-service-error-types';
 import Promise from 'bluebird';
 
