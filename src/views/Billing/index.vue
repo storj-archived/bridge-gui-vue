@@ -1,10 +1,8 @@
 <template>
   <section class="billing">
-    <div v-if="loading" class="col">
+    <div v-if="loading" class="container">
       <div class="row">
-        <div class="col">
-          <Sj-Loading class="loading"></Sj-Loading>
-        </div>
+        <Sj-Loading class="loading"></Sj-Loading>
       </div>
     </div>
 
