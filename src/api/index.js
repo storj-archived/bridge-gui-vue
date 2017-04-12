@@ -39,20 +39,24 @@ class BillingClient {
 
     return new Promise((resolve, reject) => {
       const privateKey = fromLocalStorage('privateKey');
-      const publicKey = fromLocalStorage('publicKey');
 
       if (!privateKey) {
         return reject(new errors.BadRequestError('Private key required'));
-      }
-
-      if (!publicKey) {
-        return reject(new errors.BadRequestError('Public key required'));
       }
 
       if (implementedMethods.indexOf(options.method) === -1) {
         return reject(new errors.NotImplementedError('Method not implemented'));
       }
 
+      // Create Storj instance to get access to generate keys and sign message
+      const storj = new Storj({
+        bridge: config.app.BRIDGE_URL,
+        key: privateKey
+      });
+      const keypair = storj.generateKeyPair(privateKey);
+      const publicKey = storj.getPublicKey();
+
+      // Nonce for signing
       const nonce = uuid();
 
       // Add nonce to either params or json
@@ -70,19 +74,18 @@ class BillingClient {
       // Create contract string in format of <METHOD>\<PATH>\n<PARAMS>
       const contract = [options.method, options.path, payload].join('\n');
 
-      //
+      // Sign contract with keypair
+      const signedContract = keypair.sign(contract);
 
+      // Create
       const billingRequest = axios.create({
         baseURL: config.app.BILLING_URL,
         headers: {
-          'x-pubkey': fromLocalStorage('publicKey')
+          'x-pubkey': publicKey,
+          'x-signature': signedContract
         }
-      })
-
-      const storj = new Storj({
-        bridge: config.app.BRIDGE_URL,
-        key: privateKey
       });
+
     });
   }
 }
