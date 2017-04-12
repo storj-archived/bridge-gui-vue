@@ -64,7 +64,7 @@
                 </b-form-fieldset>
               </div>
               <div class="col">
-                <b-form-fieldset label="Billing Zip Code">
+                <b-form-fieldset label="Zip / Postal Code">
                   <b-form-input
                     class="form-control"
                     placeholder="Billing zip code"
