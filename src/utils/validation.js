@@ -128,7 +128,8 @@ export function validateCVV (cvv) {
  * @returns {Object}
  */
 export function validateCCExp (ccExp) {
-  const ccExpIsValidYear = /^((0[1-9])|(1[0-2]))\/((2017)|(20[1-4][0-9]))$/.test(ccExp.value);
+  const ccExpIsValidYear =
+    /^(?:0?[1-9]|1[0-2])*\/*[1-9][0-9]$/.test(ccExp.value);
   ccExp.error = '';
 
   if (!ccExp.value) {
@@ -136,7 +137,7 @@ export function validateCCExp (ccExp) {
   }
 
   if (!ccExpIsValidYear) {
-    ccExp.error = 'Please enter a valid expiration date (MM/YYYY)';
+    ccExp.error = 'Please enter a valid expiration date (MM/YY)';
   }
 
   return ccExp;
@@ -148,9 +149,10 @@ export function validateCCExp (ccExp) {
  * @returns {Boolean}
  */
 export function validateCCForm (fields) {
-  const { ccNumber, cvv, ccExp } = fields;
+  const { ccNumber, cvv, ccExp, zip } = fields;
 
-  if (cvv.error || ccExp.error || ccNumber.error || !cvv.value || !ccExp.value || !ccNumber.value) {
+  if (cvv.error || ccExp.error || ccNumber.error || !cvv.value ||
+     !ccExp.value || !ccNumber.value || !zip.value) {
     return false;
   }
 
