@@ -101,24 +101,24 @@ export function validateCCNumber (ccNumber) {
 }
 
 /**
- * Validates CVV
- * @param {String} cvv.error
- * @param {String} cvv.value
+ * Validates CVC
+ * @param {String} cvc.error
+ * @param {String} cvc.value
  * @returns {Object}
  */
-export function validateCVV (cvv) {
-  const cvvIsValid = /^([0-9]{3,4})$/.test(cvv.value);
-  cvv.error = '';
+export function validateCVC (cvc) {
+  const cvcIsValid = /^([0-9]{3,4})$/.test(cvc.value);
+  cvc.error = '';
 
-  if (!cvv.value) {
-    return cvv;
+  if (!cvc.value) {
+    return cvc;
   }
 
-  if (!cvvIsValid) {
-    cvv.error = 'Please enter a valid CVV';
+  if (!cvcIsValid) {
+    cvc.error = 'Please enter a valid CVC';
   }
 
-  return cvv;
+  return cvc;
 }
 
 /**
@@ -149,9 +149,9 @@ export function validateCCExp (ccExp) {
  * @returns {Boolean}
  */
 export function validateCCForm (fields) {
-  const { ccNumber, cvv, ccExp, zip } = fields;
+  const { ccNumber, cvc, ccExp, zip } = fields;
 
-  if (cvv.error || ccExp.error || ccNumber.error || !cvv.value ||
+  if (cvc.error || ccExp.error || ccNumber.error || !cvc.value ||
      !ccExp.value || !ccNumber.value || !zip.value) {
     return false;
   }

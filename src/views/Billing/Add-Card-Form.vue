@@ -32,18 +32,17 @@
                   </b-form-fieldset>
                 </div>
                 <div class="col">
-                  <b-form-fieldset label="CVV">
+                  <b-form-fieldset label="CVC">
                     <b-form-input
                       class="form-control"
-                      placeholder="CVV"
+                      placeholder="CVC"
                       name="cc-cvc"
                       type="text"
-                      autoComplete="cc-csc"
-                      v-model="fields.cvv.value"
-                      @keyup="isValidCVV"
+                      v-model="fields.cvc.value"
+                      @keyup="isValidCVC"
                     ></b-form-input>
-                    <small v-show="fields.cvv.error" class="has-error">
-                      {{ fields.cvv.error }}
+                    <small v-show="fields.cvc.error" class="has-error">
+                      {{ fields.cvc.error }}
                     </small>
                   </b-form-fieldset>
                 </div>
@@ -112,7 +111,7 @@ import SjCryptoPaymentBtn from '@/components/Sj-Crypto-Payment-Btn';
 import {
   validateCCNumber,
   validateCCForm,
-  validateCVV,
+  validateCVC,
   validateCCExp
 } from '@/utils/validation';
 import { mapActions } from 'vuex';
@@ -128,7 +127,7 @@ export default {
     return {
       fields: {
         ccNumber: { value: '', error: '' },
-        cvv: { value: '', error: '' },
+        cvc: { value: '', error: '' },
         ccExp: { value: '', error: '' },
         ccName: { value: '', error: '' },
         zip: { value: '' }
@@ -147,8 +146,8 @@ export default {
       this.validateForm();
     }, debounceTime),
 
-    isValidCVV: debounce(function () {
-      this.fields.cvv = validateCVV(this.fields.cvv);
+    isValidCVC: debounce(function () {
+      this.fields.cvc = validateCVC(this.fields.cvc);
       this.validateForm();
     }, debounceTime),
 
