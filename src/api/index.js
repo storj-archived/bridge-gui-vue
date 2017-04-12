@@ -7,13 +7,6 @@ import { fromLocalStorage } from '@/utils';
 import uuid from 'uuid/v4';
 import querystring from 'querystring';
 
-const billingRequest = axios.create({
-  baseURL: config.app.BILLING_URL,
-  headers: {
-    'x-pubkey': fromLocalStorage('publicKey')
-  }
-})
-
 /**
  * Authenticates requests sent to Billing. Only keypair authentication
  * is currently allowed
@@ -49,7 +42,11 @@ class BillingClient {
       const publicKey = fromLocalStorage('publicKey');
 
       if (!privateKey) {
-        return reject(new errors.NotAuthorizedError('Private key required'));
+        return reject(new errors.BadRequestError('Private key required'));
+      }
+
+      if (!publicKey) {
+        return reject(new errors.BadRequestError('Public key required'));
       }
 
       if (implementedMethods.indexOf(options.method) === -1) {
@@ -64,12 +61,20 @@ class BillingClient {
       // Create contract string in format of <METHOD>\<PATH>\n<PARAMS>
       const contract = [options.method, options.path, payload].join('\n');
 
+      //
+      const nonce = uuid();
+
+      const billingRequest = axios.create({
+        baseURL: config.app.BILLING_URL,
+        headers: {
+          'x-pubkey': fromLocalStorage('publicKey')
+        }
+      })
+
       const storj = new Storj({
         bridge: config.app.BRIDGE_URL,
         key: privateKey
       });
-      const nonce = uuid();
-      const contract = [method, path, payload].join('\n');
     });
   }
 }
