@@ -5,7 +5,7 @@ export const SET_AUTHENTICATION = 'SET_AUTHENTICATION';
 
 export const SET_PRIVATE_KEY = 'SET_PRIVATE_KEY';
 export const SET_PUBLIC_KEY = 'SET_PUBLIC_KEY';
-export const CLEAR_PRIVATE_KEY = 'CLEAR_PRIVATE_KEY';
+export const CLEAR_KEYS = 'CLEAR_KEYS';
 
 export const CREATE_KEY_PAIR = 'CREATE_KEY_PAIR';
 
