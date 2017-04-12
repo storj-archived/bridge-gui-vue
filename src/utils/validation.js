@@ -122,7 +122,7 @@ export function validateCVC (cvc) {
 }
 
 /**
- * Validates CC Expiration
+ * Validates CC Expiration in MM/YY format
  * @param {String} ccExp.error
  * @param {String} ccExp.value
  * @returns {Object}
