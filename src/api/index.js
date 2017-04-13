@@ -92,7 +92,7 @@ class BillingClient {
         }
       })
       .then((result) => resolve(result))
-      .catch((err) =< reject(err));
+      .catch((err) => reject(err));
     });
   }
 }
