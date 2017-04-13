@@ -96,3 +96,7 @@ class BillingClient {
     });
   }
 }
+
+const billingClient = new BillingClient();
+
+export default billingClient;
