@@ -33,9 +33,6 @@ import Promise from 'bluebird';
  * Reference: https://github.com/Storj/bridge/blob/master/doc/auth.md
  */
 class BillingClient {
-  constructor () {
-  }
-
   request(options) {
     const implementedMethods = ['GET', 'PUT', 'POST'];
 
@@ -50,7 +47,7 @@ class BillingClient {
         return reject(new errors.NotImplementedError('Method not implemented'));
       }
 
-      const isGet = ['GET'].indexOf(options.method) !== -1 ? true : false;
+      const isGet = ['GET'].indexOf(options.method) !== -1 || false;
       // Create Storj instance to get access to generate keys and sign message
       const storj = new Storj({
         bridge: config.app.BRIDGE_URL,
