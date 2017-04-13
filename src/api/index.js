@@ -29,6 +29,7 @@ import qs from 'qs';
  *    json: { user: '', type: '' }
  *  })
  *
+ * Reference: https://github.com/Storj/bridge/blob/master/doc/auth.md
  */
 class BillingClient {
   constructor () {
@@ -48,6 +49,7 @@ class BillingClient {
         return reject(new errors.NotImplementedError('Method not implemented'));
       }
 
+      const isGet = ['GET'].indexOf(options.method) !== -1 ? true : false;
       // Create Storj instance to get access to generate keys and sign message
       const storj = new Storj({
         bridge: config.app.BRIDGE_URL,
@@ -59,15 +61,15 @@ class BillingClient {
       // Nonce for signing
       const nonce = uuid();
 
-      // Add nonce to either params or json
-      if (['GET'].indexOf(options.method) !== -1) {
+      // Add nonce to either params or json depending on type of request
+      if (isGet) {
         options.params.__nonce = nonce;
       } else {
         options.json.__nonce = nonce;
       }
 
       // Stringify according to type of request
-      const payload = ['GET'].indexOf(options.method) !== -1
+      const payload = isGet
         ? qs.stringify(options.params)
         : JSON.stringify(options.json);
 
@@ -77,15 +79,20 @@ class BillingClient {
       // Sign contract with keypair
       const signedContract = keypair.sign(contract);
 
-      // Create
-      const billingRequest = axios.create({
-        baseURL: config.app.BILLING_URL,
+      // Make request to Billing
+      const dataType = isGet ? 'params' : 'data';
+
+      return axios({
+        method: options.method.toLowerCase(),
+        url: config.app.BILLING_URL + options.path,
+        [dataType]: isGet ? options.params : options.json,
         headers: {
           'x-pubkey': publicKey,
           'x-signature': signedContract
         }
-      });
-
+      })
+      .then((result) => resolve(result))
+      .catch((err) =< reject(err));
     });
   }
 }
