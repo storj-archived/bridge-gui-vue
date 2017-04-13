@@ -34,7 +34,7 @@ import errors from 'storj-service-error-types';
  * Reference: https://github.com/Storj/bridge/blob/master/doc/auth.md
  */
 class BillingClient {
-  request(options) {
+  request (options) {
     const implementedMethods = ['GET', 'PUT', 'POST'];
 
     return new Promise((resolve, reject) => {
