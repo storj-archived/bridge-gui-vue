@@ -7,6 +7,7 @@ import { fromLocalStorage } from '@/utils';
 import uuid from 'uuid/v4';
 import qs from 'qs';
 import Promise from 'bluebird';
+import errors from 'storj-service-error-types';
 
 /**
  * Authenticates requests sent to Billing. Only keypair authentication
