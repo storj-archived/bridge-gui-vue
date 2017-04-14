@@ -89,11 +89,13 @@ export const promoCodes = function (code) {
  * @returns {String} prettified amount e.g. -$10.00, $12.00
  */
 export const formatAmount = function (amount) {
+  const newAmount = Math.round(amount) / 100;
+
   if (amount < 0) {
-    return `-$${(amount / 100).toFixed(2).substr(1)}`;
+    return `-$${newAmount.toFixed(2).substr(1)}`;
   }
 
-  return `$${(amount / 100).toFixed(2)}`;
+  return `$${(newAmount).toFixed(2)}`;
 };
 
 export const getRange = function (offset = 1, billingDate = new Date()) {
