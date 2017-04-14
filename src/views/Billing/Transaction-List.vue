@@ -99,7 +99,7 @@ export default {
         } else {
           adjustment = formatAmount(debit.amount);
         }
-        console.log('debit', debit.amount);
+
         const transaction = {...debit};
         transaction.amount = debit.amount;
         transaction.description = amountUsed
@@ -120,7 +120,11 @@ export default {
           return transaction;
         });
 
-      temp = [...convertedCredits, ...convertedDebits, ...convertedPromoCredits];
+      temp = [
+        ...convertedCredits,
+        ...convertedDebits,
+        ...convertedPromoCredits
+      ];
 
       this.transactions = temp.sort((t1, t2) => (t2.timestamp - t1.timestamp));
     }
