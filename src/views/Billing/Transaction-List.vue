@@ -8,7 +8,12 @@
     <div class="row">
       <div class="col">
         <div class="table-response content">
-          <table class="table table-hover">
+
+          <div v-if="!transactions.length" class="text-center">
+            No billing history
+          </div>
+
+          <table v-else class="table table-hover">
             <thead>
               <tr>
                 <th>Date</th>
@@ -94,8 +99,9 @@ export default {
         } else {
           adjustment = formatAmount(debit.amount);
         }
-
+        console.log('debit', debit.amount);
         const transaction = {...debit};
+        transaction.amount = debit.amount;
         transaction.description = amountUsed
           ? `${amountUsed} GB of ${debit.type} used`
           : `Adjustment of ${adjustment}`;
