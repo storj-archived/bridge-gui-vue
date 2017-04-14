@@ -78,6 +78,14 @@ const actions = {
     });
   },
 
+  getDebits ({ commit, dispatch }, params) {
+    return new Promise((resolve, reject) => {
+      return billingClient.request('GET', '/debits', params)
+        .then((res) => resolve(commit(SET_DEBITS, res.data)))
+        .catch((err) => reject(err));
+    });
+  },
+
   removeCard ({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
       setTimeout(function () {
