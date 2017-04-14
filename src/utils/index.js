@@ -83,6 +83,19 @@ export const promoCodes = function (code) {
   }
 };
 
+/**
+ * Formats from cents to dollars
+ * @param {Number} amount - amount in cents (1000, 2000, 150)
+ * @returns {String} prettified amount e.g. -$10.00, $12.00
+ */
+export const formatAmount = function (amount) {
+  if (amount < 0) {
+    return `-$${(amount / 100).toFixed(2).substr(1)}`;
+  }
+
+  return `$${(amount / 100).toFixed(2)}`;
+};
+
 export const getRange = function (offset = 1, billingDate = new Date()) {
   const format = 'YYYY-MM-DD HH:mm:ss.SSS';
   const today = new Date();
