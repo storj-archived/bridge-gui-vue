@@ -38,7 +38,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { roundToGBAmount, promoCodes } from '@/utils';
+import { roundToGBAmount, promoCodes, formatAmount } from '@/utils';
 import moment from 'moment';
 
 export default {
@@ -83,6 +83,7 @@ export default {
 
       const convertedDebits = this.debits.map((debit) => {
         let amountUsed;
+        let adjustment;
 
         /**
          * This check is here to control for any 'adjustment' types
@@ -90,12 +91,14 @@ export default {
          */
         if (debit.type === 'storage' || debit.type === 'bandwidth') {
           amountUsed = roundToGBAmount(debit[debit.type], 'bytes');
+        } else {
+          adjustment = formatAmount(debit.amount);
         }
 
         const transaction = {...debit};
         transaction.description = amountUsed
           ? `${amountUsed} GB of ${debit.type} used`
-          : `Adjustment of ${debit.amount}`;
+          : `Adjustment of ${adjustment}`;
         transaction.timestamp = Date.parse(debit.created);
         return transaction;
       });
