@@ -10,44 +10,7 @@ import billingClient from '@/api/billing-client';
 
 const state = {
   credits: [],
-  debits: [{
-    id: 1,
-    amount: 1000,
-    user: 'a@a.com',
-    created: new Date(),
-    type: 'storage',
-    bandwidth: 0,
-    storage: 1920321
-  }, {
-    id: 2,
-    amount: 2000,
-    user: 'a@a.com',
-    created: new Date(),
-    type: 'storage',
-    bandwidth: 0,
-    storage: 10321
-  }, {
-    id: 3,
-    amount: 1000,
-    user: 'a@a.com',
-    created: new Date(),
-    type: 'bandwidth',
-    bandwidth: 123123
-  }, {
-    id: 4,
-    amount: 1121,
-    user: 'a@a.com',
-    created: new Date(),
-    type: 'adjustment'
-  }, {
-    id: 5,
-    amount: -121,
-    user: 'a@a.com',
-    created: new Date(),
-    type: 'adjustment'
-  }],
-  // debits: [],
-  // credits: [],
+  debits: [],
   defaultPaymentMethod: {}
 };
 
