@@ -12,29 +12,17 @@ import errors from 'storj-service-error-types';
 /**
  * Authenticates requests sent to Billing. Only keypair authentication
  * is currently allowed
- * @params {Object} options - Options parameter passed to request
- * @params {String} options.method - HTTP method ('GET', 'POST', 'PUT')
- * @params {String} options.path - Path for HTTP request
- * @params {Object} options.params - for 'GET' requests
- * @params {Object} options.json - for 'POST' and 'PUT' requests
+ * @params {String} method - HTTP method ('GET', 'POST', 'PUT')
+ * @params {String} path - Path for HTTP request
+ * @params {Object} params - data for requests
  *
  * Example usage:
- *  billingClient.request({
- *    method: 'GET',
- *    path: '/credits/dateRange',
- *    params: { startDate: '', endDate: '' }
- *  })
- *
- *  billingClient.request({
- *    method: 'POST',
- *    path: '/credits/create',
- *    json: { user: '', type: '' }
- *  })
+ *  billingClient.request('GET', '/credits/test')
  *
  * Reference: https://github.com/Storj/bridge/blob/master/doc/auth.md
  */
 class BillingClient {
-  request (options) {
+  request (method, path, params = {}) {
     const implementedMethods = ['GET', 'PUT', 'POST'];
 
     return new Promise((resolve, reject) => {
@@ -44,54 +32,50 @@ class BillingClient {
         return reject(new errors.BadRequestError('Private key required'));
       }
 
-      if (implementedMethods.indexOf(options.method) === -1) {
+      if (implementedMethods.indexOf(method) === -1) {
         return reject(new errors.NotImplementedError('Method not implemented'));
       }
 
-      const isGet = ['GET'].indexOf(options.method) !== -1 || false;
+      const isGet = ['GET'].indexOf(method) !== -1 || false;
       // Create Storj instance to get access to generate keys and sign message
       const storj = new Storj({
         bridge: config.app.BRIDGE_URL,
         key: privateKey
       });
+
       const keypair = storj.generateKeyPair(privateKey);
-      const publicKey = storj.getPublicKey();
+      const publicKey = keypair.getPublicKey();
 
       // Nonce for signing
       const nonce = uuid();
-
-      // Add nonce to either params or json depending on type of request
-      if (isGet) {
-        options.params.__nonce = nonce;
-      } else {
-        options.json.__nonce = nonce;
-      }
+      params.__nonce = nonce;
 
       // Stringify according to type of request
-      const payload = isGet
-        ? qs.stringify(options.params)
-        : JSON.stringify(options.json);
+      const payload = isGet ? qs.stringify(params) : JSON.stringify(params);
 
       // Create contract string in format of <METHOD>\<PATH>\n<PARAMS>
-      const contract = [options.method, options.path, payload].join('\n');
+      const contract = [method, path, payload].join('\n');
 
       // Sign contract with keypair
-      const signedContract = keypair.sign(contract);
+      const signedContract = keypair.sign(contract, { compact: false });
 
       // Make request to Billing
       const dataType = isGet ? 'params' : 'data';
 
-      return axios({
-        method: options.method.toLowerCase(),
-        url: config.app.BILLING_URL + options.path,
-        [dataType]: isGet ? options.params : options.json,
+      const opts = {
+        method: method.toLowerCase(),
+        url: config.app.BILLING_URL + path,
+        [dataType]: params,
         headers: {
           'x-pubkey': publicKey,
           'x-signature': signedContract
         }
-      })
-      .then((result) => resolve(result))
-      .catch((err) => reject(err));
+      };
+
+      console.log(opts);
+      return axios(opts)
+        .then((result) => resolve(result))
+        .catch((err) => reject(err));
     });
   }
 }
