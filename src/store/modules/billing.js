@@ -5,44 +5,11 @@ import {
   CLEAR_DEFAULT_PAYMENT_METHOD
 } from '../mutation-types';
 import errors from 'storj-service-error-types';
+import { createStripeToken } from '@/vendors/stripe';
+import billingClient from '@/api/billing-client';
 
 const state = {
-  credits: [{
-    id: 1,
-    paid_amount: 1000,
-    invoiced_amount: 1000,
-    created: new Date(),
-    user: 'a@a.com',
-    paid: true,
-    payment_processor: 'stripe',
-    type: 'automatic'
-  }, {
-    id: 2,
-    paid_amount: 0,
-    invoiced_amount: 1000,
-    created: new Date(),
-    user: 'a@a.com',
-    paid: false,
-    payment_processor: 'stripe',
-    type: 'automatic'
-  },
-  {
-    id: 3,
-    paid_amount: 2000,
-    invoiced_amount: 2000,
-    created: new Date(),
-    user: 'a@a.com',
-    paid: true,
-    payment_processor: 'stripe',
-    type: 'automatic'
-  }, {
-    id: 4,
-    promo_code: 'referral-recipient',
-    promo_amount: 1000,
-    promo_expires: new Date(),
-    created: new Date(),
-    type: 'automatic'
-  }],
+  credits: [],
   debits: [{
     id: 1,
     amount: 1000,
@@ -66,6 +33,18 @@ const state = {
     created: new Date(),
     type: 'bandwidth',
     bandwidth: 123123
+  }, {
+    id: 4,
+    amount: 1121,
+    user: 'a@a.com',
+    created: new Date(),
+    type: 'adjustment'
+  }, {
+    id: 5,
+    amount: -121,
+    user: 'a@a.com',
+    created: new Date(),
+    type: 'adjustment'
   }],
   // debits: [],
   // credits: [],
@@ -91,6 +70,14 @@ const mutations = {
 };
 
 const actions = {
+  getCredits ({ commit, dispatch }, params) {
+    return new Promise((resolve, reject) => {
+      return billingClient.request('GET', '/credits', params)
+        .then((res) => resolve(commit(SET_CREDITS, res.data)))
+        .catch((err) => reject(err));
+    });
+  },
+
   removeCard ({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
       setTimeout(function () {
@@ -100,14 +87,21 @@ const actions = {
     });
   },
 
-  addPaymentMethod ({ commit, dispatch }, fields) {
+  addPaymentMethod ({ commit, dispatch }, fields, processor) {
     return new Promise((resolve, reject) => {
-      // const obj = {
-      //   id: 123,
-      //   merchant: 'Visa',
-      //   lastFour: '1234'
-      // };
-
+      createStripeToken(fields)
+        .then(() => {
+          console.log('okdoaisdjfklas;flsdkfjsd');
+        });
+      // if (processor === 'stripe') {
+      //   dispatch('createStripeToken')
+        // .then((token) => {
+        //   storjAxios.addPaymentMethod(JSON.stringify(token)), 'stripe')
+        //     .then((result) => {
+        //       commit(SET_DEFAULT_PAYMENT_METHOD, result.defaultPaymentMethod);
+        //     })
+        //     .catch((err) => reject(err));
+        // }
       setTimeout(function () {
         // commit(SET_DEFAULT_PAYMENT_METHOD, obj);
         console.log('heeelllooo');
