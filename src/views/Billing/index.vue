@@ -36,7 +36,8 @@ import UsagePanel from '@/views/Billing/Usage-Panel';
 import TransactionList from '@/views/Billing/Transaction-List';
 import AddCardForm from '@/views/Billing/Add-Card-Form';
 import SjLoading from '@/components/Sj-Loading';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
+import Promise from 'bluebird';
 
 export default {
   name: 'billing',
@@ -51,9 +52,15 @@ export default {
   },
 
   created () {
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
+    Promise.join(
+      this.getCredits(),
+      () => {
+        this.loading = false;
+      }
+    );
+    // this.getPaymentProcessor
+    // ranges = utils.getRanges(ppBillingDate);
+    // this.getTransactions(ranges)
   },
 
   data () {
@@ -64,7 +71,11 @@ export default {
 
   computed: mapState({
     hasPaymentMethod: state => state.billing.defaultPaymentMethod.id
-  })
+  }),
+
+  methods: {
+    ...mapActions([ 'getCredits' ])
+  }
 };
 </script>
 
