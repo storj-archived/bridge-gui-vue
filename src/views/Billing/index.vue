@@ -52,10 +52,12 @@ export default {
   },
 
   created () {
+    const self = this;
     Promise.join(
-      this.getCredits(),
-      () => {
-        this.loading = false;
+      self.getCredits(),
+      self.getDebits(),
+      function () {
+        self.loading = false;
       }
     );
     // this.getPaymentProcessor
@@ -74,7 +76,7 @@ export default {
   }),
 
   methods: {
-    ...mapActions([ 'getCredits' ])
+    ...mapActions([ 'getCredits', 'getDebits' ])
   }
 };
 </script>
