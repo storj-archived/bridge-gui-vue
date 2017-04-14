@@ -40,6 +40,6 @@ module.exports = {
     BRIDGE_URL: process.env.NODE_ENV === 'development'
       ? 'http://localhost:6382' : 'https://api.storj.io',
     BILLING_URL: process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000/graphql' : ''
+      ? 'http://localhost:3000' : process.env.APOLLO_CLIENT_URL
   }
 }
