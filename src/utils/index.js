@@ -116,7 +116,9 @@ export const getRange = function (offset = 1, billingDate = new Date()) {
     .subtract(1, 'day')
     .date();
 
-  const startDayOfMonth = (billingDate > daysInMonth) ? daysInMonth : billingDate;
+  const startDayOfMonth = (billingDate > daysInMonth)
+    ? daysInMonth
+    : billingDate;
   const startDate = moment
     .utc(dateThisMonthString(startDayOfMonth), format)
     .subtract(offset, 'month')
