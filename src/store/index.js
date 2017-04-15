@@ -7,6 +7,7 @@ import keypair from './modules/keypair';
 import buckets from './modules/buckets';
 import auth from './modules/auth';
 import billing from './modules/billing';
+import marketing from './modules/marketing';
 
 Vue.use(Vuex);
 
@@ -20,7 +21,8 @@ export default new Vuex.Store({
     user,
     keypair,
     buckets,
-    billing
+    billing,
+    marketing
   },
   strict: debug,
   plugins: []
