@@ -17,6 +17,7 @@
 import ReferralInfo from './Referral-Info';
 import ReferralEmail from './Referral-Email';
 import ReferralLink from './Referral-Link';
+import { mapState } from 'vuex';
 
 export default {
   name: 'referrals',
@@ -25,8 +26,13 @@ export default {
 
   data () {
     return {
-      referralLink: 'haiha-hai'
     };
+  },
+
+  computed: {
+    ...mapState({
+      referralLink: state => state.marketing.referralLink
+    })
   }
 };
 </script>
