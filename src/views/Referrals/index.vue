@@ -1,6 +1,10 @@
 <template lang="html">
-  <section class="referrals container">
-    <div class="row justify-content-center">
+  <section class="referrals">
+    <div v-if="loading" class="row">
+      <Sj-Loading></Sj-Loading>
+    </div>
+
+    <div v-else class="container justify-content-center">
 
       <Referral-Info></Referral-Info>
 
@@ -14,18 +18,30 @@
 </template>
 
 <script>
+import SjLoading from '@/components/Sj-Loading';
 import ReferralInfo from './Referral-Info';
 import ReferralEmail from './Referral-Email';
 import ReferralLink from './Referral-Link';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'referrals',
 
-  components: { ReferralInfo, ReferralEmail, ReferralLink },
+  components: { ReferralInfo, ReferralEmail, ReferralLink, SjLoading },
+
+  created () {
+    if (!this.referralLink) {
+      this.getMarketing().then(() => {
+        this.loading = false;
+      });
+    } else {
+      this.loading = false;
+    }
+  },
 
   data () {
     return {
+      loading: true
     };
   },
 
@@ -33,6 +49,10 @@ export default {
     ...mapState({
       referralLink: state => state.marketing.referralLink
     })
+  },
+
+  methods: {
+    ...mapActions([ 'getMarketing' ])
   }
 };
 </script>
