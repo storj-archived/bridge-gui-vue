@@ -52,14 +52,7 @@ export default {
   },
 
   created () {
-    const self = this;
-    Promise.join(
-      self.getCredits(),
-      self.getDebits(),
-      function () {
-        self.loading = false;
-      }
-    );
+    this.loadBillingData();
     // this.getPaymentProcessor
     // ranges = utils.getRanges(ppBillingDate);
     // this.getTransactions(ranges)
@@ -72,11 +65,28 @@ export default {
   },
 
   computed: mapState({
-    hasPaymentMethod: state => state.billing.defaultPaymentMethod.id
+    hasPaymentMethod: state => state.billing.defaultPaymentMethod.id,
+    retrieved: state => state.billing.retrieved
   }),
 
   methods: {
-    ...mapActions([ 'getCredits', 'getDebits' ])
+    ...mapActions([ 'getCredits', 'getDebits' ]),
+
+    loadBillingData () {
+      const self = this;
+      if (!this.retrieved) {
+        Promise.join(
+          self.getCredits(),
+          self.getDebits(),
+          function () {
+            self.loading = false;
+            self.$store.commit('MARK_RETRIEVED');
+          }
+        );
+      } else {
+        self.loading = false;
+      }
+    }
   }
 };
 </script>
