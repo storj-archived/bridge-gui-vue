@@ -30,16 +30,24 @@
 
             <span v-show="error" class="has-error"> {{ error }} </span>
 
-            <div v-show="successes" class="successes">
-              <p>Successfully sent: {{ successes }}</p>
-              <div> X </div>
+            <div v-show="successes" class="successes col">
+              <p>
+                <span>Successfully sent:</span>
+                <span class="float-right x" @click="closeSuccesses">X</span>
+              </p>
+              <span class="text-muted">{{ successes }}</span>
             </div>
 
-            <div v-show="failures.length > 0" class="has-error failures">
-              <p>Failed to send:</p>
-              <p v-for="failure in failures">
-                {{ failure.email }}: {{ failure.message }}
+            <div v-show="failures.length > 0" class="failures">
+              <p>
+                <span class="has-error">Failed to send:</span>
+                <span class="float-right x has-error" @click="closeFailure">
+                  X
+                </span>
               </p>
+              <span v-for="failure in failures" class="text-muted">
+                {{ failure.email }}: {{ failure.message }} </br>
+              </span>
             </div>
           </div>
         </div>
@@ -61,8 +69,8 @@ export default {
       input: '',
       error: '',
       submitting: false,
-      failures: [{ email: 'a@a.com', message: 'User already invited' }, { email: 'b@b.com', message: 'Testing' }],
-      successes: 'a@a.com, b@b.com'
+      failures: [],
+      successes: ''
     };
   },
 
@@ -89,16 +97,22 @@ export default {
     }, 650),
 
     handleSubmit () {
-      console.log('handleSubmit', this.emails);
       this.submitting = false;
       if (this.emails.length > 0 && !this.error) {
         this.submitting = true;
         this.sendEmails(this.emails).then((res) => {
-          console.log('result', res);
           this.failures = res.data.failures;
           this.successes = res.data.successes.map((s) => s.email).join(', ');
         });
       }
+    },
+
+    closeFailure () {
+      this.failures = [];
+    },
+
+    closeSuccesses () {
+      this.successes = '';
     }
   }
 };
@@ -119,13 +133,24 @@ export default {
 
   .referral-email .failures {
     margin-top: 20px;
+    border-radius: 3px;
+    border: 1px solid red;
+    padding: 1.25rem;
+  }
+
+  .referral-email .failures span.x:hover, .referral-email .successes span.x:hover {
+    cursor: pointer;
+    font-weight: bold;
   }
 
   .referral-email .successes {
     margin-top: 20px;
-    color: green;
-    border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 3px;
-    padding: 1rem;
+    border: 1px solid #88C425;
+    padding: 1.25rem;
+  }
+
+  .referral-email .successes > p {
+    color: green;
   }
 </style>
