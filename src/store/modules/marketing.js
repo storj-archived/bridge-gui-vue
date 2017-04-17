@@ -13,7 +13,7 @@ const state = {
 
 const mutations = {
   [SET_MARKETING] (state, marketing) {
-    state.id = marketing.id;
+    state.id = marketing._id;
     state.user = marketing.user;
     state.referralLink = marketing.referralLink;
   }
@@ -34,10 +34,13 @@ const actions = {
 
   sendEmails ({ commit, dispatch, state }, emails, marketing) {
     return new Promise((resolve, reject) => {
-      billingClient.request('POST', '/referrals/sendReferralEmail', {
-        marketing,
-        emails
-      });
+      billingClient
+        .request('POST', '/referrals/sendReferralEmail', {
+          marketing: state,
+          emails
+        })
+        .then((res) => resolve(res))
+        .catch((err) => reject(err));
     });
   }
 };
