@@ -49,21 +49,17 @@ class BillingClient {
       // Nonce for signing
       const nonce = uuid();
       params.__nonce = nonce;
-      console.log('params', params);
 
       // Stringify according to type of request
       const payload = isGet ? qs.stringify(params) : JSON.stringify(params);
 
-      console.log('payload', payload);
       // Create contract string in format of <METHOD>\n<PATH>\n<PARAMS>
       const contract = [method, path, payload].join('\n');
-      console.log('contract', contract, typeof (contract));
 
       // Sign contract with keypair
       const signedContract = keypair.sign(contract, { compact: false });
-      console.log('signed,', signedContract);
 
-      const query = isGet ? `?${payload}` : '';
+      const query = isGet ? `?${payload}` : ``;
 
       const opts = {
         method: method.toLowerCase(),
@@ -75,7 +71,7 @@ class BillingClient {
       };
 
       if (!isGet) {
-        opts.json = params;
+        opts.data = params;
       }
 
       // Make request to Billing
