@@ -2,13 +2,15 @@ import {
   SET_CREDITS,
   SET_DEBITS,
   SET_DEFAULT_PAYMENT_METHOD,
-  CLEAR_DEFAULT_PAYMENT_METHOD
+  CLEAR_DEFAULT_PAYMENT_METHOD,
+  MARK_RETRIEVED
 } from '../mutation-types';
 import errors from 'storj-service-error-types';
 import { createStripeToken } from '@/vendors/stripe';
 import billingClient from '@/api/billing-client';
 
 const state = {
+  retrieved: false,
   credits: [],
   debits: [],
   defaultPaymentMethod: {}
@@ -29,6 +31,10 @@ const mutations = {
 
   [CLEAR_DEFAULT_PAYMENT_METHOD] (state) {
     state.defaultPaymentMethod = {};
+  },
+
+  [MARK_RETRIEVED] (state) {
+    state.retrieved = true;
   }
 };
 
