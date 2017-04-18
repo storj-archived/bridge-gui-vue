@@ -22,7 +22,7 @@ import errors from 'storj-service-error-types';
  * Reference: https://github.com/Storj/bridge/blob/master/doc/auth.md
  */
 class BillingClient {
-  request (method, path, params = {}, ) {
+  request (method, path, params = {}, credentials) {
     console.log('making request');
     const implementedMethods = ['GET', 'PUT', 'POST'];
 
@@ -33,9 +33,28 @@ class BillingClient {
         return reject(new errors.NotImplementedError('Method not implemented'));
       }
 
-      const opts = privateKey
-        ? this._ecdsa(method, path, params)
-        : this._basicAuth()
+      const isGet = ['GET'].indexOf(method) !== -1 || false;
+
+      // Nonce for signing
+      const nonce = uuid();
+      params.__nonce = nonce;
+
+      const baseOpts = {
+        baseURL: config.app.BILLING_URL,
+        method: method.toLowerCase()
+      };
+
+      if (isGet) {
+        baseOpts.qs = params;
+      } else {
+        baseOpts.data = params;
+      }
+
+      const authOpts = privateKey
+        ? this._ecdsa(method, path, params, privateKey)
+        : this._basicAuth(method, path, params, credentials);
+
+      const opts = Object.assign(baseOpts, authOpts);
 
       // Make request to Billing
       console.log(opts);
@@ -45,7 +64,7 @@ class BillingClient {
     });
   }
 
-  _ecdsa (method, path, params) {
+  _ecdsa (method, path, params, privateKey) {
     const isGet = ['GET'].indexOf(method) !== -1 || false;
     // Create Storj instance to get access to generate keys and sign message
     const storj = new Storj({
@@ -55,10 +74,6 @@ class BillingClient {
 
     const keypair = storj.generateKeyPair(privateKey);
     const publicKey = keypair.getPublicKey();
-
-    // Nonce for signing
-    const nonce = uuid();
-    params.__nonce = nonce;
 
     // Stringify according to type of request
     const payload = isGet ? qs.stringify(params) : JSON.stringify(params);
@@ -72,27 +87,30 @@ class BillingClient {
     const query = isGet ? `?${payload}` : ``;
 
     const opts = {
-      method: method.toLowerCase(),
-      url: config.app.BILLING_URL + path + query,
+      url: path + query,
       headers: {
         'x-pubkey': publicKey,
         'x-signature': signedContract
       }
     };
 
-    if (!isGet) {
-      opts.data = params;
-    }
-
     return opts;
   }
 
-  _basicAuth () {
+  _basicAuth (method, path, params, credentials) {
+    const isGet = ['GET'].indexOf(method) !== -1 || false;
 
-  }
+    const query = isGet ? `?${qs.stringify(params)}` : ``;
 
-  _prepRequest () {
+    const opts = {
+      url: path + query,
+      auth: {
+        user: credentials.email,
+        pass: credentials.password
+      }
+    };
 
+    return opts;
   }
 }
 
