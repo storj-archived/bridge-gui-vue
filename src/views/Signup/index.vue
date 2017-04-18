@@ -50,7 +50,7 @@
 
                   <div class="form-group">
                     <button
-                      :disabled="fieldsComplete"
+                      :disabled="!fieldsComplete"
                       type="submit"
                       @click.prevent="handleSubmit"
                       class="btn btn-block btn-green"
@@ -142,18 +142,23 @@ export default {
 
   computed: {
     fieldsComplete: function () {
-      return false;
-      // if (!this.email) {
-      //   return false;
-      // }
-      //
-      // if (this.initialPassword !== this.confirmPassword) {
-      //   return false;
-      // }
-      //
-      // if (!this.initialPassword) {
-      //   return false;
-      // }
+      if (!this.email) {
+        return false;
+      }
+
+      if (!this.initialPassword || !this.confirmPassword) {
+        return false;
+      }
+
+      if (this.initialPassword !== this.confirmPassword) {
+        this.error = 'Passwords do not match';
+        return false;
+      }
+
+      if (this.email && this.initialPassword === this.confirmPassword) {
+        this.error = '';
+        return true;
+      }
     }
   },
 
@@ -171,10 +176,13 @@ export default {
       this.createUser({
         email: this.email,
         password: sha256(this.initialPassword)
-      }).then((result) => {
+      }, this.$route.query.referralLink).then((result) => {
         this.signupSuccess = true;
       }).catch((err) => {
-        const message = err.message.response.data.error;
+        console.log('err', err);
+        const message = err.message.response
+          ? err.message.response.data.error
+          : err.message;
         this.error = message;
       });
     },
