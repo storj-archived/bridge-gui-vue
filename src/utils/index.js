@@ -23,12 +23,12 @@ export const fromLocalStorage = function (item) {
 
 /**
  * Sets item to localStorage
- * @param {String} name - name of item to set
+ * @param {String} item - name of item to set
  * @param {String} value - value of item to set
  */
-export const toLocalStorage = function (name, value) {
+export const toLocalStorage = function (item, value) {
   if (window && window.localStorage) {
-    window.localStorage.setItem(name, value);
+    window.localStorage.setItem(item, value);
   }
 };
 
