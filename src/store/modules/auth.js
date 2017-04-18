@@ -7,7 +7,7 @@ import {
   SET_USER,
   CLEAR_USER,
   CLEAR_KEYS,
-  CLEAR_RETRIEVED,
+  CLEAR_BILLING,
   CLEAR_MARKETING
 } from '../mutation-types';
 import config from '../../../config';
@@ -35,7 +35,7 @@ const actions = {
     commit(SET_AUTHENTICATION, false);
     commit(CLEAR_USER);
     commit(CLEAR_KEYS);
-    commit(CLEAR_RETRIEVED);
+    commit(CLEAR_BILLING);
     commit(CLEAR_MARKETING);
   },
 
