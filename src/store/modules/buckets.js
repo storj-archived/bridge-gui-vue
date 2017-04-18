@@ -5,7 +5,8 @@ import {
   SET_BUCKETS,
   ADD_BUCKET,
   SET_CURRENT_BUCKET_META,
-  SET_CURRENT_BUCKET_FILES
+  SET_CURRENT_BUCKET_FILES,
+  CLEAR_BUCKET_STATE
 } from '../mutation-types';
 
 const state = {
@@ -35,8 +36,13 @@ const mutations = {
   [SET_CURRENT_BUCKET_FILES] (state, files) {
     console.log('set current bucket files', files);
     state.current.files = files;
-  }
+  },
 
+  [CLEAR_BUCKET_STATE] (state) {
+    state.all = [];
+    state.current.meta = {};
+    state.current.files = [];
+  }
 };
 
 const actions = {
