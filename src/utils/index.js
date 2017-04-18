@@ -1,6 +1,10 @@
 import crypto from 'crypto';
 import moment from 'moment';
 
+/**
+ * Hash password
+ * @param {String} i - string to hash
+ */
 export const sha256 = function (i) {
   return crypto.createHash('sha256').update(i).digest('hex');
 };
@@ -21,10 +25,7 @@ export const getAverage = function (sum, numItems) {
   if (!sum) {
     return 0;
   }
-
-  const avg = sum / numItems;
-
-  return avg;
+  return sum / numItems;
 };
 
 export const getSum = function (arr, field) {
