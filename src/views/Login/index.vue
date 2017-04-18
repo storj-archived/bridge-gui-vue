@@ -125,17 +125,6 @@ export default {
   },
 
   created () {
-    // const privateKey = window.localStorage.getItem('privateKey');
-    // console.log('privateKey', privateKey);
-    // if (privateKey) {
-    //   this.attemptLogin = true;
-    //   this.keypairAuth(privateKey)
-    //     .then(() => this.$router.push('/dashboard'))
-    //     .catch((err) => this.handleError(err));
-    // } else {
-    //   console.log('no private key');
-    //   this.attemptLogin = false;
-    // }
     this.attemptLogin = false;
   },
 
