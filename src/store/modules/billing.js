@@ -7,6 +7,7 @@ import {
 } from '../mutation-types';
 import errors from 'storj-service-error-types';
 import { createStripeToken } from '@/vendors/stripe';
+import { fromLocalStorage } from '@/utils';
 import billingClient from '@/api/billing-client';
 
 const state = {
@@ -39,16 +40,18 @@ const mutations = {
 };
 
 const actions = {
-  getCredits ({ commit, dispatch }, params) {
+  getCredits ({ commit, dispatch }, params = {}) {
     return new Promise((resolve, reject) => {
+      params.user = fromLocalStorage('email');
       return billingClient.request('GET', '/credits', params)
         .then((res) => resolve(commit(SET_CREDITS, res.data)))
         .catch((err) => reject(err));
     });
   },
 
-  getDebits ({ commit, dispatch }, params) {
+  getDebits ({ commit, dispatch }, params = {}) {
     return new Promise((resolve, reject) => {
+      params.user = fromLocalStorage('email');
       return billingClient.request('GET', '/debits', params)
         .then((res) => resolve(commit(SET_DEBITS, res.data)))
         .catch((err) => reject(err));
