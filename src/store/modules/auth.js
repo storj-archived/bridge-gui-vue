@@ -5,7 +5,10 @@ import Promise from 'bluebird';
 import {
   SET_AUTHENTICATION,
   SET_USER,
-  CLEAR_USER
+  CLEAR_USER,
+  CLEAR_KEYS,
+  CLEAR_RETRIEVED,
+  CLEAR_MARKETING
 } from '../mutation-types';
 import config from '../../../config';
 import errors from 'storj-service-error-types';
@@ -31,37 +34,41 @@ const actions = {
   unauthenticateAll ({ commit, rootState }) {
     commit(SET_AUTHENTICATION, false);
     commit(CLEAR_USER);
+    commit(CLEAR_KEYS);
+    commit(CLEAR_RETRIEVED);
+    commit(CLEAR_MARKETING);
   },
 
   login ({ commit, dispatch }, credentials) {
     return new Promise((resolve, reject) => {
       dispatch('basicAuth', credentials).then((storj) => {
-        return dispatch('unregisterKey', storj)
+        dispatch('unregisterKey', storj)
           .then(() => dispatch('generateKeypair', storj))
-          .then((keypair) => dispatch('registerKey', {
-            publicKey: keypair.getPublicKey(),
-            storj: storj
-          }))
-          .then(() => resolve())
+          .then((keypair) => {
+            return dispatch('registerKey', {
+              publicKey: keypair.getPublicKey(),
+              storj: storj
+            })
+            .then(() => resolve())
+            .catch((err) => reject(err));
+          })
           .catch((err) => reject(err));
-      })
-      .catch((err) => reject(err));
+      });
     });
   },
 
   logout ({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
       console.log('logging out');
-      dispatch('keypairAuth').then((storj) => {
-        dispatch('unregisterKey', storj)
-        .then(() => {
-          commit(CLEAR_USER);
-          resolve();
-        })
-        .catch(() => {
-          commit(CLEAR_USER);
-          reject();
-        });
+      dispatch('keypairAuth')
+      .then((storj) => dispatch('unregisterKey', storj))
+      .then(() => {
+        dispatch('unauthenticateAll');
+        return resolve();
+      })
+      .catch(() => {
+        dispatch('unauthenticateAll');
+        return reject();
       });
     });
   },
