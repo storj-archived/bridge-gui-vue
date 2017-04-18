@@ -7,11 +7,11 @@ import {
 } from '@/store/mutation-types';
 import errors from 'storj-service-error-types';
 import Promise from 'bluebird';
+import { fromLocalStorage } from '@/utils';
 
 const state = {
-  privateKey: window && window.localStorage
-    ? window.localStorage.getItem('privateKey')
-    : ''
+  privateKey: fromLocalStorage('privateKey'),
+  publicKey: fromLocalStorage('publicKey')
 };
 
 const mutations = {
