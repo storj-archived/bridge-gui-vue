@@ -10,37 +10,52 @@ export const sha256 = function (i) {
 };
 
 /**
- * Gets items from localStorage
- * @param {String} item - name of item to retrieve
- * @returns {String}
+ * Convenience class verify localStorage exists.
+ * TODO: Consider adding polyfill...
+ *
  */
-export const fromLocalStorage = function (item) {
-  if (window && window.localStorage) {
-    return window.localStorage.getItem(item);
+class LStorage {
+  _verify () {
+    if (window && window.localStorage) {
+      return true;
+    }
+    return false;
   }
-  return '';
-};
 
-/**
- * Sets item to localStorage
- * @param {String} item - name of item to set
- * @param {String} value - value of item to set
- */
-export const toLocalStorage = function (item, value) {
-  if (window && window.localStorage) {
-    window.localStorage.setItem(item, value);
+  /**
+   * Sets item to localStorage
+   * @param {String} item - name of item to set
+   * @param {String} value - value of item to set
+   */
+  set (item, value) {
+    if (this._verify()) {
+      window.localStorage.setItem(item, value);
+    }
   }
-};
 
-/**
- * Removes an item from localStorage
- * @param {String} item - name of item to remove
- */
-export const removeFromLocalStorage = function (item) {
-  if (window && window.localStorage) {
-    window.localStorage.removeItem(item);
+  /**
+   * Gets items from localStorage
+   * @param {String} item - name of item to retrieve
+   * @returns {String}
+   */
+  get (item) {
+    if (this._verify()) {
+      window.localStorage.getItem(item);
+    }
   }
-};
+
+  /**
+   * Removes an item from localStorage
+   * @param {String} item - name of item to remove
+   */
+  remove (item) {
+    if (this._verify()) {
+      window.localStorage.removeItem(item);
+    }
+  }
+}
+
+export const lStorage = new LStorage();
 
 export const getAverage = function (sum, numItems) {
   if (!sum) {
