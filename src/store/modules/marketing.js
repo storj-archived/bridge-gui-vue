@@ -1,5 +1,6 @@
 import {
-  SET_MARKETING
+  SET_MARKETING,
+  CLEAR_MARKETING
 } from '../mutation-types';
 import Promise from 'bluebird';
 import billingClient from '@/api/billing-client';
@@ -16,6 +17,12 @@ const mutations = {
     state.id = marketing._id;
     state.user = marketing.user;
     state.referralLink = marketing.referralLink;
+  },
+
+  [CLEAR_MARKETING] (state) {
+    state.id = '';
+    state.user = '';
+    state.referralLink = '';
   }
 };
 
