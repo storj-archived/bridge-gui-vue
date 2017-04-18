@@ -22,57 +22,20 @@ import errors from 'storj-service-error-types';
  * Reference: https://github.com/Storj/bridge/blob/master/doc/auth.md
  */
 class BillingClient {
-  request (method, path, params = {}) {
+  request (method, path, params = {}, ) {
+    console.log('making request');
     const implementedMethods = ['GET', 'PUT', 'POST'];
 
     return new Promise((resolve, reject) => {
       const privateKey = fromLocalStorage('privateKey');
 
-      if (!privateKey) {
-        return reject(new errors.BadRequestError('Private key required'));
-      }
-
       if (implementedMethods.indexOf(method) === -1) {
         return reject(new errors.NotImplementedError('Method not implemented'));
       }
 
-      const isGet = ['GET'].indexOf(method) !== -1 || false;
-      // Create Storj instance to get access to generate keys and sign message
-      const storj = new Storj({
-        bridge: config.app.BRIDGE_URL,
-        key: privateKey
-      });
-
-      const keypair = storj.generateKeyPair(privateKey);
-      const publicKey = keypair.getPublicKey();
-
-      // Nonce for signing
-      const nonce = uuid();
-      params.__nonce = nonce;
-
-      // Stringify according to type of request
-      const payload = isGet ? qs.stringify(params) : JSON.stringify(params);
-
-      // Create contract string in format of <METHOD>\n<PATH>\n<PARAMS>
-      const contract = [method, path, payload].join('\n');
-
-      // Sign contract with keypair
-      const signedContract = keypair.sign(contract, { compact: false });
-
-      const query = isGet ? `?${payload}` : ``;
-
-      const opts = {
-        method: method.toLowerCase(),
-        url: config.app.BILLING_URL + path + query,
-        headers: {
-          'x-pubkey': publicKey,
-          'x-signature': signedContract
-        }
-      };
-
-      if (!isGet) {
-        opts.data = params;
-      }
+      const opts = privateKey
+        ? this._ecdsa(method, path, params)
+        : this._basicAuth()
 
       // Make request to Billing
       console.log(opts);
@@ -80,6 +43,56 @@ class BillingClient {
         .then((result) => resolve(result))
         .catch((err) => reject(err));
     });
+  }
+
+  _ecdsa (method, path, params) {
+    const isGet = ['GET'].indexOf(method) !== -1 || false;
+    // Create Storj instance to get access to generate keys and sign message
+    const storj = new Storj({
+      bridge: config.app.BRIDGE_URL,
+      key: privateKey
+    });
+
+    const keypair = storj.generateKeyPair(privateKey);
+    const publicKey = keypair.getPublicKey();
+
+    // Nonce for signing
+    const nonce = uuid();
+    params.__nonce = nonce;
+
+    // Stringify according to type of request
+    const payload = isGet ? qs.stringify(params) : JSON.stringify(params);
+
+    // Create contract string in format of <METHOD>\n<PATH>\n<PARAMS>
+    const contract = [method, path, payload].join('\n');
+
+    // Sign contract with keypair
+    const signedContract = keypair.sign(contract, { compact: false });
+
+    const query = isGet ? `?${payload}` : ``;
+
+    const opts = {
+      method: method.toLowerCase(),
+      url: config.app.BILLING_URL + path + query,
+      headers: {
+        'x-pubkey': publicKey,
+        'x-signature': signedContract
+      }
+    };
+
+    if (!isGet) {
+      opts.data = params;
+    }
+
+    return opts;
+  }
+
+  _basicAuth () {
+
+  }
+
+  _prepRequest () {
+
   }
 }
 
