@@ -21,6 +21,17 @@ export const fromLocalStorage = function (item) {
   return '';
 };
 
+/**
+ * Sets item to localStorage
+ * @param {String} name - name of item to set
+ * @param {String} value - value of item to set
+ */
+export const toLocalStorage = function (name, value) {
+  if (window && window.localStorage) {
+    return window.localStorage.setItem(name, value);
+  }
+};
+
 export const getAverage = function (sum, numItems) {
   if (!sum) {
     return 0;
