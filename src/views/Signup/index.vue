@@ -175,8 +175,9 @@ export default {
 
       this.createUser({
         email: this.email,
-        password: sha256(this.initialPassword)
-      }, this.$route.query.referralLink).then((result) => {
+        password: sha256(this.initialPassword),
+        referralLink: this.$route.query.referralLink
+      }).then((result) => {
         this.signupSuccess = true;
       }).catch((err) => {
         console.log('err', err);
