@@ -1,9 +1,18 @@
 <template lang="html">
   <div class="crypto-payment-btn">
-    <h6>
-      Interested in paying in BTC or SJCX? Contact us at
-      <a href="mailto:sales@storj.io"> sales@storj.io</a>
-    </h6>
+    <p>
+      Add credit with
+      <b-button
+        href="https://bitpay.com/cart/add?itemId=JoY55YbAiBvdiV8EZVTmAw"
+        target="_blank"
+        class="btn btn-payment">
+          <img class="btn-payment-icon-bitcoin"
+            src="//localhost:3001/static/img/icon-bitcoin.svg"
+            alt="bitcoin"
+          />
+        bitcoin
+      </b-button>
+    </p>
   </div>
 </template>
 
@@ -16,5 +25,22 @@ export default {
 <style lang="scss">
 .crypto-payment-btn {
   margin-top: 1.75rem;
+}
+
+.crypto-payment-btn .btn-payment {
+  background: #fff;
+  padding: 0.4em 0.4em;
+  letter-spacing: 0;
+  border-color: rgba(0, 0, 0, 0.10);
+}
+
+.crypto-payment-btn .btn-payment:hover {
+  border-color: transparent;
+}
+
+.btn-payment-icon-bitcoin {
+  width: 22px;
+  height: 22px;
+  margin-right: 0.3em;
 }
 </style>
