@@ -36,13 +36,18 @@ const actions = {
    */
   createUser ({ commit, state }, credentials) {
     return new Promise((resolve, reject) => {
-      console.log('ACTION: createUser', credentials);
-      axios.post(config.app.BRIDGE_URL + '/users', credentials)
+      axios
+        .post(config.app.BRIDGE_URL + '/users', credentials)
         .then((result) => {
-          if (result.status < 400) {
-            commit(SET_USER, credentials.email);
-            return resolve();
-          }
+          commit(SET_USER, credentials.email);
+
+          axios
+            .post(config.app.BILLING_URL + '/credits/signups', {
+              email: credentials.email,
+              referralLink: credentials.referralLink
+            })
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
         })
         .catch((err) => reject(new errors.InternalError(err)));
     });
