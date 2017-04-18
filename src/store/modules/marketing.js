@@ -4,7 +4,7 @@ import {
 } from '../mutation-types';
 import Promise from 'bluebird';
 import billingClient from '@/api/billing-client';
-import { fromLocalStorage } from '@/utils';
+import { lStorage } from '@/utils';
 
 const state = {
   id: '',
@@ -29,7 +29,7 @@ const mutations = {
 const actions = {
   getMarketing ({ commit }) {
     return new Promise((resolve, reject) => {
-      const user = fromLocalStorage('email');
+      const user = lStorage.get('email');
       billingClient.request('GET', '/marketing', { user })
         .then((res) => {
           commit(SET_MARKETING, res.data);

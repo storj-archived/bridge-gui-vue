@@ -13,7 +13,7 @@ import BucketFiles from '@/views/Buckets/Bucket-Files';
 import Support from '@/views/Support';
 import Billing from '@/views/Billing';
 import Referrals from '@/views/Referrals';
-import { fromLocalStorage } from '@/utils';
+import { lStorage } from '@/utils';
 
 Vue.use(Router);
 
@@ -111,7 +111,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // this route requires auth. check if authenticated
     console.log('auth');
-    const privateKey = fromLocalStorage('privateKey');
+    const privateKey = lStorage.get('privateKey');
 
     if (privateKey) {
       next();

@@ -7,11 +7,11 @@ import {
 } from '@/store/mutation-types';
 import errors from 'storj-service-error-types';
 import Promise from 'bluebird';
-import { fromLocalStorage } from '@/utils';
+import { lStorage } from '@/utils';
 
 const state = {
-  privateKey: fromLocalStorage('privateKey'),
-  publicKey: fromLocalStorage('publicKey')
+  privateKey: lStorage.set('privateKey'),
+  publicKey: lStorage.set('publicKey')
 };
 
 const mutations = {
@@ -22,17 +22,13 @@ const mutations = {
     console.log('SET_PRIVATE_KEY');
     state.privateKey = privateKey;
 
-    if (window && window.localStorage) {
-      window.localStorage.setItem('privateKey', privateKey);
-    }
+    lStorage.set('privateKey', privateKey);
   },
 
   [SET_PUBLIC_KEY] (state, publicKey) {
     state.publicKey = publicKey;
 
-    if (window && window.localStorage) {
-      window.localStorage.setItem('publicKey', publicKey);
-    }
+    lStorage.set('publicKey', publicKey);
   },
 
   [CLEAR_KEYS] (state) {

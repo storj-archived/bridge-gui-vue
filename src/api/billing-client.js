@@ -3,7 +3,7 @@
 
 import axios from 'axios';
 import config from '../../config';
-import { fromLocalStorage } from '@/utils';
+import { lStorage } from '@/utils';
 import uuid from 'uuid/v4';
 import qs from 'qs';
 import Promise from 'bluebird';
@@ -27,7 +27,7 @@ class BillingClient {
     const implementedMethods = ['GET', 'PUT', 'POST'];
 
     return new Promise((resolve, reject) => {
-      const privateKey = fromLocalStorage('privateKey');
+      const privateKey = lStorage.get('privateKey');
 
       if (implementedMethods.indexOf(method) === -1) {
         return reject(new errors.NotImplementedError('Method not implemented'));
