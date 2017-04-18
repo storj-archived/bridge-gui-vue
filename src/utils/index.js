@@ -28,7 +28,17 @@ export const fromLocalStorage = function (item) {
  */
 export const toLocalStorage = function (name, value) {
   if (window && window.localStorage) {
-    return window.localStorage.setItem(name, value);
+    window.localStorage.setItem(name, value);
+  }
+};
+
+/**
+ * Removes an item from localStorage
+ * @param {String} item - name of item to remove
+ */
+export const removeFromLocalStorage = function (item) {
+  if (window && window.localStorage) {
+    window.localStorage.removeItem(item);
   }
 };
 
