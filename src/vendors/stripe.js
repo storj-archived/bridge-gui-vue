@@ -10,12 +10,13 @@ Stripe.setPublishableKey(STRIPE_PUBLISHABLE_KEY);
 
 export const createStripeToken = function (opts) {
   return new Promise((resolve, reject) => {
-    const { ccNumber, ccExp, cvc } = opts;
+    const { ccNumber, ccExp, cvc, zip } = opts;
 
     Stripe.card.createToken({
       number: ccNumber.value,
       cvc: cvc.value,
-      exp: ccExp.value
+      exp: ccExp.value,
+      address_zip: zip.value
     }, (status, response) => {
       if (response.error) {
         console.log('err', response.error);
