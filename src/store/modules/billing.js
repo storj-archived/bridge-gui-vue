@@ -6,7 +6,7 @@ import {
   MARK_RETRIEVED,
   CLEAR_BILLING
 } from '../mutation-types';
-import errors from 'storj-service-error-types';
+// import errors from 'storj-service-error-types';
 import { createStripeToken } from '@/vendors/stripe';
 import { lStorage } from '@/utils';
 import billingClient from '@/api/billing-client';
@@ -75,10 +75,13 @@ const actions = {
     });
   },
 
-  addPaymentMethod ({ commit, dispatch }, fields, processor) {
+  addPaymentMethod ({ commit, dispatch }, opts) {
     return new Promise((resolve, reject) => {
-      if (processor === 'stripe') {
-        createStripeToken(fields).then((token) => {
+      console.log('hai', opts.processor);
+      if (opts.processor !== 'stripe') {
+        billingClient.request('GET', '/pp/getDefault');
+      } else if (opts.processor === 'stripe') {
+        createStripeToken(opts.fields).then((token) => {
           billingClient.request('POST', '/pp/addPaymentMethod', {
             token,
             processor: 'stripe'
@@ -89,13 +92,13 @@ const actions = {
           }).catch((err) => {
             console.log('addPaymentMethod err', err);
             return reject(err);
-          })
+          });
         });
       }
     });
   },
 
-  getDefaultPaymentProcessor({ commit, dispatch }) {
+  getDefaultPaymentProcessor ({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
       billingClient.request('GET', '/pp/defaultPaymentProcessor')
         .then((res) => {
@@ -106,7 +109,7 @@ const actions = {
         .catch((err) => {
           console.log('getDefaultPaymentProcessor err', err);
           return reject(err);
-        })
+        });
     });
   }
 };
