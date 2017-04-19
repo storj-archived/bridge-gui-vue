@@ -79,7 +79,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       console.log('hai', opts.processor);
       if (opts.processor !== 'stripe') {
-        billingClient.request('GET', '/pp/getDefault');
+        return true;
       } else if (opts.processor === 'stripe') {
         createStripeToken(opts.fields).then((token) => {
           billingClient.request('POST', '/pp/addPaymentMethod', {
@@ -87,7 +87,11 @@ const actions = {
             processor: 'stripe'
           }).then((res) => {
             console.log('res', res);
-            commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
+            if (res.data.defaultPaymentMethod) {
+              commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
+            } else {
+              commit(SET_DEFAULT_PAYMENT_METHOD, {});
+            }
             return resolve();
           }).catch((err) => {
             console.log('addPaymentMethod err', err);
@@ -100,10 +104,14 @@ const actions = {
 
   getDefaultPaymentProcessor ({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
-      billingClient.request('GET', '/pp/defaultPaymentProcessor')
+      billingClient.request('GET', '/pp/default')
         .then((res) => {
           console.log('defaultPaymentProcessor res', res);
-          commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
+          if (res.data.defaultPaymentMethod) {
+            commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
+          } else {
+            commit(SET_DEFAULT_PAYMENT_METHOD, {});
+          }
           return resolve();
         })
         .catch((err) => {
