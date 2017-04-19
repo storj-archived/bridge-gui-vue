@@ -77,24 +77,36 @@ const actions = {
 
   addPaymentMethod ({ commit, dispatch }, fields, processor) {
     return new Promise((resolve, reject) => {
-      createStripeToken(fields)
-        .then(() => {
-          console.log('okdoaisdjfklas;flsdkfjsd');
+      if (processor === 'stripe') {
+        createStripeToken(fields).then((token) => {
+          billingClient.request('POST', '/pp/addPaymentMethod', {
+            token,
+            processor: 'stripe'
+          }).then((res) => {
+            console.log('res', res);
+            commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
+            return resolve();
+          }).catch((err) => {
+            console.log('addPaymentMethod err', err);
+            return reject(err);
+          })
         });
-      // if (processor === 'stripe') {
-      //   dispatch('createStripeToken')
-        // .then((token) => {
-        //   storjAxios.addPaymentMethod(JSON.stringify(token)), 'stripe')
-        //     .then((result) => {
-        //       commit(SET_DEFAULT_PAYMENT_METHOD, result.defaultPaymentMethod);
-        //     })
-        //     .catch((err) => reject(err));
-        // }
-      setTimeout(function () {
-        // commit(SET_DEFAULT_PAYMENT_METHOD, obj);
-        console.log('heeelllooo');
-        reject(new errors.BadRequestError('No soup for you'));
-      }, 2000);
+      }
+    });
+  },
+
+  getDefaultPaymentProcessor({ commit, dispatch }) {
+    return new Promise((resolve, reject) => {
+      billingClient.request('GET', '/pp/defaultPaymentProcessor')
+        .then((res) => {
+          console.log('defaultPaymentProcessor res', res);
+          commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
+          return resolve();
+        })
+        .catch((err) => {
+          console.log('getDefaultPaymentProcessor err', err);
+          return reject(err);
+        })
     });
   }
 };
