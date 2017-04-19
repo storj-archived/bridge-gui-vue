@@ -24,7 +24,7 @@
                       name="cc-number"
                       type="text"
                       v-model="fields.ccNumber.value"
-                      @keyup="isValidCCNumber"
+                      @blur="isValidCCNumber"
                     ></b-form-input>
                     <small v-show="fields.ccNumber.error" class="has-error">
                       {{ fields.ccNumber.error }}
@@ -39,7 +39,7 @@
                       name="cc-cvc"
                       type="text"
                       v-model="fields.cvc.value"
-                      @keyup="isValidCVC"
+                      @blur="isValidCVC"
                     ></b-form-input>
                     <small v-show="fields.cvc.error" class="has-error">
                       {{ fields.cvc.error }}
@@ -56,7 +56,7 @@
                     name="cc-exp"
                     type="text"
                     v-model="fields.ccExp.value"
-                    @keyup="isValidCCExp"
+                    @blur="isValidCCExp"
                   ></b-form-input>
                   <small v-show="fields.ccExp.error" class="has-error">
                     {{ fields.ccExp.error }}
@@ -115,8 +115,6 @@ import {
   validateCCExp
 } from '@/utils/validation';
 import { mapActions } from 'vuex';
-import { debounce } from 'lodash';
-const debounceTime = 800;
 
 export default {
   name: 'add-card-form',
@@ -145,20 +143,20 @@ export default {
   methods: {
     ...mapActions([ 'addPaymentMethod' ]),
 
-    isValidCCNumber: debounce(function () {
+    isValidCCNumber () {
       this.fields.ccNumber = validateCCNumber(this.fields.ccNumber);
       this.validateForm();
-    }, debounceTime),
+    },
 
-    isValidCVC: debounce(function () {
+    isValidCVC () {
       this.fields.cvc = validateCVC(this.fields.cvc);
       this.validateForm();
-    }, debounceTime),
+    },
 
-    isValidCCExp: debounce(function () {
+    isValidCCExp () {
       this.fields.ccExp = validateCCExp(this.fields.ccExp);
       this.validateForm();
-    }, debounceTime),
+    },
 
     validateForm () {
       this.okToSubmit = validateCCForm(this.fields);
