@@ -77,14 +77,15 @@ const actions = {
 
   addPaymentMethod ({ commit, dispatch }, opts) {
     return new Promise((resolve, reject) => {
-      console.log('hai', opts.processor);
-      if (opts.processor !== 'stripe') {
+      console.log('hai', opts.processor.name);
+      // TODO: Add switch/case for different processor additions
+      if (opts.processor.name !== 'stripe') {
         return true;
-      } else if (opts.processor === 'stripe') {
+      } else if (opts.processor.name === 'stripe') {
         createStripeToken(opts.fields).then((token) => {
-          billingClient.request('POST', '/pp/addPaymentMethod', {
-            token,
-            processor: 'stripe'
+          billingClient.request('POST', '/pp/add', {
+            data: token,
+            processor: opts.processor
           }).then((res) => {
             console.log('res', res);
             if (res.data.defaultPaymentMethod) {
@@ -97,7 +98,7 @@ const actions = {
             console.log('addPaymentMethod err', err);
             return reject(err);
           });
-        });
+        }).catch((err) => reject(err));
       }
     });
   },
