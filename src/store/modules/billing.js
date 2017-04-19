@@ -81,25 +81,28 @@ const actions = {
     });
   },
 
-  removeCard ({ commit, dispatch }) {
-    return new Promise((resolve, reject) => {
-      setTimeout(function () {
-        commit(CLEAR_DEFAULT_PAYMENT_METHOD);
-        console.log('hai hai hai');
-      }, 2000);
-    });
-  },
-
   _setPaymentInfo ({ commit }, res) {
-    if (res.data) {
-      commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
-      commit(SET_BILLING_DATE, res.data.billingDate);
-      commit(SET_DEFAULT_PP_ID, res.data.id);
+    if (res && res.data && res.data.pp) {
+      console.log('res.data', res.data);
+      commit(SET_DEFAULT_PAYMENT_METHOD, res.data.pp.defaultPaymentMethod);
+      commit(SET_BILLING_DATE, res.data.pp.billingDate);
+      commit(SET_DEFAULT_PP_ID, res.data.pp.id);
     } else {
       commit(SET_DEFAULT_PAYMENT_METHOD, {});
       commit(SET_BILLING_DATE, null);
       commit(SET_DEFAULT_PP_ID, '');
     }
+  },
+
+  removePaymentMethod ({ commit, dispatch, state }) {
+    return new Promise((resolve, reject) => {
+      billingClient.request('POST', '/pp/method/remove', {
+        methodId: state.defaultPaymentMethod.id,
+        ppId: state.defaultPPId
+      })
+      .then((res) => resolve(dispatch('_setPaymentInfo')))
+      .catch((err) => reject(err));
+    });
   },
 
   addPaymentMethod ({ commit, dispatch }, opts) {
@@ -110,7 +113,7 @@ const actions = {
         return true;
       } else if (opts.processor.name === 'stripe') {
         createStripeToken(opts.fields).then((token) => {
-          billingClient.request('POST', '/pp/add', {
+          billingClient.request('POST', '/pp/method/add', {
             data: token,
             processor: opts.processor
           })
