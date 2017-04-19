@@ -3,6 +3,7 @@ import {
   SET_DEBITS,
   SET_DEFAULT_PAYMENT_METHOD,
   SET_BILLING_DATE,
+  SET_DEFAULT_PP_ID,
   CLEAR_DEFAULT_PAYMENT_METHOD,
   MARK_RETRIEVED,
   CLEAR_BILLING
@@ -12,11 +13,13 @@ import { createStripeToken } from '@/vendors/stripe';
 import { lStorage } from '@/utils';
 import billingClient from '@/api/billing-client';
 
+// TODO: break out processors and payments into submodule of billing
 const state = {
   retrieved: false,
   credits: [],
   debits: [],
   defaultPaymentMethod: {},
+  defaultPPId: '',
   billingDate: null
 };
 
@@ -41,6 +44,10 @@ const mutations = {
     state.billingDate = date;
   },
 
+  [SET_DEFAULT_PP_ID] (state, id) {
+    state.defaultPPId = id;
+  },
+
   [MARK_RETRIEVED] (state) {
     state.retrieved = true;
   },
@@ -51,6 +58,7 @@ const mutations = {
     state.debits = [];
     state.defaultPaymentMethod = {};
     state.billingDate = null;
+    state.defaultPPId = '';
   }
 };
 
@@ -94,13 +102,14 @@ const actions = {
             data: token,
             processor: opts.processor
           }).then((res) => {
-            console.log('res', res);
             if (res.data) {
               commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
               commit(SET_BILLING_DATE, res.data.billingDate);
+              commit(SET_DEFAULT_PP_ID, res.data.id);
             } else {
               commit(SET_DEFAULT_PAYMENT_METHOD, {});
               commit(SET_BILLING_DATE, null);
+              commit(SET_DEFAULT_PP_ID, '');
             }
             return resolve();
           }).catch((err) => reject(err));
@@ -116,9 +125,11 @@ const actions = {
           if (res.data) {
             commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
             commit(SET_BILLING_DATE, res.data.billingDate);
+            commit(SET_DEFAULT_PP_ID, res.data.id);
           } else {
             commit(SET_DEFAULT_PAYMENT_METHOD, {});
             commit(SET_BILLING_DATE, null);
+            commit(SET_DEFAULT_PP_ID, '');
           }
           return resolve();
         })
