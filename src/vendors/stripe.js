@@ -27,7 +27,7 @@ export const createStripeToken = function (opts) {
       console.log('response', response);
       const token = response.id;
 
-      return token;
+      return resolve(token);
     });
   });
 };
