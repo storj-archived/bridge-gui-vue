@@ -31,6 +31,14 @@
               </b-button>
             </div>
           </div>
+          <div class="row">
+            <div class="spacer20"></div>
+            <div class="col text-muted">
+              Note: Your account billing date is the
+                {{ billingDate | dateSuffix }}
+              of each month.
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -54,7 +62,8 @@ export default {
 
   computed: mapState({
     merchant: ({ billing }) => billing.defaultPaymentMethod.merchant,
-    lastFour: ({ billing }) => billing.defaultPaymentMethod.lastFour
+    lastFour: ({ billing }) => billing.defaultPaymentMethod.lastFour,
+    billingDate: ({ billing }) => billing.billingDate
   }),
 
   methods: {
