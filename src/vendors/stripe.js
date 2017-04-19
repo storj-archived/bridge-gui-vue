@@ -3,8 +3,11 @@
 
 import errors from 'storj-service-error-types';
 import env from '../../.env.js';
+import Promise from 'bluebird';
 
-const STRIPE_PUBLISHABLE_KEY = process.env.NODE_ENV === 'development' ? env.STRIPE_PUBLISHABLE_KEY : process.env.STRIPE_PUBLISHABLE_KEY;
+const STRIPE_PUBLISHABLE_KEY = process.env.NODE_ENV === 'development'
+  ? env.STRIPE_PUBLISHABLE_KEY
+  : process.env.STRIPE_PUBLISHABLE_KEY;
 
 Stripe.setPublishableKey(STRIPE_PUBLISHABLE_KEY);
 
@@ -19,15 +22,13 @@ export const createStripeToken = function (opts) {
       address_zip: zip.value
     }, (status, response) => {
       if (response.error) {
-        console.log('err', response.error);
+        console.error('CREATE STRIPE TOKEN ERR', response.error);
         return reject(new errors.InternalError(
           `Processing error: ${response.error.message}`
         ));
       }
 
-      console.log('response', response);
       const token = response.id;
-
       return resolve(token);
     });
   });
