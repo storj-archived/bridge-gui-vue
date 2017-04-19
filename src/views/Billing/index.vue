@@ -38,6 +38,7 @@ import AddCardForm from '@/views/Billing/Add-Card-Form';
 import SjLoading from '@/components/Sj-Loading';
 import { mapState, mapActions } from 'vuex';
 import Promise from 'bluebird';
+import { isEmpty } from 'lodash';
 
 export default {
   name: 'billing',
@@ -65,12 +66,12 @@ export default {
   },
 
   computed: mapState({
-    hasPaymentMethod: state => state.billing.defaultPaymentMethod.id,
+    hasPaymentMethod: state => !isEmpty(state.billing.defaultPaymentMethod),
     retrieved: state => state.billing.retrieved
   }),
 
   methods: {
-    ...mapActions([ 'getCredits', 'getDebits' ]),
+    ...mapActions([ 'getCredits', 'getDebits', 'getDefaultPaymentProcessor' ]),
 
     loadBillingData () {
       const self = this;
@@ -78,6 +79,7 @@ export default {
         Promise.join(
           self.getCredits(),
           self.getDebits(),
+          self.getDefaultPaymentProcessor(),
           function () {
             self.loading = false;
             self.$store.commit('MARK_RETRIEVED');
