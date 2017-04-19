@@ -34,9 +34,7 @@
           <div class="row">
             <div class="spacer20"></div>
             <div class="col text-muted">
-              Note: Your account billing date is the
-                {{ billingDate | dateSuffix }}
-              of each month.
+              Note: Your billing date is the {{ billingDate | dateSuffix }}
             </div>
           </div>
         </div>
@@ -67,11 +65,11 @@ export default {
   }),
 
   methods: {
-    ...mapActions([ 'removeCard' ]),
+    ...mapActions([ 'removePaymentMethod' ]),
 
     handleClick () {
       this.submitting = true;
-      this.removeCard().then(() => {
+      this.removePaymentMethod().then(() => {
         this.submitting = false;
       });
     }
