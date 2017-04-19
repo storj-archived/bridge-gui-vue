@@ -58,3 +58,33 @@ export const dateFormat = function (date, formatType) {
       return `${moment.utc((date)).format('MMM DD, YYYY - HH:mm')} UTC`;
   }
 };
+
+/**
+ * Adds ordinal suffixes to date and stringifies
+ * @param {Number} date - only the day date, 1, 2, ... 31, etc.
+ * @returns {String} - date with ordinal suffix
+ */
+export const dateSuffix = function (date) {
+  console.log('date dasdf', date);
+  const nd = [ 2, 22 ];
+  const st = [ 1, 21, 31 ];
+  const th = [ 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+    20, 24, 25, 26, 27, 28, 29, 30 ];
+  const rd = [ 3, 23 ];
+
+  if (th.indexOf(date) !== -1) {
+    return `${date}th`;
+  }
+
+  if (st.indexOf(date) !== -1) {
+    return `${date}st`;
+  }
+
+  if (nd.indexOf(date) !== -1) {
+    return `${date}nd`;
+  }
+
+  if (rd.indexOf(date) !== -1) {
+    return `${date}rd`;
+  }
+};
