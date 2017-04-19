@@ -27,7 +27,7 @@ class LStorage {
    * @param {String} item - name of item to set
    * @param {String} value - value of item to set
    */
-  set (item, value) {
+  save (item, value) {
     if (this._verify()) {
       window.localStorage.setItem(item, value);
     }
@@ -38,9 +38,10 @@ class LStorage {
    * @param {String} item - name of item to retrieve
    * @returns {String}
    */
-  get (item) {
+  retrieve (item) {
     if (this._verify()) {
-      window.localStorage.getItem(item);
+      const i = window.localStorage.getItem(item);
+      return i;
     }
   }
 
