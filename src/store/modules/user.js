@@ -25,7 +25,7 @@ const mutations = {
     console.log('commiting CLEAR_USER');
     state.email = '';
 
-    window.localStorage.removeItem('email');
+    lStorage.remove('email');
   }
 };
 
