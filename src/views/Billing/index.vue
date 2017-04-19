@@ -71,7 +71,7 @@ export default {
   }),
 
   methods: {
-    ...mapActions([ 'getCredits', 'getDebits', 'getDefaultPaymentProcessor' ]),
+    ...mapActions([ 'getCredits', 'getDebits', 'getDefaultPP' ]),
 
     loadBillingData () {
       const self = this;
@@ -79,7 +79,7 @@ export default {
         Promise.join(
           self.getCredits(),
           self.getDebits(),
-          self.getDefaultPaymentProcessor(),
+          self.getDefaultPP(),
           function () {
             self.loading = false;
             self.$store.commit('MARK_RETRIEVED');
