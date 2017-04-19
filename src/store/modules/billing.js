@@ -2,6 +2,7 @@ import {
   SET_CREDITS,
   SET_DEBITS,
   SET_DEFAULT_PAYMENT_METHOD,
+  SET_BILLING_DATE,
   CLEAR_DEFAULT_PAYMENT_METHOD,
   MARK_RETRIEVED,
   CLEAR_BILLING
@@ -15,7 +16,8 @@ const state = {
   retrieved: false,
   credits: [],
   debits: [],
-  defaultPaymentMethod: {}
+  defaultPaymentMethod: {},
+  billingDate: null
 };
 
 const mutations = {
@@ -35,6 +37,10 @@ const mutations = {
     state.defaultPaymentMethod = {};
   },
 
+  [SET_BILLING_DATE] (state, date) {
+    state.billingDate = date;
+  },
+
   [MARK_RETRIEVED] (state) {
     state.retrieved = true;
   },
@@ -44,6 +50,7 @@ const mutations = {
     state.credits = [];
     state.debits = [];
     state.defaultPaymentMethod = {};
+    state.billingDate = null;
   }
 };
 
@@ -90,8 +97,10 @@ const actions = {
             console.log('res', res);
             if (res.data) {
               commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
+              commit(SET_BILLING_DATE, res.data.billingDate);
             } else {
               commit(SET_DEFAULT_PAYMENT_METHOD, {});
+              commit(SET_BILLING_DATE, null);
             }
             return resolve();
           }).catch((err) => reject(err));
@@ -106,8 +115,10 @@ const actions = {
         .then((res) => {
           if (res.data) {
             commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
+            commit(SET_BILLING_DATE, res.data.billingDate);
           } else {
             commit(SET_DEFAULT_PAYMENT_METHOD, {});
+            commit(SET_BILLING_DATE, null);
           }
           return resolve();
         })
