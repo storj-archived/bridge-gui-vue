@@ -37,6 +37,12 @@
               Note: Your billing date is the {{ billingDate | dateSuffix }}
             </div>
           </div>
+          <div v-show="error" class="row">
+            <div class="spacer20"></div>
+            <div class="col has-error">
+              {{ error }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -54,7 +60,8 @@ export default {
 
   data () {
     return {
-      submitting: false
+      submitting: false,
+      error: ''
     };
   },
 
@@ -68,10 +75,15 @@ export default {
     ...mapActions([ 'removePaymentMethod' ]),
 
     handleClick () {
+      this.error = '';
       this.submitting = true;
-      this.removePaymentMethod().then(() => {
-        this.submitting = false;
-      });
+      this.removePaymentMethod()
+        .then(() => {
+          this.submitting = false;
+        })
+        .catch((err) => {
+          this.error = err.message;
+        });
     }
   }
 };
