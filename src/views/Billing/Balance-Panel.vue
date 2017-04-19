@@ -32,7 +32,16 @@ export default {
       const promoCreditSum = getSum(this.credits, 'promo_amount');
       const paidCreditSum = getSum(this.credits, 'paid_amount');
       const creditSum = paidCreditSum + promoCreditSum;
-      const balance = debitSum - creditSum;
+      const freeCredit = 167;
+
+      // TODO: This is not entirely complete yet. Needs to handle negative
+      // balances better and account for differences between creditSum and
+      // freeCredit
+      const balance = debitSum < freeCredit
+        ? 0
+        : debitSum - creditSum < 0
+          ? debitSum - creditSum
+          : debitSum - creditSum - freeCredit;
 
       return formatAmount(balance);
     }
@@ -41,9 +50,8 @@ export default {
 </script>
 
 <style lang="scss">
-
-.balance-panel > .content {
-  min-height: 180px;
-  max-height: 180px;
-}
+  .balance-panel > .content {
+    min-height: 180px;
+    max-height: 180px;
+  }
 </style>
