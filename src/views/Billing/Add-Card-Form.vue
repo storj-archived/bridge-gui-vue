@@ -132,7 +132,10 @@ export default {
         ccName: { value: '', error: '' },
         zip: { value: '' }
       },
-      processor: 'stripe', // NB: Allows for different processors later
+      processor: {
+        name: 'stripe',
+        default: true
+      }, // NB: Allows for different processors later
       submitting: false,
       submitError: '',
       okToSubmit: false
