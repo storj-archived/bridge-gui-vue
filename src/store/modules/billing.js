@@ -88,37 +88,30 @@ const actions = {
             processor: opts.processor
           }).then((res) => {
             console.log('res', res);
-            if (res.data.defaultPaymentMethod) {
+            if (res.data) {
               commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
             } else {
               commit(SET_DEFAULT_PAYMENT_METHOD, {});
             }
             return resolve();
-          }).catch((err) => {
-            console.log('addPaymentMethod err', err);
-            return reject(err);
-          });
+          }).catch((err) => reject(err));
         }).catch((err) => reject(err));
       }
     });
   },
 
-  getDefaultPaymentProcessor ({ commit, dispatch }) {
+  getDefaultPP ({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
       billingClient.request('GET', '/pp/default')
         .then((res) => {
-          console.log('defaultPaymentProcessor res', res);
-          if (res.data.defaultPaymentMethod) {
+          if (res.data) {
             commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
           } else {
             commit(SET_DEFAULT_PAYMENT_METHOD, {});
           }
           return resolve();
         })
-        .catch((err) => {
-          console.log('getDefaultPaymentProcessor err', err);
-          return reject(err);
-        });
+        .catch((err) => reject(err));
     });
   }
 };
