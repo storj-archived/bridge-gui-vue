@@ -168,8 +168,8 @@ export default {
       this.submitting = true;
       this.addPaymentMethod({ fields: this.fields, processor: this.processor })
         .catch((err) => {
+          this.okToSubmit = true;
           this.submitting = false;
-          this.okToSubmit = false;
           this.submitError = err.message;
         });
     }

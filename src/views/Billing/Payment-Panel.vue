@@ -77,12 +77,14 @@ export default {
     handleClick () {
       this.error = '';
       this.submitting = true;
+
       this.removePaymentMethod()
         .then(() => {
           this.submitting = false;
         })
         .catch((err) => {
           this.error = err.message;
+          this.submitting = false;
         });
     }
   }
