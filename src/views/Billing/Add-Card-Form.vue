@@ -132,6 +132,7 @@ export default {
         ccName: { value: '', error: '' },
         zip: { value: '' }
       },
+      processor: 'stripe', // NB: Allows for different processors later
       submitting: false,
       submitError: '',
       okToSubmit: false
@@ -162,7 +163,7 @@ export default {
 
     handleSubmit () {
       this.submitting = true;
-      this.addPaymentMethod(this.fields, 'stripe')
+      this.addPaymentMethod({ fields: this.fields, processor: this.processor })
         .catch((err) => {
           this.submitting = false;
           this.okToSubmit = false;
