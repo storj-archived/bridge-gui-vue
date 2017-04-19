@@ -6,11 +6,10 @@ import axios from 'axios';
 import Promise from 'bluebird';
 import config from '../../../config';
 import errors from 'storj-service-error-types';
+import { lStorage } from '@/utils';
 
 const state = {
-  email: window && window.localStorage
-    ? window.localStorage.getItem('email')
-    : ''
+  email: lStorage.retrieve('email')
 };
 
 const mutations = {
@@ -19,7 +18,7 @@ const mutations = {
     state.email = email;
 
     // save user to localStorage
-    window.localStorage.setItem('email', email);
+    lStorage.save('email', email);
   },
 
   [CLEAR_USER] (state) {

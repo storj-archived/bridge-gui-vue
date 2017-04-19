@@ -27,7 +27,7 @@ class BillingClient {
     const implementedMethods = ['GET', 'PUT', 'POST'];
 
     return new Promise((resolve, reject) => {
-      const privateKey = lStorage.get('privateKey');
+      const privateKey = lStorage.retrieve('privateKey');
 
       if (implementedMethods.indexOf(method) === -1) {
         return reject(new errors.NotImplementedError('Method not implemented'));

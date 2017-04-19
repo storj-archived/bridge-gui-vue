@@ -29,7 +29,7 @@ const mutations = {
 const actions = {
   getMarketing ({ commit }) {
     return new Promise((resolve, reject) => {
-      const user = lStorage.get('email');
+      const user = lStorage.retrieve('email');
       billingClient.request('GET', '/marketing', { user })
         .then((res) => {
           commit(SET_MARKETING, res.data);

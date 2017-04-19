@@ -10,8 +10,8 @@ import Promise from 'bluebird';
 import { lStorage } from '@/utils';
 
 const state = {
-  privateKey: lStorage.set('privateKey'),
-  publicKey: lStorage.set('publicKey')
+  privateKey: lStorage.retrieve('privateKey'),
+  publicKey: lStorage.retrieve('publicKey')
 };
 
 const mutations = {
@@ -22,13 +22,13 @@ const mutations = {
     console.log('SET_PRIVATE_KEY');
     state.privateKey = privateKey;
 
-    lStorage.set('privateKey', privateKey);
+    lStorage.save('privateKey', privateKey);
   },
 
   [SET_PUBLIC_KEY] (state, publicKey) {
     state.publicKey = publicKey;
 
-    lStorage.set('publicKey', publicKey);
+    lStorage.save('publicKey', publicKey);
   },
 
   [CLEAR_KEYS] (state) {
@@ -36,10 +36,8 @@ const mutations = {
     state.privateKey = '';
     state.publicKey = '';
 
-    if (window && window.localStorage) {
-      window.localStorage.removeItem('privateKey');
-      window.localStorage.removeItem('publicKey');
-    }
+    lStorage.remove('privateKey');
+    lStorage.remove('publicKey');
   }
 };
 
@@ -72,7 +70,7 @@ const actions = {
         return reject(new errors.BadRequestError('No Storj instance'));
       }
 
-      data.storj.registerKey(data.publicKey, function (err) {
+      return data.storj.registerKey(data.publicKey, function (err) {
         if (err) {
           return reject(new errors.InternalError(err));
         }
@@ -89,8 +87,8 @@ const actions = {
   unregisterKey ({ commit, dispatch }, storj) {
     return new Promise((resolve, reject) => {
       console.log('unregisterKey');
-      const privateKey = window.localStorage.getItem('privateKey');
-      const publicKey = window.localStorage.getItem('publicKey');
+      const privateKey = lStorage.retrieve('privateKey');
+      const publicKey = lStorage.retrieve('publicKey');
 
       if (!privateKey || !publicKey) {
         return resolve();
