@@ -90,6 +90,18 @@ const actions = {
     });
   },
 
+  _setPaymentInfo ({ commit }, res) {
+    if (res.data) {
+      commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
+      commit(SET_BILLING_DATE, res.data.billingDate);
+      commit(SET_DEFAULT_PP_ID, res.data.id);
+    } else {
+      commit(SET_DEFAULT_PAYMENT_METHOD, {});
+      commit(SET_BILLING_DATE, null);
+      commit(SET_DEFAULT_PP_ID, '');
+    }
+  },
+
   addPaymentMethod ({ commit, dispatch }, opts) {
     return new Promise((resolve, reject) => {
       console.log('hai', opts.processor.name);
@@ -101,19 +113,11 @@ const actions = {
           billingClient.request('POST', '/pp/add', {
             data: token,
             processor: opts.processor
-          }).then((res) => {
-            if (res.data) {
-              commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
-              commit(SET_BILLING_DATE, res.data.billingDate);
-              commit(SET_DEFAULT_PP_ID, res.data.id);
-            } else {
-              commit(SET_DEFAULT_PAYMENT_METHOD, {});
-              commit(SET_BILLING_DATE, null);
-              commit(SET_DEFAULT_PP_ID, '');
-            }
-            return resolve();
-          }).catch((err) => reject(err));
-        }).catch((err) => reject(err));
+          })
+          .then((res) => resolve(dispatch('_setPaymentInfo', res)))
+          .catch((err) => reject(err));
+        })
+        .catch((err) => reject(err));
       }
     });
   },
@@ -121,18 +125,7 @@ const actions = {
   getDefaultPP ({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
       billingClient.request('GET', '/pp/default')
-        .then((res) => {
-          if (res.data) {
-            commit(SET_DEFAULT_PAYMENT_METHOD, res.data.defaultPaymentMethod);
-            commit(SET_BILLING_DATE, res.data.billingDate);
-            commit(SET_DEFAULT_PP_ID, res.data.id);
-          } else {
-            commit(SET_DEFAULT_PAYMENT_METHOD, {});
-            commit(SET_BILLING_DATE, null);
-            commit(SET_DEFAULT_PP_ID, '');
-          }
-          return resolve();
-        })
+        .then((res) => resolve(dispatch('_setPaymentInfo', res)))
         .catch((err) => reject(err));
     });
   }
