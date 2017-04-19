@@ -152,7 +152,7 @@ export function validateCCForm (fields) {
   const { ccNumber, cvc, ccExp, zip } = fields;
 
   if (cvc.error || ccExp.error || ccNumber.error || !cvc.value ||
-     !ccExp.value || !ccNumber.value || !zip.value) {
+     !ccExp.value || !ccNumber.value || zip.value.length <= 2) {
     return false;
   }
 
