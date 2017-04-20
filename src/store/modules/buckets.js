@@ -56,7 +56,7 @@ const actions = {
           commit(SET_BUCKETS, buckets);
           return resolve();
         });
-      });
+      }).catch((err) => reject(err));
     });
   },
 
@@ -71,7 +71,7 @@ const actions = {
           commit(SET_CURRENT_BUCKET_META, bucket);
           return resolve(bucket.id);
         });
-      });
+      }).catch((err) => reject(new errors.InternalError(err)));
     });
   },
 
@@ -89,7 +89,7 @@ const actions = {
           commit(SET_CURRENT_BUCKET_META, bucket);
           return resolve(bucket);
         });
-      });
+      }).catch((err) => reject(new errors.InternalError(err)));
     });
   },
 
@@ -107,7 +107,7 @@ const actions = {
           commit(SET_CURRENT_BUCKET_FILES, files);
           return resolve(files);
         });
-      });
+      }).catch((err) => reject(new errors.InternalError(err)));
     });
   }
 };
