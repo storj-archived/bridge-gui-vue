@@ -10,7 +10,7 @@ export const sha256 = function (i) {
 };
 
 /**
- * Convenience class verify localStorage exists.
+ * Convenience class to verify localStorage exists
  * TODO: Consider adding polyfill...
  *
  */
@@ -58,6 +58,12 @@ class LStorage {
 
 export const lStorage = new LStorage();
 
+/**
+ * Gets average
+ * @param {Number} sum - sum of all items
+ * @param {Number} numItems - number of items making up sum
+ * @returns {Number} average
+ */
 export const getAverage = function (sum, numItems) {
   if (!sum) {
     return 0;
@@ -65,6 +71,12 @@ export const getAverage = function (sum, numItems) {
   return sum / numItems;
 };
 
+/**
+ * Sums the values of specified field in collection array [{}, {}]
+ * @param {Array} arr - collection Array
+ * @param {string} field - field in arr to sum up
+ * @returns {Number}
+ */
 export const getSum = function (arr, field) {
   if (!arr || Array.isArray(arr) && arr.length <= 0) {
     return 0;
@@ -100,6 +112,11 @@ export function roundToGBAmount (num, type) {
   return `${modNum}`;
 };
 
+/**
+ * Rounds a number to two decimal places
+ * @param {Number} num
+ * @returns {String} num rounded and stringified to two decimal places
+ */
 export function setToTwoDecimalPlaces (num) {
   const roundedToTwoPlaces = Math.round(num * 100) / 100;
   const setToTwoPlaces = roundedToTwoPlaces.toFixed(2);
@@ -107,6 +124,12 @@ export function setToTwoDecimalPlaces (num) {
   return setToTwoPlaces;
 };
 
+/**
+ * Prettifies credit.promo_codes.
+ * NB: Could possibly be better suited as a filter
+ * @param {String} code - promo code
+ * @returns {String} prettified promo code
+ */
 export const promoCodes = function (code) {
   switch (code) {
     case 'referral-recipient':
@@ -136,7 +159,8 @@ export const formatAmount = function (amount) {
   return `$${(newAmount).toFixed(2)}`;
 };
 
-export const getRange = function (offset = 1, billingDate = new Date()) {
+export const getRange = function (billingDate = (new Date()).getDate(), offset = 1) {
+  console.log('billingDate', billingDate);
   const format = 'YYYY-MM-DD HH:mm:ss.SSS';
   const today = new Date();
   const currentYearMonth = [
