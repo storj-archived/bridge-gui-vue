@@ -1,6 +1,6 @@
 <template lang="html">
   <section class="usage-panel col col-sm-12 col-md-6">
-    <h2 class="title">Avg. Usage This Month</h2>
+    <h2 class="title">Usage This Month</h2>
     <div class="content">
       <div class="row">
         <div class="col col-xs-6">
@@ -74,8 +74,4 @@ export default {
 </script>
 
 <style lang="scss">
-.usage-panel > .content {
-  min-height: 180px;
-  max-height: 180px;
-}
 </style>

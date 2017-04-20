@@ -50,8 +50,4 @@ export default {
 </script>
 
 <style lang="scss">
-  .balance-panel > .content {
-    min-height: 180px;
-    max-height: 180px;
-  }
 </style>

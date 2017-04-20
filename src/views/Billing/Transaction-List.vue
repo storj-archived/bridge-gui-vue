@@ -9,7 +9,7 @@
       <div class="col">
         <div class="table-response content">
 
-          <div v-if="!transactions.length" class="text-center">
+          <div v-if="!transactions.length" class="text-center no-history">
             No billing history
           </div>
 
@@ -132,4 +132,22 @@ export default {
 </script>
 
 <style lang="scss">
+  .transaction-list table thead th {
+    border-top: none;
+    border-bottom: none;
+  }
+
+  .transaction-list .table td, .transaction-list .table th {
+    padding: 1.75rem;
+    padding-left: 4rem;
+  }
+
+  .transaction-list .content {
+    padding: 0;
+    margin-bottom: 0;
+  }
+
+  .transaction-list .no-history {
+    padding: 3rem 0;
+  }
 </style>
