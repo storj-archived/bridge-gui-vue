@@ -4,6 +4,7 @@ import {
   SET_DEFAULT_PAYMENT_METHOD,
   SET_BILLING_DATE,
   SET_DEFAULT_PP_ID,
+  SET_NEXT_BILLING_PERIOD,
   CLEAR_DEFAULT_PAYMENT_METHOD,
   MARK_RETRIEVED,
   CLEAR_BILLING
@@ -20,7 +21,8 @@ const state = {
   debits: [],
   defaultPaymentMethod: {},
   defaultPPId: '',
-  billingDate: null
+  billingDate: null,
+  nextBillingPeriod: {}
 };
 
 const mutations = {
@@ -46,6 +48,10 @@ const mutations = {
 
   [SET_DEFAULT_PP_ID] (state, id) {
     state.defaultPPId = id;
+  },
+
+  [SET_NEXT_BILLING_PERIOD] (state, period) {
+    state.nextBillingPeriod = period;
   },
 
   [MARK_RETRIEVED] (state) {
@@ -83,14 +89,16 @@ const actions = {
 
   _setPaymentInfo ({ commit }, res) {
     if (res && res.data && res.data.pp) {
-      // console.log('res.data', res.data);
+      console.log('res.data', res.data);
       commit(SET_DEFAULT_PAYMENT_METHOD, res.data.pp.defaultPaymentMethod);
       commit(SET_BILLING_DATE, res.data.pp.billingDate);
       commit(SET_DEFAULT_PP_ID, res.data.pp.id);
+      commit(SET_NEXT_BILLING_PERIOD, res.data.pp.nextBillingPeriod);
     } else {
       commit(SET_DEFAULT_PAYMENT_METHOD, {});
       commit(SET_BILLING_DATE, null);
       commit(SET_DEFAULT_PP_ID, '');
+      commit(SET_NEXT_BILLING_PERIOD, {});
     }
   },
 

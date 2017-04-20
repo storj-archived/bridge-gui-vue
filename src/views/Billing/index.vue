@@ -39,7 +39,6 @@ import SjLoading from '@/components/Sj-Loading';
 import { mapState, mapActions } from 'vuex';
 import Promise from 'bluebird';
 import { isEmpty } from 'lodash';
-import { getRange } from '@/utils';
 
 export default {
   name: 'billing',
@@ -66,7 +65,7 @@ export default {
   computed: mapState({
     hasPaymentMethod: state => !isEmpty(state.billing.defaultPaymentMethod),
     retrieved: state => state.billing.retrieved,
-    billingDate: state => state.billing.billingDate
+    period: state => state.billing.nextBillingPeriod
   }),
 
   methods: {
@@ -76,7 +75,10 @@ export default {
       const self = this;
       if (!this.retrieved) {
         return self.getDefaultPP().then(() => {
-          const range = getRange(this.billingDate);
+          const range = {
+            startDate: this.period ? this.period.startMoment : null,
+            endDate: this.period ? this.period.endMoment : null
+          };
 
           Promise.join(
             self.getCredits(range),
