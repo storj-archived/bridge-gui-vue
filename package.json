@@ -32,7 +32,6 @@
     "lodash": "^4.17.4",
     "path": "^0.12.7",
     "qs": "^6.4.0",
-    "storj-lib": "^6.4.0",
     "storj-service-error-types": "^1.1.0",
     "uuid": "^3.0.1",
     "vue": "^2.2.6",
