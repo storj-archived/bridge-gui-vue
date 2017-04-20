@@ -39,6 +39,7 @@ import SjLoading from '@/components/Sj-Loading';
 import { mapState, mapActions } from 'vuex';
 import Promise from 'bluebird';
 import { isEmpty } from 'lodash';
+import { getRange } from '@/utils';
 
 export default {
   name: 'billing',
@@ -54,9 +55,6 @@ export default {
 
   created () {
     this.loadBillingData();
-    // this.getPaymentProcessor
-    // ranges = utils.getRanges(ppBillingDate);
-    // this.getTransactions(ranges)
   },
 
   data () {
@@ -76,18 +74,22 @@ export default {
     loadBillingData () {
       const self = this;
       if (!this.retrieved) {
-        Promise.join(
-          self.getCredits(),
-          self.getDebits(),
-          self.getDefaultPP(),
-          function () {
-            self.loading = false;
-            self.$store.commit('MARK_RETRIEVED');
-          }
-        );
-      } else {
-        self.loading = false;
+        return self.getDefaultPP().then((data) => {
+          const billingDate = data.pp ? data.pp.billingDate : new Date();
+          const range = getRange(billingDate);
+
+          Promise.join(
+            self.getCredits(range),
+            self.getDebits(range),
+            function () {
+              self.loading = false;
+              self.$store.commit('MARK_RETRIEVED');
+            }
+          );
+        });
       }
+
+      self.loading = false;
     }
   }
 };
