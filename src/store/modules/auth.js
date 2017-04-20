@@ -137,7 +137,6 @@ const actions = {
       const storj = new Storj(options);
 
       storj.on('ready', function () {
-        console.log('ready');
         return resolve(storj);
       });
 
