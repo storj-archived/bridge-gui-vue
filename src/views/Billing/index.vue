@@ -65,7 +65,8 @@ export default {
 
   computed: mapState({
     hasPaymentMethod: state => !isEmpty(state.billing.defaultPaymentMethod),
-    retrieved: state => state.billing.retrieved
+    retrieved: state => state.billing.retrieved,
+    billingDate: state => state.billing.billingDate
   }),
 
   methods: {
@@ -74,9 +75,8 @@ export default {
     loadBillingData () {
       const self = this;
       if (!this.retrieved) {
-        return self.getDefaultPP().then((data) => {
-          const billingDate = data.pp ? data.pp.billingDate : new Date();
-          const range = getRange(billingDate);
+        return self.getDefaultPP().then(() => {
+          const range = getRange(this.billingDate);
 
           Promise.join(
             self.getCredits(range),
