@@ -38,7 +38,7 @@ module.exports = {
   app: {
     NAME: 'storj-bridge-gui',
     BRIDGE_URL: process.env.NODE_ENV === 'development'
-      ? 'http://localhost:6382' : 'https://api.storj.io',
+      ? 'http://localhost:6382' : process.env.BRIDGE_URL,
     BILLING_URL: process.env.NODE_ENV === 'development'
       ? 'http://localhost:3000' : process.env.APOLLO_CLIENT_URL
   }
