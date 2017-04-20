@@ -110,12 +110,12 @@ router.beforeEach((to, from, next) => {
   console.log(to.matched, from.meta);
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // this route requires auth. check if authenticated
-    console.log('auth');
     const privateKey = lStorage.retrieve('privateKey');
 
     if (!privateKey) {
       return next({ path: '/login' });
     }
+
     next();
   } else {
     next();

@@ -23,7 +23,6 @@ import errors from 'storj-service-error-types';
  */
 class BillingClient {
   request (method, path, params = {}, credentials) {
-    console.log('making request');
     const implementedMethods = ['GET', 'PUT', 'POST'];
 
     return new Promise((resolve, reject) => {
@@ -57,7 +56,6 @@ class BillingClient {
       const opts = Object.assign(baseOpts, authOpts);
 
       // Make request to Billing
-      console.log(opts);
       return axios(opts)
         .then((result) => resolve(result))
         .catch((err) => reject(err));

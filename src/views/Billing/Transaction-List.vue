@@ -71,7 +71,6 @@ export default {
 
   methods: {
     calculateTransactions () {
-      console.log('this.credits', this.credits, 'debits', this.debits);
       let temp = [];
 
       const convertedCredits = this.credits
