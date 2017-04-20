@@ -53,7 +53,7 @@ const actions = {
             .catch((err) => reject(err));
           })
           .catch((err) => reject(err));
-      });
+      }).catch((err) => reject(err));
     });
   },
 
@@ -61,15 +61,15 @@ const actions = {
     return new Promise((resolve, reject) => {
       console.log('logging out');
       dispatch('keypairAuth')
-      .then((storj) => dispatch('unregisterKey', storj))
-      .then(() => {
-        dispatch('unauthenticateAll');
-        return resolve();
-      })
-      .catch(() => {
-        dispatch('unauthenticateAll');
-        return reject();
-      });
+        .then((storj) => dispatch('unregisterKey', storj))
+        .then(() => {
+          dispatch('unauthenticateAll');
+          return resolve();
+        })
+        .catch(() => {
+          dispatch('unauthenticateAll');
+          return reject();
+        });
     });
   },
 
@@ -110,11 +110,11 @@ const actions = {
         dispatch('isStorjAuthenticated', storj)
           .then(() => {
             dispatch('authenticateAll', credentials.email);
-            resolve(storj);
+            return resolve(storj);
           })
           .catch((err) => {
             dispatch('unauthenticateAll');
-            reject(err);
+            return reject(err);
           });
       });
     });
