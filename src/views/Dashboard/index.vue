@@ -19,9 +19,9 @@
           <b-nav-item @click="navigateTo('Buckets')">Buckets</b-nav-item>
           <b-nav-item @click="navigateTo('Billing')">Billing</b-nav-item>
           <b-nav-item @click="navigateTo('Referrals')">Referrals</b-nav-item>
-          <b-nav-item>Documentation</b-nav-item>
-          <b-nav-item>API</b-nav-item>
-          <b-nav-item>Support</b-nav-item>
+          <b-nav-item href="https://storj.readme.io/">Documentation</b-nav-item>
+          <b-nav-item href="https://storj.github.io/bridge">API</b-nav-item>
+          <b-nav-item href="https://storj.readme.io/discuss">Support</b-nav-item>
         </b-nav>
 
         <b-nav is-nav-bar class="ml-auto">
@@ -34,7 +34,7 @@
 
     <!-- ROUTER VIEW FOR AUTHENTICATED VIEWS -->
     <router-view
-      class="authenticated-views container"
+      class="authenticated-views"
       keep-alive
       transition
       transition-mode="out-in"
@@ -86,13 +86,12 @@ export default {
 
   .authenticated-views {
     background: #f9f9f9;
-    height: 100%;
-    width: 100%;
     padding: 3rem;
   }
 
-  .nav-item {
+  .dashboard .nav-item {
     margin: 0 0.5rem;
+    min-width: 80px;
   }
 
   .nav-item:hover {
