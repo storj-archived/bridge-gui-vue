@@ -74,6 +74,16 @@ export default {
     width: 100%;
   }
 
+  .dashboard > .navbar-default {
+    margin-bottom: -1px;
+    padding-bottom: 0;
+  }
+
+  .dashboard > .navbar-default .navbar-nav {
+    margin-bottom: -4px;
+    padding-bottom: 0;
+  }
+
   .authenticated-views {
     background: #f9f9f9;
     height: 100%;
