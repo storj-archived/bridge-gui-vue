@@ -23,7 +23,7 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: 8080,
+    port: 3001,
     autoOpenBrowser: false,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
@@ -36,6 +36,10 @@ module.exports = {
     cssSourceMap: false
   },
   app: {
-    BILLING_URL: ''
+    NAME: 'storj-bridge-gui',
+    BRIDGE_URL: process.env.NODE_ENV === 'development'
+      ? 'http://localhost:6382' : 'https://api.storj.io',
+    BILLING_URL: process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3000' : process.env.APOLLO_CLIENT_URL
   }
 }

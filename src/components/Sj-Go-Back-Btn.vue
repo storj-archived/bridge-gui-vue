@@ -1,7 +1,8 @@
 <template lang="html">
-  <button class="btn btn-block btn-transparent" @click="goBack">
+  <b-button class="btn btn-block btn-transparent" @click="goBack">
     <span class="go-back">Go Back</span>
-  </button>
+  </b-button>
+
 </template>
 
 <script>

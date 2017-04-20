@@ -16,9 +16,14 @@
       </div>
       <div class="row">
         <div class="col">
-          <button class="btn btn-primary btn-block">
+          <button
+            v-clipboard="referralLink"
+            class="btn btn-primary btn-block"
+            @success="handleSuccess"
+          >
             Copy Link
           </button>
+          <span v-show="copied" class="float-right copied">Copied!</span>
         </div>
       </div>
     </div>
@@ -32,6 +37,21 @@ export default {
   props: {
     referralLink: {
       type: String
+    }
+  },
+
+  data () {
+    return {
+      copied: false
+    };
+  },
+
+  methods: {
+    handleSuccess () {
+      this.copied = true;
+      setTimeout(() => {
+        this.copied = false;
+      }, 2000);
     }
   }
 };
@@ -48,5 +68,9 @@ export default {
 
   .referral-link > .content button {
     margin-top: 20px;
+  }
+
+  .copied {
+    color: red;
   }
 </style>

@@ -1,28 +1,31 @@
 <template>
-  <section class="billing container">
-    <div class="container">
+  <section class="billing">
+    <div v-if="loading" class="container">
       <div class="row">
-        <div class="col">
-          <h1 class="title float-left">Billing</h1>
-        </div>
+        <Sj-Loading class="loading"></Sj-Loading>
       </div>
     </div>
 
-    <div class="container">
+    <div v-else class="container">
       <div class="row">
-        <Balance-Panel :balance="balance"></Balance-Panel>
-        <Usage-Panel :bandwidth="bandwidth" :storage="storage"></Usage-Panel>
+        <h1 class="container title float-left">Billing</h1>
+      </div>
+
+      <div class="row">
+        <Balance-Panel></Balance-Panel>
+        <Usage-Panel></Usage-Panel>
+      </div>
+
+      <div class="row">
+        <Payment-Panel v-if="hasPaymentMethod"></Payment-Panel>
+        <Add-Card-Form v-else></Add-Card-Form>
+      </div>
+
+      <div class="row">
+        <Transaction-List></Transaction-List>
       </div>
     </div>
 
-    <div class="container">
-      <div class="row">
-        <AddCardForm v-if="hasPaymentInfo"></AddCardForm>
-        <Payment-Panel v-else></Payment-Panel>
-      </div>
-    </div>
-
-    <Transaction-List :transactions="transactions"></Transaction-List>
   </section>
 </template>
 
@@ -32,6 +35,10 @@ import PaymentPanel from '@/views/Billing/Payment-Panel';
 import UsagePanel from '@/views/Billing/Usage-Panel';
 import TransactionList from '@/views/Billing/Transaction-List';
 import AddCardForm from '@/views/Billing/Add-Card-Form';
+import SjLoading from '@/components/Sj-Loading';
+import { mapState, mapActions } from 'vuex';
+import Promise from 'bluebird';
+import { isEmpty } from 'lodash';
 
 export default {
   name: 'billing',
@@ -41,38 +48,77 @@ export default {
     PaymentPanel,
     UsagePanel,
     TransactionList,
-    AddCardForm
+    AddCardForm,
+    SjLoading
+  },
+
+  created () {
+    this.loadBillingData();
   },
 
   data () {
     return {
-      hasPaymentInfo: false,
-      // dummy data for testing rendering,
-      balance: '112312312.99',
-      bandwidth: '12312',
-      storage: '12312',
-      transactions: [{
-        id: 1,
-        created: new Date(),
-        description: 'so much transactions',
-        amount: 100000
-      }, {
-        id: 2,
-        created: new Date(),
-        description: 'fwhehjehsjdjfdkl',
-        amount: 12312312
-      }]
+      loading: true
     };
+  },
+
+  computed: mapState({
+    hasPaymentMethod: state => !isEmpty(state.billing.defaultPaymentMethod),
+    retrieved: state => state.billing.retrieved,
+    period: state => state.billing.nextBillingPeriod
+  }),
+
+  methods: {
+    ...mapActions([ 'getCredits', 'getDebits', 'getDefaultPP' ]),
+
+    loadBillingData () {
+      const self = this;
+      if (!this.retrieved) {
+        return self.getDefaultPP().then(() => {
+          const range = {
+            startDate: this.period ? this.period.startMoment : null,
+            endDate: this.period ? this.period.endMoment : null
+          };
+
+          Promise.join(
+            self.getCredits(range),
+            self.getDebits(range),
+            function () {
+              self.loading = false;
+              self.$store.commit('MARK_RETRIEVED');
+            }
+          );
+        });
+      }
+
+      self.loading = false;
+    }
   }
 };
 </script>
 
 <style lang="scss">
+.unit-numbers {
+  font-size: 40px;
+  letter-spacing: -2px;
+}
+
+.unit-text {
+  font-size: 15px;
+  padding-left: 10px;
+  letter-spacing: 0;
+  display: inline-block;
+}
+
 .mb0 {
   font-size: 40px;
 }
 
 .blue {
   letter-spacing: -2px;
+}
+
+.loading {
+  margin-bottom: 3rem;
 }
 </style>

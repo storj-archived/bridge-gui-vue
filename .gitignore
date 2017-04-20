@@ -1,7 +1,7 @@
 .DS_Store
 node_modules/
 dist/
-npm-debug.log
+npm-debug.log*
 yarn-error.log
 test/unit/coverage
 test/e2e/reports
@@ -18,4 +18,5 @@ gems/
 .cache
 .node-gyp
 .env
+.env.*
 yarn.lock

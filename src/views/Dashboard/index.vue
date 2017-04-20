@@ -19,13 +19,13 @@
           <b-nav-item @click="navigateTo('Buckets')">Buckets</b-nav-item>
           <b-nav-item @click="navigateTo('Billing')">Billing</b-nav-item>
           <b-nav-item @click="navigateTo('Referrals')">Referrals</b-nav-item>
-          <b-nav-item>Documentation</b-nav-item>
-          <b-nav-item>API</b-nav-item>
-          <b-nav-item>Support</b-nav-item>
+          <b-nav-item href="https://storj.readme.io/">Documentation</b-nav-item>
+          <b-nav-item href="https://storj.github.io/bridge">API</b-nav-item>
+          <b-nav-item href="https://storj.readme.io/discuss">Support</b-nav-item>
         </b-nav>
 
         <b-nav is-nav-bar class="ml-auto">
-          <b-nav-item @click="logout">Logout</b-nav-item>
+          <b-nav-item @click="handleClick">Logout</b-nav-item>
         </b-nav>
 
       </b-collapse>
@@ -34,7 +34,7 @@
 
     <!-- ROUTER VIEW FOR AUTHENTICATED VIEWS -->
     <router-view
-      class="authenticated-views container"
+      class="authenticated-views"
       keep-alive
       transition
       transition-mode="out-in"
@@ -45,22 +45,22 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
   name: 'dashboard',
 
-  data () {
-    return {
-
-    };
-  },
-
   methods: {
-    navigateTo (page) {
-      this.$router.push({ name: page });
+    ...mapActions([ 'logout' ]),
+
+    handleClick () {
+      this.logout()
+        .then(() => this.$router.push({ name: 'Login' }))
+        .catch(() => this.$router.push({ name: 'Login' }));
     },
 
-    logout () {
-      console.log('logging out');
+    navigateTo (page) {
+      this.$router.push({ name: page });
     }
   }
 };
@@ -74,15 +74,24 @@ export default {
     width: 100%;
   }
 
-  .authenticated-views {
-    background: #f9f9f9;
-    height: 100%;
-    width: 100%;
-    padding: 3rem 10rem;
+  .dashboard > .navbar-default {
+    margin-bottom: -1px;
+    padding-bottom: 0;
   }
 
-  .nav-item {
+  .dashboard > .navbar-default .navbar-nav {
+    margin-bottom: -4px;
+    padding-bottom: 0;
+  }
+
+  .authenticated-views {
+    background: #f9f9f9;
+    padding: 3rem;
+  }
+
+  .dashboard .nav-item {
     margin: 0 0.5rem;
+    min-width: 80px;
   }
 
   .nav-item:hover {

@@ -12,6 +12,7 @@
   "homepage": "https://app.storj.io",
   "scripts": {
     "dev": "node build/dev-server.js",
+    "dev-w": "webpack --config build/webpack.dev.vm.conf.js --watch",
     "build": "node build/build.js",
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "e2e": "node test/e2e/runner.js",
@@ -21,15 +22,21 @@
   "dependencies": {
     "axios": "^0.15.3",
     "bluebird": "^3.4.7",
+    "body-parser": "^1.17.1",
     "bootstrap": "^4.0.0-alpha.6",
     "bootstrap-vue": "^0.11.0",
     "compression": "^1.6.2",
-    "express": "^4.15.0",
-    "jquery": "^3.1.1",
+    "crypto": "0.0.3",
+    "express-session": "^1.15.2",
+    "helmet": "^3.5.0",
     "lodash": "^4.17.4",
+    "moment": "^2.18.1",
     "path": "^0.12.7",
+    "qs": "^6.4.0",
     "storj-service-error-types": "^1.1.0",
+    "uuid": "^3.0.1",
     "vue": "^2.2.6",
+    "vue-clipboards": "^0.2.6",
     "vue-router": "^2.3.0",
     "vuex": "^2.2.1",
     "vuex-router-sync": "^4.1.1"
@@ -41,7 +48,7 @@
     "babel-loader": "^6.4.1",
     "babel-plugin-istanbul": "^3.1.2",
     "babel-plugin-transform-runtime": "^6.22.0",
-    "babel-preset-latest": "^6.22.0",
+    "babel-preset-env": "^1.4.0",
     "babel-preset-stage-2": "^6.22.0",
     "babel-register": "^6.24.0",
     "chai": "^3.5.0",
@@ -103,6 +110,6 @@
   },
   "engines": {
     "node": ">= 6.9.5",
-    "npm": ">= 4.0.0"
+    "npm": ">= 3.10.0"
   }
 }

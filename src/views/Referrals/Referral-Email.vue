@@ -2,7 +2,7 @@
   <div class="referral-email col col-md-6">
     <h2>Refer by email</h2>
     <div class="content">
-      <form @submit="submitReferralEmails">
+      <form>
         <p class="referral-email__text">
           Enter your friends' emails (separated by commas) and we'll invite
           them for you.
@@ -12,17 +12,43 @@
             <input
               type="text"
               class="form-control"
-              v-model="emails"
-              @change="updateEmailList"
+              v-model="input"
+              @keyup="verifyEmails"
             />
           </div>
         </div>
 
         <div class="row">
           <div class="col">
-            <button type="submit" class="btn btn-block btn-green">
+            <button
+              type="submit"
+              class="btn btn-block btn-green"
+              @click.prevent="handleSubmit"
+            >
               Invite friends
             </button>
+
+            <span v-show="error" class="has-error"> {{ error }} </span>
+
+            <div v-show="successes" class="successes col">
+              <p>
+                <span>Successfully sent:</span>
+                <span class="float-right x" @click="closeSuccesses">X</span>
+              </p>
+              <span class="text-muted">{{ successes }}</span>
+            </div>
+
+            <div v-show="failures.length > 0" class="failures">
+              <p>
+                <span class="has-error">Failed to send:</span>
+                <span class="float-right x has-error" @click="closeFailure">
+                  X
+                </span>
+              </p>
+              <span v-for="failure in failures" class="text-muted">
+                {{ failure.email }}: {{ failure.message }} </br>
+              </span>
+            </div>
           </div>
         </div>
       </form>
@@ -31,22 +57,62 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+import { debounce } from 'lodash';
+import { isValidEmail } from '@/utils/validation';
+
 export default {
   name: 'referral-email',
 
   data () {
     return {
-      emails: []
+      input: '',
+      error: '',
+      submitting: false,
+      failures: [],
+      successes: ''
     };
   },
 
-  methods: {
-    updateEmailList () {
+  computed: {
+    emails () {
+      if (this.input) {
+        return this.input.split(',').map((email) => email.trim());
+      }
+      return [];
+    }
+  },
 
+  methods: {
+    ...mapActions([ 'sendEmails' ]),
+
+    verifyEmails: debounce(function () {
+      if (!this.emails.length) {
+        return;
+      }
+      this.emails.forEach((email) => {
+        const isValid = isValidEmail(email.trim());
+        this.error = isValid ? '' : 'Invalid email list';
+      });
+    }, 650),
+
+    handleSubmit () {
+      this.submitting = false;
+      if (this.emails.length > 0 && !this.error) {
+        this.submitting = true;
+        this.sendEmails(this.emails).then((res) => {
+          this.failures = res.data.failures;
+          this.successes = res.data.successes.map((s) => s.email).join(', ');
+        });
+      }
     },
 
-    submitReferralEmails () {
+    closeFailure () {
+      this.failures = [];
+    },
 
+    closeSuccesses () {
+      this.successes = '';
     }
   }
 };
@@ -63,5 +129,28 @@ export default {
 
   .referral-email > .content button {
     margin-top: 20px;
+  }
+
+  .referral-email .failures {
+    margin-top: 20px;
+    border-radius: 3px;
+    border: 1px solid red;
+    padding: 1.25rem;
+  }
+
+  .referral-email .failures span.x:hover, .referral-email .successes span.x:hover {
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .referral-email .successes {
+    margin-top: 20px;
+    border-radius: 3px;
+    border: 1px solid #88C425;
+    padding: 1.25rem;
+  }
+
+  .referral-email .successes > p {
+    color: green;
   }
 </style>

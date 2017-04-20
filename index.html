@@ -6,6 +6,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   </head>
   <body>
+    <!--
+      Webpack bundles static assets based on the subdirectory 'static'
+      Anything that's not in this path won't be served up when webpack bundles
+      Probably a way to do it, but ¯\_(ツ)_/¯
+     -->
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script src="//localhost:3001/static/vendor/storj.es6.js"></script>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>

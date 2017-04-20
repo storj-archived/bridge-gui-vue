@@ -17,49 +17,61 @@
               <legend>Credit Card Details</legend>
               <div class="row">
                 <div class="col">
-                  <b-form-fieldset>
+                  <b-form-fieldset label="Card Number">
                     <b-form-input
                       class="form-control"
                       placeholder="Credit card number"
                       name="cc-number"
                       type="text"
-                      v-model="fields.ccNumber"
+                      v-model="fields.ccNumber.value"
+                      @blur="isValidCCNumber"
                     ></b-form-input>
+                    <small v-show="fields.ccNumber.error" class="has-error">
+                      {{ fields.ccNumber.error }}
+                    </small>
                   </b-form-fieldset>
                 </div>
                 <div class="col">
-                  <b-form-fieldset>
+                  <b-form-fieldset label="CVC">
                     <b-form-input
                       class="form-control"
-                      placeholder="CVV"
+                      placeholder="CVC"
                       name="cc-cvc"
                       type="text"
-                      autoComplete="cc-csc"
-                      v-model="fields.cvv"
+                      v-model="fields.cvc.value"
+                      @blur="isValidCVC"
                     ></b-form-input>
+                    <small v-show="fields.cvc.error" class="has-error">
+                      {{ fields.cvc.error }}
+                    </small>
                   </b-form-fieldset>
                 </div>
               </div>
               <div class="row">
                 <div class="col">
-                <b-form-fieldset>
+                <b-form-fieldset label="Expiration Date (MM/YY)">
                   <b-form-input
                     class="form-control"
-                    placeholder="Expires MM / YYYY"
+                    placeholder="MM/YY"
                     name="cc-exp"
                     type="text"
-                    v-model="fields.ccExp"
+                    v-model="fields.ccExp.value"
+                    @blur="isValidCCExp"
                   ></b-form-input>
+                  <small v-show="fields.ccExp.error" class="has-error">
+                    {{ fields.ccExp.error }}
+                  </small>
                 </b-form-fieldset>
               </div>
               <div class="col">
-                <b-form-fieldset>
+                <b-form-fieldset label="Zip / Postal Code">
                   <b-form-input
                     class="form-control"
-                    placeholder="Please enter a name for this credit card"
+                    placeholder="Billing zip code"
                     type="text"
-                    name="cc-name"
-                    v-model="fields.ccName"
+                    name="zip-code"
+                    v-model="fields.zip.value"
+                    @keyup="validateForm"
                   ></b-form-input>
                 </b-form-fieldset>
               </div>
@@ -70,17 +82,21 @@
             <div class="row">
               <div class="col">
                 <button
+                  :disabled="!okToSubmit || submitting"
                   class="btn btn-block btn-green"
                   type="submit"
-                  name="submit"
-                  @click="submitCreditCard"
+                  @click.prevent="handleSubmit"
                 >
-                  Save Credit Card
+                  <span v-show="!submitting">Save Credit Card</span>
+                  <span v-show="submitting">Submitting . . .</span>
                 </button>
+                <div v-show="submitError" class="has-error help-block">
+                  {{ submitError }}
+                </div>
               </div>
             </div>
 
-            <div class="spcaer10"></div>
+            <div class="spacer10"></div>
 
           </form>
 
@@ -92,6 +108,13 @@
 
 <script>
 import SjCryptoPaymentBtn from '@/components/Sj-Crypto-Payment-Btn';
+import {
+  validateCCNumber,
+  validateCCForm,
+  validateCVC,
+  validateCCExp
+} from '@/utils/validation';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'add-card-form',
@@ -101,9 +124,53 @@ export default {
   data () {
     return {
       fields: {
-        ccNumber: null
-      }
+        ccNumber: { value: '', error: '' },
+        cvc: { value: '', error: '' },
+        ccExp: { value: '', error: '' },
+        ccName: { value: '', error: '' },
+        zip: { value: '' }
+      },
+      processor: {
+        name: 'stripe',
+        default: true
+      }, // NB: Allows for different processors later
+      submitting: false,
+      submitError: '',
+      okToSubmit: false
     };
+  },
+
+  methods: {
+    ...mapActions([ 'addPaymentMethod' ]),
+
+    isValidCCNumber () {
+      this.fields.ccNumber = validateCCNumber(this.fields.ccNumber);
+      this.validateForm();
+    },
+
+    isValidCVC () {
+      this.fields.cvc = validateCVC(this.fields.cvc);
+      this.validateForm();
+    },
+
+    isValidCCExp () {
+      this.fields.ccExp = validateCCExp(this.fields.ccExp);
+      this.validateForm();
+    },
+
+    validateForm () {
+      this.okToSubmit = validateCCForm(this.fields);
+    },
+
+    handleSubmit () {
+      this.submitting = true;
+      this.addPaymentMethod({ fields: this.fields, processor: this.processor })
+        .catch((err) => {
+          this.okToSubmit = true;
+          this.submitting = false;
+          this.submitError = err.message;
+        });
+    }
   }
 };
 </script>
