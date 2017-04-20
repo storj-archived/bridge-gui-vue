@@ -38,23 +38,23 @@
                 </div>
               </div>
             </div>
-
-            <div class="row">
-              <div class="col col-xs-6">
-                <Sj-Go-Back-Btn name="Buckets"></Sj-Go-Back-Btn>
-              </div>
-
-              <div class="col col-xs-6">
-                <button
-                  type="submit"
-                  :disabled="disabled"
-                  class="btn btn-block btn-green btn-create-bucket"
-                >
-                  Save Bucket
-                </button>
-              </div>
-            </div>
           </form>
+
+          <div class="row">
+            <div class="col col-xs-6">
+              <Sj-Go-Back-Btn name="Buckets"></Sj-Go-Back-Btn>
+            </div>
+
+            <div class="col col-xs-6">
+              <button
+                type="submit"
+                :disabled="disabled"
+                class="btn btn-block btn-green btn-create-bucket"
+              >
+                Save Bucket
+              </button>
+            </div>
+          </div>
 
         </div>
       </div>
