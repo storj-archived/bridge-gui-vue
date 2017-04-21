@@ -33,15 +33,7 @@ export default {
       const paidCreditSum = getSum(this.credits, 'paid_amount');
       const creditSum = paidCreditSum + promoCreditSum;
       const freeCredit = 167;
-
-      // TODO: This is not entirely complete yet. Needs to handle negative
-      // balances better and account for differences between creditSum and
-      // freeCredit
-      const balance = debitSum < freeCredit
-        ? 0
-        : debitSum - creditSum < 0
-          ? debitSum - creditSum
-          : debitSum - creditSum - freeCredit;
+      const balance = -creditSum + debitSum - Math.min(debitSum, freeCredit);
 
       return formatAmount(balance);
     }
