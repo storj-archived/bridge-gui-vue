@@ -87,3 +87,7 @@ export const dateSuffix = function (date) {
     return `${date}rd`;
   }
 };
+
+export const capitalize = function (str) {
+  return str.replace(/^\w/, (w) => (w.toUpperCase()));
+};
