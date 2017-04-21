@@ -164,7 +164,7 @@ export default {
 
     handleSubmit () {
       this.submitting = true;
-      this.addPaymentMethod({ fields: this.fields, processor: this.processor })
+      return this.addPaymentMethod({ fields: this.fields, processor: this.processor })
         .catch((err) => {
           this.okToSubmit = true;
           this.submitting = false;

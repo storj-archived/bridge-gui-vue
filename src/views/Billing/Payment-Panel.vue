@@ -78,7 +78,7 @@ export default {
       this.error = '';
       this.submitting = true;
 
-      this.removePaymentMethod()
+      return this.removePaymentMethod()
         .then(() => {
           this.submitting = false;
         })
