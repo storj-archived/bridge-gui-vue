@@ -10,10 +10,7 @@
             </div>
           </div>
 
-          <form
-            @keydown.enter.prevent="handleSubmit"
-            @submit.prevent="handleSubmit"
-          >
+          <form @submit.prevent="handleSubmit">
             <div class="row">
               <div class="col col-sm-12">
                 <div class="content">
@@ -47,9 +44,9 @@
 
             <div class="col col-xs-6">
               <button
-                type="submit"
                 :disabled="disabled"
                 class="btn btn-block btn-green btn-create-bucket"
+                @click.prevent="handleSubmit"
               >
                 Save Bucket
               </button>
