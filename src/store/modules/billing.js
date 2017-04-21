@@ -72,7 +72,7 @@ const actions = {
   getCredits ({ commit, dispatch }, params = {}) {
     return new Promise((resolve, reject) => {
       params.user = lStorage.retrieve('email');
-      return billingClient.request('GET', '/credits', params)
+      billingClient.request('GET', '/credits', params)
         .then((res) => resolve(commit(SET_CREDITS, res.data)))
         .catch((err) => reject(err));
     });
@@ -81,7 +81,7 @@ const actions = {
   getDebits ({ commit, dispatch }, params = {}) {
     return new Promise((resolve, reject) => {
       params.user = lStorage.retrieve('email');
-      return billingClient.request('GET', '/debits', params)
+      billingClient.request('GET', '/debits', params)
         .then((res) => resolve(commit(SET_DEBITS, res.data)))
         .catch((err) => reject(err));
     });
@@ -115,13 +115,12 @@ const actions = {
 
   addPaymentMethod ({ commit, dispatch }, opts) {
     return new Promise((resolve, reject) => {
-      console.log('hai', opts.processor.name);
       // TODO: Add switch/case for different processor additions
       if (opts.processor.name !== 'stripe') {
         return true;
       } else if (opts.processor.name === 'stripe') {
         createStripeToken(opts.fields).then((token) => {
-          billingClient.request('POST', '/pp/method/add', {
+          return billingClient.request('POST', '/pp/method/add', {
             data: token,
             processor: opts.processor
           })
