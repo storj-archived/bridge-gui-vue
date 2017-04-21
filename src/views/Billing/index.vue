@@ -75,14 +75,9 @@ export default {
       const self = this;
       if (!this.retrieved) {
         return self.getDefaultPP().then(() => {
-          const range = {
-            startDate: this.period ? this.period.startMoment : null,
-            endDate: this.period ? this.period.endMoment : null
-          };
-
           Promise.join(
-            self.getCredits(range),
-            self.getDebits(range),
+            self.getCredits(),
+            self.getDebits(),
             function () {
               self.loading = false;
               self.$store.commit('MARK_RETRIEVED');
