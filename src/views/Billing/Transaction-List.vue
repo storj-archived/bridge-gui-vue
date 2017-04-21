@@ -28,7 +28,10 @@
                 class="clickable-row"
               >
                 <td>{{ transaction.created | dateFormat('long') }}</td>
-                <td>{{ transaction.description }}</td>
+                <td>
+                  <b>{{ transaction.type | capitalize }}</b>
+                  {{ transaction.description | capitalize }}
+                </td>
                 <td :class="{ 'text-success': transaction.amount <= 0 }">
                   {{ transaction.amount | prettifyAmount | addDollarSign }}
                 </td>
@@ -78,9 +81,8 @@ export default {
         .map((credit) => {
           const transaction = {...credit};
           transaction.amount = -credit.paid_amount;
-          const titleizedType = credit.type
-            .replace(/^\w/, (w) => (w.toUpperCase()));
-          transaction.description = `${titleizedType} payment - Thank you!`;
+          transaction.type = `${credit.type} payment`;
+          transaction.description = `- Thank you! 🐶`;
           transaction.timestamp = moment.utc(credit.created).valueOf();
           return transaction;
         });
@@ -101,9 +103,10 @@ export default {
 
         const transaction = {...debit};
         transaction.amount = debit.amount;
+        transaction.type = debit.type;
         transaction.description = amountUsed
-          ? `${amountUsed} GB of ${debit.type} used`
-          : `Adjustment of ${adjustment}`;
+          ? `: ${amountUsed} GB`
+          : `: ${adjustment}`;
         transaction.timestamp = Date.parse(debit.created);
         return transaction;
       });
