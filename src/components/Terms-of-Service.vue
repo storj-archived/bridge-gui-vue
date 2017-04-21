@@ -6,6 +6,7 @@
       </div>
     </header>
     <hr>
+    <div class="spacer10"></div>
     <div class="row">
       <div class="col col-xs-12 text-center">
         <h4>Storage Terms of Service</h4>
