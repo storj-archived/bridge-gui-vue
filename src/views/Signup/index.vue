@@ -5,7 +5,6 @@
       <div class="row justify-content-center">
         <div class="col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12 text-center">
           <div class="content">
-
             <h1 class="title text-center form-group">Sign Up</h1>
 
             <NewReferralUserBanner v-if="showReferralBanner">
@@ -91,7 +90,7 @@
 
     <Signup-Success v-else></Signup-Success>
 
-    <b-modal id="eulaModal" size="lg" hide-header=true>
+    <b-modal id="eulaModal" size="lg" :hide-header="true">
       <Terms-Of-Service></Terms-Of-Service>
       <footer slot="modal-footer">
         <b-button @click.prevent="closeEula">Close</b-button>
