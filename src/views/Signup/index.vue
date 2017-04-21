@@ -4,97 +4,98 @@
     <div v-if="!signupSuccess" class="container auth">
       <div class="row justify-content-center">
         <div class="col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12 text-center">
-          <div class="row">
-            <div class="col-sm-12">
-              <div class="content">
+          <div class="content">
 
-                <h1 class="title text-center form-group">Sign Up</h1>
+            <h1 class="title text-center form-group">Sign Up</h1>
 
-                <NewReferralUserBanner v-if="showReferralBanner">
-                </NewReferralUserBanner>
+            <NewReferralUserBanner v-if="showReferralBanner">
+            </NewReferralUserBanner>
 
-                <NewUserBanner v-else></NewUserBanner>
+            <NewUserBanner v-else></NewUserBanner>
 
-                <form>
-                  <b-form-input
-                    v-model="email"
-                    type="email"
-                    placeholder="Email Address"
-                    class="form-group"
-                  ></b-form-input>
+            <form>
+              <b-form-input
+                v-model="email"
+                type="email"
+                placeholder="Email Address"
+                class="form-group"
+              ></b-form-input>
 
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      name="initial-password"
-                      placeholder="Password"
-                      v-model="initialPassword"
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <input
-                      type="password"
-                      class="form-control"
-                      name="confirm-password"
-                      placeholder="Confirm Password"
-                      v-model="confirmPassword"
-                    />
-                  </div>
-
-                  <div class="form-group">
-                    <button
-                      :disabled="!fieldsComplete"
-                      type="submit"
-                      @click.prevent="handleSubmit"
-                      class="btn btn-block btn-green"
-                    >
-                      Sign Up
-                    </button>
-                  </div>
-
-                  <div class="form-group checkbox eula-checkbox">
-                    <label>
-                      <p>
-                        <input
-                          type="checkbox"
-                          class="text-right"
-                          name="eula"
-                          v-model="eula"
-                        />
-                        I agree to the
-                          <a href="" @click.prevent="openEula">
-                            Terms of Service
-                          </a>
-                      </p>
-                    </label>
-                  </div>
-
-                  <div v-if="error">
-                    <span class="text-danger">{{ error }}</span>
-                  </div>
-
-                  <div v-if="eulaError">
-                    <span class="text-danger">{{ eulaError }}</span>
-                  </div>
-
-                </form>
+              <div class="form-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  name="initial-password"
+                  placeholder="Password"
+                  v-model="initialPassword"
+                />
               </div>
 
-              <p>
-                Already have an account?
-                <router-link :to="{ name: 'Login' }">Log In</router-link>
-              </p>
-            </div>
+              <div class="form-group">
+                <input
+                  type="password"
+                  class="form-control"
+                  name="confirm-password"
+                  placeholder="Confirm Password"
+                  v-model="confirmPassword"
+                />
+              </div>
+
+              <div class="form-group">
+                <button
+                  :disabled="!fieldsComplete"
+                  type="submit"
+                  @click.prevent="handleSubmit"
+                  class="btn btn-block btn-green"
+                >
+                  Sign Up
+                </button>
+              </div>
+
+              <div class="form-group checkbox eula-checkbox">
+                <label>
+                  <p>
+                    <input
+                      type="checkbox"
+                      class="text-right"
+                      name="eula"
+                      v-model="eula"
+                    />
+                    I agree to the
+                      <a href="" @click.prevent="openEula">
+                        Terms of Service
+                      </a>
+                  </p>
+                </label>
+              </div>
+
+              <div v-if="error">
+                <span class="text-danger">{{ error }}</span>
+              </div>
+
+              <div v-if="eulaError">
+                <span class="text-danger">{{ eulaError }}</span>
+              </div>
+
+            </form>
           </div>
+
+          <p>
+            Already have an account?
+            <router-link :to="{ name: 'Login' }">Log In</router-link>
+          </p>
         </div>
+
       </div>
     </div>
+
     <Signup-Success v-else></Signup-Success>
 
-    <b-modal id="eulaModal" title="Storj Labs" size="lg" hide-header=true>
+    <b-modal id="eulaModal" size="lg" hide-header=true>
       <Terms-Of-Service></Terms-Of-Service>
+      <footer slot="modal-footer">
+        <b-button @click.prevent="closeEula">Close</b-button>
+      </footer>
     </b-modal>
 
   </section>
@@ -191,13 +192,18 @@ export default {
 
     openEula () {
       this.$root.$emit('show::modal', 'eulaModal');
+    },
+
+    closeEula () {
+      this.$root.$emit('hide::modal', 'eulaModal');
     }
   }
 };
 </script>
 
 <style lang="scss">
-  .eula-checkbox {
-    margin-bottom: 0;
+  .eula-checkbox > label > p > input {
+    margin-top: 1rem;
+    margin-right: 5px;
   }
 </style>
