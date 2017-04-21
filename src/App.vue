@@ -32,5 +32,6 @@ export default {
 #main {
   font-family: 'Avenir Next LT Pro Regular';
   background-color: #f9f9f9;
+  height: 100%;
 }
 </style>
