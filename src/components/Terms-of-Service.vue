@@ -1,9 +1,15 @@
 <template>
-  <div>
+  <div class="terms-of-service">
+    <header class="row">
+      <div class="col text-center">
+        <h2>Storj Labs</h2>
+      </div>
+    </header>
+    <hr>
     <div class="row">
-      <div class="col-xs-12 text-center">
-        <h3>Storage Terms of Service</h3>
-        <p class="text-center">Last Updated: July 21, 2016</p>
+      <div class="col col-xs-12 text-center">
+        <h4>Storage Terms of Service</h4>
+        <p class="text-center">Last Updated: March 15, 2017</p>
         <p>
           <a href="https://storj.io/terms-of-service.html" target="_blank">
             (a static copy of this document is available here)
@@ -14,7 +20,7 @@
     </div>
 
     <div class="row">
-      <div class="col-xs-12 col-md-10 col-md-push-1">
+      <div class="col body">
         <p>
           By clicking to agree to these Storage Terms of Service (&ldquo;<b>
           Storage Terms</b>&rdquo;) during the account setup process, or by
@@ -153,6 +159,10 @@
           (c) After redemption, Promotional Credits are valid for a period of 12 months. Promotional Credits that have not been used at that time will expire.
         </p>
 
+        <p>
+          (d) Promotional offers expressed in Gigabytes of storage or bandwidth will be treated as Promotional Credits in dollar equivalents. For example, a promotional offer of "50 GB free bandwidth" will be reflected on the account statement by a Promotional Credit of $2.50 (50GB bandwidth * $0.05 per GB).
+        </p>
+
       </div>
     </div>
   </div>
@@ -163,3 +173,13 @@ export default {
   name: 'terms-of-service'
 };
 </script>
+
+<style lang="scss">
+  .terms-of-service header {
+    padding-top: 1.5rem;
+  }
+
+  .terms-of-service .body {
+    padding: 0 3rem;
+  }
+</style>

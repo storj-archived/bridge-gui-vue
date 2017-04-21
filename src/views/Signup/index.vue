@@ -10,7 +10,6 @@
 
                 <h1 class="title text-center form-group">Sign Up</h1>
 
-
                 <NewReferralUserBanner v-if="showReferralBanner">
                 </NewReferralUserBanner>
 
@@ -44,10 +43,6 @@
                     />
                   </div>
 
-                  <!-- <div v-if="!passwordsMatch" class="text-danger">
-
-                  </div> -->
-
                   <div class="form-group">
                     <button
                       :disabled="!fieldsComplete"
@@ -69,7 +64,7 @@
                           v-model="eula"
                         />
                         I agree to the
-                          <a href="#noop" @click.prevent="openEula">
+                          <a href="" @click.prevent="openEula">
                             Terms of Service
                           </a>
                       </p>
@@ -96,13 +91,18 @@
         </div>
       </div>
     </div>
-
     <Signup-Success v-else></Signup-Success>
+
+    <b-modal id="eulaModal" title="Storj Labs" size="lg" hide-header=true>
+      <Terms-Of-Service></Terms-Of-Service>
+    </b-modal>
+
   </section>
 </template>
 
 <script>
 import NavAuthentication from '@/components/Nav-Authentication';
+import TermsOfService from '@/components/Terms-of-Service';
 import NewReferralUserBanner from './New-Referral-User-Banner';
 import NewUserBanner from './New-User-Banner';
 import SignupSuccess from './Signup-Success';
@@ -114,6 +114,7 @@ export default {
 
   components: {
     NavAuthentication,
+    TermsOfService,
     NewReferralUserBanner,
     NewUserBanner,
     SignupSuccess
@@ -189,7 +190,7 @@ export default {
     },
 
     openEula () {
-
+      this.$root.$emit('show::modal', 'eulaModal');
     }
   }
 };
