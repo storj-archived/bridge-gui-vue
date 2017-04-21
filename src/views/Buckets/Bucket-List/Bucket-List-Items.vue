@@ -38,8 +38,9 @@ export default {
 
   methods: {
     navigateToBucket (bucketId) {
-      console.log('bucket clicked', bucketId);
-      this.$router.push({ name: 'Bucket Files', params: { bucketId } });
+      this.$router.push({
+        name: 'Bucket Files', params: { bucketId: bucketId }
+      });
     }
   }
 };
