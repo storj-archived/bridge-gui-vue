@@ -116,8 +116,8 @@ export default {
         .map((credit) => {
           const transaction = {...credit};
           transaction.amount = -credit.promo_amount;
-          const titleizedType = promoCodes(credit.promo_code);
-          transaction.description = `${titleizedType} credit applied`;
+          transaction.type = `${promoCodes(credit.promo_code)} Credit`;
+          transaction.description = '';
           transaction.timestamp = moment.utc(credit.created).valueOf();
           return transaction;
         });
