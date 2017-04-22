@@ -15,6 +15,16 @@ npm run dev
 npm run build
 
 ```
+
+`bridge-gui` uses a `.env.js` file containing write keys. Create one locally with the correct values:
+
+```javascript
+export default {
+  STRIPE_PUBLISHABLE_KEY: ''
+};
+
+```
+
 ## Service Dependencies
 
 Bridge-gui uses [billing](https://github.com/Storj/billing) and [bridge](https://github.com/Storj/bridge).
