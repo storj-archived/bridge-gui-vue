@@ -109,6 +109,26 @@ const actions = {
         });
       }).catch((err) => reject(new errors.InternalError(err)));
     });
+  },
+
+  deleteBucket ({ commit, state, dispatch }, bucketId) {
+    return new Promise((resolve, reject) => {
+      if (!bucketId) {
+        return reject(new errors.BadRequestError('No bucket ID'));
+      }
+
+      dispatch('keypairAuth').then((storj) => {
+        storj.deleteBucket(bucketId, function (err) {
+          if (err) {
+            return reject(err);
+          }
+          commit(SET_CURRENT_BUCKET_META, {});
+          commit(SET_CURRENT_BUCKET_FILES, []);
+
+          return resolve();
+        });
+      }).catch((err) => reject(err));
+    });
   }
 };
 
