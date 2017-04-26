@@ -150,7 +150,6 @@ export default {
     },
 
     handleError (err) {
-      console.log('err', err);
       this.submitting = false;
       this.attemptLogin = false;
       this.errors.login = err.message;
@@ -164,8 +163,6 @@ export default {
     }, 400),
 
     validateInputs () {
-      console.log('validating');
-
       this.errors.email = validate.email(this.email) || validate.required(this.email);
       this.errors.password = validate.required(this.password);
 

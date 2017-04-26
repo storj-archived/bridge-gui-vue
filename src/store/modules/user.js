@@ -13,7 +13,6 @@ const state = {
 
 const mutations = {
   [SET_USER] (state, email) {
-    console.log('commiting SET_USER', email);
     state.email = email;
 
     // save user to localStorage
@@ -21,7 +20,6 @@ const mutations = {
   },
 
   [CLEAR_USER] (state) {
-    console.log('commiting CLEAR_USER');
     state.email = '';
 
     lStorage.remove('email');

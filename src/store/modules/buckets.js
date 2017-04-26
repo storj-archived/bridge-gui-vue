@@ -24,17 +24,14 @@ const mutations = {
 
   [ADD_BUCKET] (state, bucket) {
     const newBucketList = state.all.concat([bucket]);
-    console.log('newBucketlist', newBucketList);
     state.all = newBucketList;
   },
 
   [SET_CURRENT_BUCKET_META] (state, bucket) {
-    console.log('set current bucket', bucket);
     state.current.meta = bucket;
   },
 
   [SET_CURRENT_BUCKET_FILES] (state, files) {
-    console.log('set current bucket files', files);
     state.current.files = files;
   },
 
@@ -67,7 +64,6 @@ const actions = {
           if (err) {
             return reject(new errors.InternalError(err.message));
           }
-          console.log('created bucket', bucket);
           commit(SET_CURRENT_BUCKET_META, bucket);
           return resolve(bucket.id);
         });

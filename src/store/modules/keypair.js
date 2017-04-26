@@ -19,7 +19,6 @@ const mutations = {
    * Saves private key to store and also sets it on Local Storage
    */
   [SET_PRIVATE_KEY] (state, privateKey) {
-    console.log('SET_PRIVATE_KEY');
     state.privateKey = privateKey;
 
     lStorage.save('privateKey', privateKey);
@@ -32,7 +31,6 @@ const mutations = {
   },
 
   [CLEAR_KEYS] (state) {
-    console.log('CLEAR_KEYS');
     state.privateKey = '';
     state.publicKey = '';
 
@@ -44,8 +42,6 @@ const mutations = {
 const actions = {
   generateKeypair ({ commit, state, rootState }, storj) {
     return new Promise((resolve, reject) => {
-      console.log('ACTION: generateKeyPair');
-
       if (!storj) {
         return reject(new errors.BadRequestError('No Storj instance'));
       }
@@ -64,8 +60,6 @@ const actions = {
   */
   registerKey ({ commit, state }, data) {
     return new Promise((resolve, reject) => {
-      console.log('registeringKey');
-
       if (!data.storj) {
         return reject(new errors.BadRequestError('No Storj instance'));
       }
@@ -74,7 +68,6 @@ const actions = {
         if (err) {
           return reject(new errors.InternalError(err));
         }
-        console.log('key registered');
         return resolve();
       });
     });
@@ -86,7 +79,6 @@ const actions = {
    */
   unregisterKey ({ commit, dispatch }, storj) {
     return new Promise((resolve, reject) => {
-      console.log('unregisterKey');
       const privateKey = lStorage.retrieve('privateKey');
       const publicKey = lStorage.retrieve('publicKey');
 
@@ -98,7 +90,6 @@ const actions = {
         if (err) {
           return reject(new errors.InternalError(err.message));
         }
-        console.log('Removing private key');
         commit(CLEAR_KEYS);
         return resolve('Private key removed');
       });

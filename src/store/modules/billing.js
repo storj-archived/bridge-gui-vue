@@ -89,7 +89,6 @@ const actions = {
 
   _setPaymentInfo ({ commit }, res) {
     if (res && res.data && res.data.pp) {
-      console.log('res.data', res.data);
       commit(SET_DEFAULT_PAYMENT_METHOD, res.data.pp.defaultPaymentMethod);
       commit(SET_BILLING_DATE, res.data.pp.billingDate);
       commit(SET_DEFAULT_PP_ID, res.data.pp.id);

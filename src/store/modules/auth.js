@@ -59,7 +59,6 @@ const actions = {
 
   logout ({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
-      console.log('logging out');
       dispatch('keypairAuth')
         .then((storj) => dispatch('unregisterKey', storj))
         .then(() => {
@@ -78,7 +77,6 @@ const actions = {
   * implemented on storj.js
   */
   isStorjAuthenticated ({ commit, dispatch }, storj) {
-    console.log('checking storj authentication');
     return new Promise((resolve, reject) => {
       if (!storj) {
         return reject(new errors.BadRequestError('No Storj instance'));
@@ -86,10 +84,8 @@ const actions = {
 
       storj.getKeyList(function (err) {
         if (err) {
-          console.log('getKeyList error');
           return reject(err);
         }
-        console.log('got key list');
         return resolve(true);
       });
     });
@@ -97,8 +93,6 @@ const actions = {
 
   basicAuth ({ commit, dispatch }, credentials) {
     return new Promise((resolve, reject) => {
-      console.log('ACTION: basicAuth', credentials);
-
       const options = {
         bridge: config.app.BRIDGE_URL,
         basicAuth: credentials
@@ -123,7 +117,6 @@ const actions = {
   keypairAuth ({ commit, dispatch, rootState }) {
     return new Promise((resolve, reject) => {
       const privateKey = rootState.keypair.privateKey;
-      console.log('ACTION: keypairAuth', privateKey);
 
       if (!privateKey) {
         return reject('No private key');
@@ -141,7 +134,6 @@ const actions = {
       });
 
       storj.on('error', function (err) {
-        console.log('errror', err);
         return reject(err);
       });
     });
