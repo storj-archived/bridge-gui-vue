@@ -2,7 +2,7 @@
 /* eslint no-undef: ["error", { "typeof": false }] */
 
 import errors from 'storj-service-error-types';
-import env from '../../.env.js';
+import env from 'env';
 import Promise from 'bluebird';
 
 const STRIPE_PUBLISHABLE_KEY = process.env.NODE_ENV === 'development'
