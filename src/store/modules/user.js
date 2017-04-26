@@ -5,7 +5,6 @@ import {
 import axios from 'axios';
 import Promise from 'bluebird';
 import config from '../../../config';
-import errors from 'storj-service-error-types';
 import { lStorage } from '@/utils';
 
 const state = {
@@ -48,7 +47,7 @@ const actions = {
             .then((res) => resolve(res))
             .catch((err) => reject(err));
         })
-        .catch((err) => reject(new errors.InternalError(err)));
+        .catch((err) => reject(err));
     });
   }
 };

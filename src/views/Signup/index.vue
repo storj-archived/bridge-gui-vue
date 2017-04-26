@@ -173,6 +173,7 @@ export default {
       }
 
       this.eulaError = '';
+      this.error = '';
 
       this.createUser({
         email: this.email,
@@ -181,10 +182,14 @@ export default {
       }).then((result) => {
         this.signupSuccess = true;
       }).catch((err) => {
-        console.log('err', err);
-        const message = err.message.response
-          ? err.message.response.data.error
-          : err.message;
+        let message;
+        if (typeof err.message === 'string') {
+          message = err.message;
+        } else {
+          message = err.message.response
+            ? err.message.response.data.error
+            : err.message.message;
+        }
         this.error = message;
       });
     },
