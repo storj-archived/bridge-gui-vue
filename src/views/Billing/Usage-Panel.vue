@@ -36,7 +36,6 @@
 <script>
 import { mapState } from 'vuex';
 import { getSum, roundToGBAmount, getAverage } from '@/utils';
-const GB = 1000000000;
 
 export default {
   name: 'usage-panel',
@@ -51,8 +50,8 @@ export default {
         return '0.00';
       }
 
-      const storageInGB = getSum(this.debits, 'storage') / GB;
-      const avgStorage = getAverage(storageInGB, this.debits.length);
+      const storage = getSum(this.debits, 'storage');
+      const avgStorage = getAverage(storage, this.debits.length);
       const roundStorage = roundToGBAmount(avgStorage);
 
       return roundStorage;
@@ -63,8 +62,8 @@ export default {
         return '0.00';
       }
 
-      const bandwidthInGB = getSum(this.debits, 'bandwidth') / GB;
-      const avgBandwidth = getAverage(bandwidthInGB, this.debits.length);
+      const bandwidth = getSum(this.debits, 'bandwidth');
+      const avgBandwidth = getAverage(bandwidth, this.debits.length);
       const roundBandwidth = roundToGBAmount(avgBandwidth);
 
       return roundBandwidth;
