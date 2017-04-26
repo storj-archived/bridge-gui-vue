@@ -2,11 +2,10 @@
 /* eslint no-undef: ["error", { "typeof": false }] */
 
 import errors from 'storj-service-error-types';
-import env from '../../.env.js';
 import Promise from 'bluebird';
 
 const STRIPE_PUBLISHABLE_KEY = process.env.NODE_ENV === 'development'
-  ? env.STRIPE_PUBLISHABLE_KEY
+  ? require('../../.env.js').STRIPE_PUBLISHABLE_KEY
   : process.env.STRIPE_PUBLISHABLE_KEY;
 
 Stripe.setPublishableKey(STRIPE_PUBLISHABLE_KEY);
