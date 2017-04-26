@@ -27,6 +27,7 @@
     "bootstrap-vue": "^0.11.0",
     "compression": "^1.6.2",
     "crypto": "0.0.3",
+    "dotenv-webpack": "^1.4.3",
     "express-session": "^1.15.2",
     "helmet": "^3.5.0",
     "lodash": "^4.17.4",
