@@ -4,7 +4,7 @@
       src="//localhost:3001/static/img/storj-loader.svg"
       alt="Storj"
       :width="width"
-      :style="style"
+      :style="componentStyle"
     />
   </div>
 </html>
@@ -20,7 +20,7 @@ export default {
       type: String,
       default: '100'
     },
-    style: {
+    componentStyle: {
       type: String,
       default: 'margin: auto; position: absolute; top: 0; left: 0; bottom: 0; right: 0;'
     }
