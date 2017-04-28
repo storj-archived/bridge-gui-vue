@@ -4,6 +4,25 @@
 
 ## Local Development Setup
 
+### Prerequisites
+
+1. Nodemon
+  - Installation: `npm install -g nodemon`
+
+2. Mongodb
+
+  - Installation: `brew update && brew install mongodb`
+
+    - If you don't have Mac OSX, follow the [install instructions](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/)
+
+    - If you don't have Homebrew, [install it](https://brew.sh/)
+
+    - As an easy way to manage Mongo and other databases, I recommend [Launch Rocket](https://github.com/jimbojsb/launchrocket). Install with `brew cask install launchrocket`. This will allow you to easily turn Mongo on and off and even have it start automatically.
+
+    - Start Mongo with `mongod` in a new terminal window. If you don't use Launch Rocket, then you'll need to follow the [Mongo instructions](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb) to start it
+
+3. Node >= v.6.9.4
+
 ### Create `storj-dev` folder
 > Optional: You don't need this folder, but it may help in organizing if you've got a lot going on
 
@@ -93,4 +112,17 @@ $ npm run dev
 
 The initial load takes around ~17 secs, but every other load after that is less than one second
 
-Open up `localhost:3001`. Any changes you make to the code, the app will hot reload and display those changes.
+If running correctly, you'll see output like this:
+
+```bash
+> bridge-gui-vue@1.0.0 dev /Users/barbara/Documents/Code/storj-vagrant/bridge-gui-vue
+> node build/dev-server.js
+
+
+
+ DONE  Compiled successfully in 16180ms                                                                                      4:27:05 PM
+
+> Listening at http://localhost:3001
+```
+
+Open up `localhost:3001`. Now, upon making changes and saving the file, the app will hot reload and display those changes.
