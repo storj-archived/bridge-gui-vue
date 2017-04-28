@@ -5,6 +5,7 @@
 ## Local Development Setup
 
 ### Create `storj-dev` folder
+> Optional: You don't need this folder, but it may help in organizing if you've got a lot going on
 
 ```sh
 $ mkdir storj-dev
