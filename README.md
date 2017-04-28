@@ -2,7 +2,7 @@
 
 > A web-based GUI for Storj Bridge
 
-## Build Setup
+## Local Development Setup
 
 ### Create `storj-dev` folder
 
