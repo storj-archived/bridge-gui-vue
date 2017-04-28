@@ -1,3 +1,6 @@
+/* global analytics */
+/* eslint no-undef: ["error", { "typeof": false }] */
+
 import Vue from 'vue';
 import Router from 'vue-router';
 import Login from '@/views/Login';
@@ -14,6 +17,7 @@ import Support from '@/views/Support';
 import Billing from '@/views/Billing';
 import Referrals from '@/views/Referrals';
 import { lStorage } from '@/utils';
+// import analytics from '@/vendors/analytics';
 
 Vue.use(Router);
 
@@ -118,6 +122,14 @@ router.beforeEach((to, from, next) => {
     next();
   } else {
     next();
+  }
+});
+
+router.afterEach((to, from) => {
+  // NB: "1" if DNT is enabled, "0" if user opted-in for tracking;
+  // otherwise "unspecified"
+  if (navigator && navigator.doNotTrack !== '1') {
+    analytics.page(to.name);
   }
 });
 
