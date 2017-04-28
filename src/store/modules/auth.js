@@ -1,6 +1,3 @@
-/* global Storj */
-/* eslint no-undef: ["error", { "typeof": false }] */
-
 import Promise from 'bluebird';
 import {
   SET_AUTHENTICATION,
@@ -12,6 +9,7 @@ import {
 } from '../mutation-types';
 import config from '../../../config';
 import errors from 'storj-service-error-types';
+import Storj from '../../../vendors/storj.es6';
 
 const state = {
   authenticated: false
