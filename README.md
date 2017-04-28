@@ -21,7 +21,13 @@
 
     - Start Mongo with `mongod` in a new terminal window. If you don't use Launch Rocket, then you'll need to follow the [Mongo instructions](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb) to start it
 
-3. Node >= v.6.9.4
+3. Redis
+
+  - Installation: `brew update && brew install redis`
+
+  - Just get Launch Rocket by now to start and manage all your databases
+
+4. Node >= v.6.9.4
 
 ### Create `storj-dev` folder
 > Optional: You don't need this folder, but it may help in organizing if you've got a lot going on
@@ -110,7 +116,7 @@ $ npm install
 $ npm run dev
 ```
 
-The initial load takes around ~17 secs, but every other load after that is less than one second
+The initial load takes around ~17 secs, but every other load after that is ~0.5-2 seconds
 
 If running correctly, you'll see output like this:
 
