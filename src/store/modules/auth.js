@@ -40,7 +40,7 @@ const actions = {
   login ({ commit, dispatch }, credentials) {
     return new Promise((resolve, reject) => {
       dispatch('basicAuth', credentials).then((storj) => {
-        dispatch('unregisterKey', storj)
+        return dispatch('unregisterKey', storj)
           .then(() => dispatch('generateKeypair', storj))
           .then((keypair) => {
             return dispatch('registerKey', {
