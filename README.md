@@ -26,7 +26,7 @@ Open up two more terminal windows and navigate to the `storj-dev` folder
 In the first one, navigate to `storj-dev/bridge`
 
 ```sh
-$ npm install
+$ npm install && npm link
 $ NODE_ENV=develop storj-bridge
 ```
 
