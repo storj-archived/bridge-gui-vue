@@ -11,7 +11,7 @@
       </b-nav-toggle>
 
       <router-link :to="'/dashboard'" class="navbar-brand">
-        <img src="../../../static/img/logo-blue.svg" alt="Storj" class="logo" />
+        <img :src="storjLogo" alt="Storj" class="logo" />
       </router-link>
 
       <b-collapse is-nav id="nav_collapse">
@@ -45,10 +45,17 @@
 </template>
 
 <script>
+import storjLogo from '../../../static/img/logo-blue.svg';
 import { mapActions } from 'vuex';
 
 export default {
   name: 'dashboard',
+
+  data () {
+    return {
+      storjLogo
+    };
+  },
 
   methods: {
     ...mapActions([ 'logout' ]),
