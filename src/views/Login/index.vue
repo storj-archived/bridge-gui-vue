@@ -84,18 +84,6 @@
 </template>
 
 <script>
-/**
- * Login should:
-  - on load, check for private key, validate, and then log user in and redirect
-  - take in email address and password
-     - validate email is valid email address && is not empty
-     - validate password is not empty
-  - on submission
-    - submit email and password to storj.basicAuth
-    - create private key and store it
-    - re-authenticate with key auth
-    - direct to /dashboard
- */
 import NavAuthentication from '@/components/Nav-Authentication.vue';
 import { mapActions } from 'vuex';
 import * as validate from '@/utils/validation';
