@@ -9,7 +9,13 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    app: './src/main.js',
+    vendor: [
+      'lodash',
+      'moment',
+      resolve('vendors/storj.es6.js'),
+      resolve('vendors/analytics.js')
+    ]
   },
   output: {
     path: config.build.assetsRoot,
