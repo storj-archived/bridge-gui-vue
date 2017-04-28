@@ -1,24 +1,26 @@
 <template>
   <section class="bucket-list container">
-    <div class="row">
-      <div class="col col-xs-12">
-        <h1 class="title float-left">Buckets</h1>
-        <router-link :to="{ name: 'Create Bucket' }">
-          <button class="btn btn-green btn-action float-right">
-              Create Bucket
-          </button>
-        </router-link>
-      </div>
+    <div v-if="loading" class="loading">
+      <Sj-loading></Sj-loading>
     </div>
-
-    <div class="row">
-      <div class="col col-xs-12">
-        <div v-if="loading" class="loading">
-          <Sj-loading></Sj-loading>
+    <div v-else>
+      <div class="row">
+        <div class="col col-xs-12">
+          <h1 class="title float-left">Buckets</h1>
+          <router-link :to="{ name: 'Create Bucket' }">
+            <button class="btn btn-green btn-action float-right">
+                Create Bucket
+            </button>
+          </router-link>
         </div>
-        <div v-else class="table-responsive content">
-          <Bucket-List-Items :buckets="buckets">
-          </Bucket-List-Items>
+      </div>
+
+      <div class="row">
+        <div class="col col-xs-12">
+          <div class="table-responsive content">
+            <Bucket-List-Items :buckets="buckets">
+            </Bucket-List-Items>
+          </div>
         </div>
       </div>
     </div>
