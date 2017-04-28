@@ -7,7 +7,7 @@
         target="_blank"
         class="btn btn-payment">
           <img class="btn-payment-icon-bitcoin"
-            :src="bitcoinBtn"
+            :src="bitcoinIcon"
             alt="bitcoin"
           />
         bitcoin
@@ -17,14 +17,14 @@
 </template>
 
 <script>
-import bitcoinBtn from './../../static/img/icon-bitcoin.svg';
+import bitcoinIcon from './../../static/img/icon-bitcoin.svg';
 
 export default {
   name: 'sj-crypto-payment-btn',
 
   data () {
     return {
-      bitcoinBtn
+      bitcoinIcon
     };
   }
 };
