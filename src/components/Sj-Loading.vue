@@ -1,7 +1,7 @@
 <template lang="html">
   <div>
     <img
-      src="//localhost:3001/static/img/storj-loader.svg"
+      :src="loader"
       alt="Storj"
       :width="width"
       :style="componentStyle"
@@ -12,8 +12,16 @@
 </template>
 
 <script>
+import loader from './../../static/img/storj-loader.svg';
+
 export default {
   name: 'sj-loading',
+
+  data () {
+    return {
+      loader
+    };
+  },
 
   props: {
     width: {
@@ -28,5 +36,5 @@ export default {
 };
 </script>
 
-<style lang="css">
+<style lang="scss">
 </style>
