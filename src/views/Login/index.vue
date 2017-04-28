@@ -87,7 +87,7 @@
 import NavAuthentication from '@/components/Nav-Authentication.vue';
 import { mapActions } from 'vuex';
 import * as validate from '@/utils/validation';
-import _ from 'lodash';
+import { debounce } from 'lodash';
 
 export default {
   name: 'login',
@@ -143,7 +143,7 @@ export default {
       this.errors.login = err.message;
     },
 
-    validateEmail: _.debounce(function () {
+    validateEmail: debounce(function () {
       const emailErrors = validate.email(this.email) || validate.required(this.email);
       this.errors.email = emailErrors;
 
