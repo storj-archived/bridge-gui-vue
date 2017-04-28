@@ -40,6 +40,6 @@ module.exports = {
     BRIDGE_URL: process.env.NODE_ENV === 'development'
       ? 'http://localhost:6382' : process.env.BRIDGE_URL,
     BILLING_URL: process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000' : process.env.APOLLO_CLIENT_URL
+      ? 'http://localhost:3000' : process.env.BILLING_URL
   }
 }
