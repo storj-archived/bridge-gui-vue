@@ -39,7 +39,7 @@
               <div class="form-group">
                 <button
                   type="submit"
-                  @click.prevent="submitPasswordReset"
+                  @click.prevent="handleSubmit"
                   class="btn btn-block btn-green submit"
                 >
                   Reset My Password
@@ -66,6 +66,8 @@
 
 <script>
 import NavAuthentication from '@/components/Nav-Authentication.vue';
+import { mapActions } from 'vuex';
+import { sha256 } from '@/utils';
 
 export default {
   name: 'password-reset',
@@ -81,12 +83,21 @@ export default {
   },
 
   methods: {
-    submitPasswordReset () {
+    ...mapActions([ 'resetPassword' ]),
 
+    handleSubmit () {
+      console.log('click');
+      this.resetPassword({ email: this.email, password: sha256(this.password) })
+        .then((res) => {
+          console.log('res', res);
+        })
+        .catch((err) => {
+          this.error = err;
+        });
     }
   }
 };
 </script>
 
-<style lang="sass">
+<style lang="scss">
 </style>
