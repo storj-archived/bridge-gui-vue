@@ -5,7 +5,9 @@
       <div class="row justify-content-center">
         <div class="col col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12
         text-center">
-          <div class="content">
+          <Reset-Success v-if="success"></Reset-Success>
+
+          <div v-else class="content">
             <h1 class="title text-center form-group">
               Forgot your password?
             </h1>
@@ -46,8 +48,10 @@
                 </button>
               </div>
 
-              <div v-if="error">
-                <span class="text-danger">{{ error }}</span>
+              <div v-show="error" class="text-danger">
+                <div class="spacer20"></div>
+                {{ error }}
+                <div class="spacer20"></div>
               </div>
 
             </form>
@@ -65,20 +69,22 @@
 </template>
 
 <script>
-import NavAuthentication from '@/components/Nav-Authentication.vue';
+import NavAuthentication from '@/components/Nav-Authentication';
+import ResetSuccess from './Reset-Success';
 import { mapActions } from 'vuex';
 import { sha256 } from '@/utils';
 
 export default {
   name: 'password-reset',
 
-  components: { NavAuthentication },
+  components: { NavAuthentication, ResetSuccess },
 
   data () {
     return {
       email: '',
       password: '',
-      error: ''
+      error: '',
+      success: false
     };
   },
 
@@ -86,13 +92,12 @@ export default {
     ...mapActions([ 'resetPassword' ]),
 
     handleSubmit () {
-      console.log('click');
       this.resetPassword({ email: this.email, password: sha256(this.password) })
-        .then((res) => {
-          console.log('res', res);
+        .then(() => {
+          this.success = true;
         })
         .catch((err) => {
-          this.error = err;
+          this.error = err.message;
         });
     }
   }
