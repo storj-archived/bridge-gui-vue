@@ -10,6 +10,7 @@ import {
 import config from '../../../config';
 import errors from 'storj-service-error-types';
 import Storj from '../../../vendors/storj.es6';
+import axios from 'axios';
 
 const state = {
   authenticated: false
@@ -66,6 +67,24 @@ const actions = {
         .catch(() => {
           dispatch('unauthenticateAll');
           return reject();
+        });
+    });
+  },
+
+  resetPassword ({ commit, dispatch }, credentials) {
+    return new Promise((resolve, reject) => {
+      console.log('credentials', credentials);
+      axios
+        .patch(`${config.app.BRIDGE_URL}/users/${credentials.email}`, {
+          password: credentials.password
+        })
+        .then((result) => {
+          console.log('res', result);
+          return resolve();
+        })
+        .catch((err) => {
+          console.log(err.status, err.message);
+          console.log('err', err);
         });
     });
   },
