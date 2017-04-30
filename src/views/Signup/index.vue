@@ -1,7 +1,7 @@
 <template>
   <section class="container signup-form">
     <Nav-Authentication></Nav-Authentication>
-    <div v-if="!signupSuccess" class="container auth">
+    <div v-if="!signup.success" class="container auth">
       <div class="row justify-content-center">
         <div class="col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12 text-center">
           <div class="content">
@@ -88,7 +88,8 @@
       </div>
     </div>
 
-    <Signup-Success v-else></Signup-Success>
+    <Message-Page v-else :title="signup.title" :message="signup.message">
+    </Message-Page>
 
     <b-modal id="eulaModal" size="lg" :hide-header="true">
       <Terms-Of-Service></Terms-Of-Service>
@@ -103,9 +104,9 @@
 <script>
 import NavAuthentication from '@/components/Nav-Authentication';
 import TermsOfService from '@/components/Terms-of-Service';
+import MessagePage from '@/components/Message-Page';
 import NewReferralUserBanner from './New-Referral-User-Banner';
 import NewUserBanner from './New-User-Banner';
-import SignupSuccess from './Signup-Success';
 import { mapActions } from 'vuex';
 import { sha256 } from '@/utils';
 
@@ -117,7 +118,7 @@ export default {
     TermsOfService,
     NewReferralUserBanner,
     NewUserBanner,
-    SignupSuccess
+    MessagePage
   },
 
   created () {
@@ -137,7 +138,13 @@ export default {
       eula: false,
       error: '',
       eulaError: '',
-      signupSuccess: false
+      signup: {
+        success: false,
+        title: 'Success!',
+        message: `Thanks for signing up! We'll soon send a confirmation email.
+        Please follow the activation link to begin using Storj and
+        unlock your credit!`
+      }
     };
   },
 
@@ -180,7 +187,7 @@ export default {
         password: sha256(this.initialPassword),
         referralLink: this.$route.query.referralLink
       }).then((result) => {
-        this.signupSuccess = true;
+        this.signup.success = true;
       }).catch((err) => {
         let message;
         if (typeof err.message === 'string') {
