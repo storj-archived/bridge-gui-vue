@@ -40,6 +40,7 @@
 
               <div class="form-group">
                 <button
+                  :disabled="this.email && this.password ? false : true"
                   type="submit"
                   @click.prevent="handleSubmit"
                   class="btn btn-block btn-green submit"
