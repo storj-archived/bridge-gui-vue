@@ -1,13 +1,11 @@
 <template>
   <section class="container password-reset">
     <Nav-Authentication></Nav-Authentication>
-    <div class="container auth">
+    <div v-if="!sent.success" class="container auth">
       <div class="row justify-content-center">
         <div class="col col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12
         text-center">
-          <Reset-Success v-if="success"></Reset-Success>
-
-          <div v-else class="content">
+          <div class="content">
             <h1 class="title text-center form-group">
               Forgot your password?
             </h1>
@@ -66,26 +64,34 @@
         </div>
       </div>
     </div>
+
+    <Message-Page v-else :title="sent.title" :message="sent.message">
+    </Message-Page>
   </section>
 </template>
 
 <script>
 import NavAuthentication from '@/components/Nav-Authentication';
-import ResetSuccess from './Reset-Success';
+import MessagePage from '@/components/Message-Page';
 import { mapActions } from 'vuex';
 import { sha256 } from '@/utils';
 
 export default {
   name: 'password-reset',
 
-  components: { NavAuthentication, ResetSuccess },
+  components: { NavAuthentication, MessagePage },
 
   data () {
     return {
       email: '',
       password: '',
       error: '',
-      success: false
+      sent: {
+        success: false,
+        title: 'Password Reset Pending',
+        message: `Almost done! We just sent you a confirmation email.
+        Please follow the instructions to complete your password reset.`
+      }
     };
   },
 
@@ -95,7 +101,7 @@ export default {
     handleSubmit () {
       this.resetPassword({ email: this.email, password: sha256(this.password) })
         .then(() => {
-          this.success = true;
+          this.sent.success = true;
         })
         .catch((err) => {
           this.error = err.message;
