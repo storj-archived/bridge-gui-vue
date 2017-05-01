@@ -16,15 +16,9 @@ import Promise from 'bluebird';
 
 class Client {
   constructor ({ baseURL, bridgeURL, httpClient }) {
+    this._baseURL = baseURL;
     this._bridgeURL = bridgeURL;
     this._httpClient = httpClient;
-    this._baseOpts = {
-      baseURL: baseURL
-    };
-  }
-
-  isGetOrDelete(method) {
-    return ['GET', 'DELETE'].indexOf(method) !== -1 || false;
   }
 
   /**
@@ -38,35 +32,38 @@ class Client {
    *
    */
   request (method, path, params = {}, credentials = {}) {
-    return new Promise((resolve, reject) => {      
-      const privateKey = credentials.privateKey
-        || lStorage.retrieve('privateKey');
+    return new Promise((resolve, reject) => {
+      const privateKey = credentials.privateKey || lStorage.retrieve('privateKey');
+      const isGetOrDel = ['GET', 'DELETE'].indexOf(method) !== -1 || false;
 
       // Nonce for signing up
       const nonce = uuid();
-
       params.__nonce = nonce;
-      this._baseOpts.method = method.toLowerCase();
 
-      if (this.isGetOrDelete) {
-        this._baseOpts.qs = params;
+      const baseOpts = {
+        baseURL: this._baseURL,
+        method: method.toLowerCase()
+      };
+
+      if (isGetOrDel) {
+        baseOpts.qs = params;
       } else {
-        this._baseOpts.data = params;
+        baseOpts.data = params;
       }
 
-      if (privateKey) {
-        this._ecdsa(method, path, params, privateKey)
-      } else {
-        this._basicAuth(method, path, params, credentials);
-      }
+      const authOpts = privateKey
+        ? this._ecdsa(method, path, params, privateKey, isGetOrDel)
+        : this._basicAuth(method, path, params, credentials, isGetOrDel);
 
-      return this._httpClient(this._baseOpts)
+      const opts = Object.assign(baseOpts, authOpts);
+
+      return this._httpClient(opts)
         .then((result) => resolve(result))
         .catch((err) => reject(err));
     });
   }
 
-  _ecdsa (method, path, params, privateKey) {
+  _ecdsa (method, path, params, privateKey, isGetOrDel) {
     const storj = new Storj({
       bridge: this._bridgeURL,
       key: privateKey
@@ -76,9 +73,7 @@ class Client {
     const publicKey = keypair.getPublicKey();
 
     // Stringify according to type of request
-    const payload = this.isGetOrDelete
-      ? qs.stringify(params)
-      : JSON.stringify(params);
+    const payload = isGetOrDel ? qs.stringify(params) : JSON.stringify(params);
 
     // Create contract string in format of <METHOD>\n<PATH>\n<PARAMS>
     const contract = [method, path, payload].join('\n');
@@ -86,26 +81,32 @@ class Client {
     // Sign contract with keypair
     const signedContract = keypair.sign(contract, { compact: false });
 
-    const query = this.isGetOrDelete ? `?${payload}` : ``;
+    const query = isGetOrDel ? `?${payload}` : ``;
 
-    this._baseOpts.url = path + query;
-    this._baseOpts.headers = {
-      'x-pubkey': publicKey,
-      'x-signature': signedContract
+    const opts = {
+      url: path + query,
+      headers: {
+        'x-pubkey': publicKey,
+        'x-signature': signedContract
+      }
     };
 
-    return;
+    return opts;
   }
 
-  _basicAuth (method, path, params, credentials) {
-    const query = this.isGetOrDelete ? `?${qs.stringify(params)}` : ``;
+  _basicAuth (method, path, params, credentials, isGetOrDel) {
+    const query = isGetOrDel ? `?${qs.stringify(params)}` : ``;
 
-    this._baseOpts.url = path + query;
-    this._baseOpts.auth = {
-      user: credentials.email,
-      pass: credentials.password
+    const opts = {
+      url: path + query,
+      auth: {
+        user: credentials.email,
+        pass: credentials.password
+      }
     };
 
-    return;
+    return opts;
   }
 }
+
+export default Client;
