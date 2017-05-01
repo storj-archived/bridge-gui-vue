@@ -6,6 +6,7 @@ import axios from 'axios';
 import Promise from 'bluebird';
 import config from '../../../config';
 import { lStorage } from '@/utils';
+import bridgeClient from '@/api/bridge-client';
 
 const state = {
   email: lStorage.retrieve('email')
@@ -47,7 +48,26 @@ const actions = {
         })
         .catch((err) => reject(err));
     });
+  },
+
+  /**
+   * "Delete" Storj account. Sets account to 'activated: false'. No way to
+   * reactive. Part 1 of 2.
+   */
+  // TODO: Works. Need to figure out what to do after sending confirmation email
+  deleteAccount ({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      const id = lStorage.retrieve('email');
+      bridgeClient.request('DELETE', `/users/${id}`)
+        .then((res) => {
+          console.log('res', res);
+        })
+        .catch((err) => {
+          console.log('err', err);
+        });
+    });
   }
+
 };
 
 export default {
