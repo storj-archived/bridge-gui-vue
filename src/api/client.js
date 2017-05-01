@@ -10,6 +10,8 @@ import Promise from 'bluebird';
  *  the same as baseURL. i.e. https://api.storj.io
  * @params {Object} opts.httpClient - your choice of client to make http calls
  *  (i.e. axios, ajax)
+ *
+ * Reference: https://github.com/Storj/bridge/blob/master/doc/auth.md
  */
 
 class Client {
@@ -25,8 +27,18 @@ class Client {
     return ['GET', 'DELETE'].indexOf(method) !== -1 || false;
   }
 
-  request (method, path, params = {}, credentials) {
-    return new Promise((resolve, reject) => {
+  /**
+   * Authenticates requests sent to Storj clients.
+   * @params {String} method - HTTP method ('GET', 'POST', 'PUT')
+   * @params {String} path - Path for HTTP request
+   * @params {Object} params - data for requests
+   * @params {Object} credentials - basic auth credentials
+   * Example usage:
+   *  client.request('GET', '/credits/test')
+   *
+   */
+  request (method, path, params = {}, credentials = {}) {
+    return new Promise((resolve, reject) => {      
       const privateKey = credentials.privateKey
         || lStorage.retrieve('privateKey');
 
