@@ -182,11 +182,24 @@ export default {
       this.eulaError = '';
       this.error = '';
 
-      this.createUser({
+      const referralLink = this.$route.query.referralLink;
+      const referralPartner = this.$route.query.referralPartner;
+
+      const payload = {
         email: this.email,
-        password: sha256(this.initialPassword),
-        referralLink: this.$route.query.referralLink
-      }).then((result) => {
+        password: sha256(this.initialPassword)
+      };
+
+      if (referralLink) {
+        payload.referralLink = referralLink;
+      }
+
+      if (referralPartner) {
+        payload.opts = { referralPartner: referralPartner.toLowerCase() };
+      }
+
+      this.createUser(payload)
+      .then((result) => {
         this.signup.success = true;
       }).catch((err) => {
         let message;
