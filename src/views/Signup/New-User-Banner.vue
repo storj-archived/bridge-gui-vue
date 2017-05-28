@@ -6,6 +6,11 @@
   >
     <span>
       <p><strong>New User Bonus!</strong></p>
+
+      <p v-if="referralPartner">
+        You've been referred by
+        <strong>{{ referralPartner | capitalize }}!</strong>
+      </p>
       <p>
         Sign up now to unlock <b>one year of free
         service</b> — up to 25GB of storage and bandwidth
@@ -17,6 +22,13 @@
 
 <script>
 export default {
-  name: 'new-user-banner'
+  name: 'new-user-banner',
+
+  props: {
+    referralPartner: {
+      type: String,
+      default: ''
+    }
+  }
 };
 </script>
