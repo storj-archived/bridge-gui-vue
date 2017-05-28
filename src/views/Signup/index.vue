@@ -10,7 +10,8 @@
             <NewReferralUserBanner v-if="showReferralBanner">
             </NewReferralUserBanner>
 
-            <NewUserBanner v-else></NewUserBanner>
+            <NewUserBanner v-else :referralPartner="referralPartner">
+            </NewUserBanner>
 
             <form>
               <b-form-input
@@ -122,6 +123,8 @@ export default {
   },
 
   created () {
+    this.referralPartner = this.$route.query.referralPartner;
+
     if (this.$route.query.referralLink) {
       this.showReferralBanner = true;
     } else {
@@ -132,6 +135,7 @@ export default {
   data () {
     return {
       showReferralBanner: false,
+      referralPartner: '',
       email: '',
       initialPassword: '',
       confirmPassword: '',
