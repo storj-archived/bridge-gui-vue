@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# On build, variables are set to contain [VAR_NAME]_ENV
+# The dist build happens and the bridge-gui app puts the "[VAR_NAME]_ENV" values in the compiled source
+# On run, the inject script (scripts/inject_static_secrets.sh) replaces "[VAR_NAME]_ENV" with
+# the variables defined in [VAR_NAME]_VAL if defined or [VAR_NAME]_DEFAULT if not
+
+# Set the config replacement values if we have an ENV var set for it
+# otherwise, use the default
+export NODE_ENV_VAL="${NODE_ENV_VAL:-$NODE_ENV_DEFAULT}"
+export STRIPE_PUBLISHABLE_KEY_VAL="${STRIPE_PUBLISHABLE_KEY_VAL:-$STRIPE_PUBLISHABLE_KEY_DEFAULT}"
+export BILLING_URL_VAL="${BILLING_URL_VAL:-$BILLING_URL_DEFAULT}"
+
+# Replace params in static content with desired values
+echo "Injecting secrets into Statically generated content"
+. /usr/local/bin/inject_static_secrets \
+  NODE_ENV \
+  STRIPE_PUBLISHABLE_KEY \
+  BILLING_URL_KEY
+
+# Start Nginx to serve Bridge GUI
+echo "Serving Bridge GUI through Nginx"
+
+/usr/sbin/nginx

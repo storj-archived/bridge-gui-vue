@@ -8,8 +8,15 @@ done
 
 echo "Building with TAG_PARAMS: ${TAG_PARAMS}"
 
-docker build ${TAG_PARAMS} -t bridge-gui-vue .
+docker build -f ./dockerfiles/build.dockerfile .
 result=$?
+
+if [[ $result != 0 ]]; then
+  echo "Error building docker image"
+  exit 1
+fi
+
+docker build ${TAG_PARAMS} -f ./dockerfiles/serve.dockerfile .
 
 if [[ $result != 0 ]]; then
   echo "Error building docker image"
