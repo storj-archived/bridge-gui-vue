@@ -2,13 +2,13 @@
 
 npm run build
 
-for TAG in "$@"; do
-  TAG_PARAMS+=" -t $TAG"
-done
+NAME=$1
+TAG=$2
 
-echo "Building with TAG_PARAMS: ${TAG_PARAMS}"
+echo "Building with NAME: ${NAME} and TAG: ${TAG}"
 
-docker build -f ./dockerfiles/build.dockerfile .
+# We need to pass in the version portion of the tag so we can tag both the serve and build containers
+docker build -t ${NAME}-build:${TAG} -f ./dockerfiles/build.dockerfile .
 result=$?
 
 if [[ $result != 0 ]]; then
@@ -16,7 +16,7 @@ if [[ $result != 0 ]]; then
   exit 1
 fi
 
-docker build ${TAG_PARAMS} -f ./dockerfiles/serve.dockerfile .
+docker build -t ${NAME}:${TAG} -f ./dockerfiles/serve.dockerfile .
 
 if [[ $result != 0 ]]; then
   echo "Error building docker image"
