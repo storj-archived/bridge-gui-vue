@@ -1,8 +1,7 @@
 FROM node:6.10
 
-VOLUME ./dist:/opt/bridge-gui-vue/dist
-
 RUN mkdir /opt/bridge-gui-vue
+RUN mkdir /opt/bridge-gui-vue/dist
 
 COPY ./package.json /opt/bridge-gui-vue/package.json
 
@@ -22,4 +21,5 @@ ENV BILLING_URL $BILLING_URL
 ENV BRIDGE_URL $BRIDGE_URL
 ENV STRIPE_PUBLISHABLE_KEY $STRIPE_PUBLISHABLE_KEY
 
-CMD ["npm", "run", "build"]
+#CMD ["npm", "run", "build"]
+CMD exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
