@@ -33,7 +33,7 @@ echo "Copying statically built files to local dist directory"
 docker cp $CONTAINER_ID:/opt/bridge-gui-vue/dist/ .
 
 echo "Creating server container from static files"
-docker build -t ${NAME}:${TAG} -f ./dockerfiles/serve.dockerfile .
+docker build ${NAME}:${TAG} -f ./dockerfiles/serve.dockerfile .
 echo "Server container creation done."
 
 if [[ $result != 0 ]]; then
