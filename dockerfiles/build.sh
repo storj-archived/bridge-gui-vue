@@ -19,16 +19,22 @@ fi
 #BUILD_ID=$(docker images -q ${NAME}-build:${TAG})
 
 echo "Build ID is $BUILD_ID"
-echo "Copying statically built files to local dist directory"
 
 # CMD exec /bin/bash -c "trap : TERM INT; sleep infinity & wait"
 
+echo "Starting build container"
 CONTAINER_ID=$(docker run -d ${NAME}-build:${TAG})
-docker exec -it $CONTAINER_ID npm run build
 
+echo "Running build in container with id $CONTAINER_ID"
+docker exec -it $CONTAINER_ID npm run build
+echo "Build done."
+
+echo "Copying statically built files to local dist directory"
 docker cp $CONTAINER_ID:/opt/bridge-gui-vue/dist/ .
 
+echo "Creating server container from static files"
 docker build -t ${NAME}:${TAG} -f ./dockerfiles/serve.dockerfile .
+echo "Server container creation done."
 
 if [[ $result != 0 ]]; then
   echo "Error building docker image"
