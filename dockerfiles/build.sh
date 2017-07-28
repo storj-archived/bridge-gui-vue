@@ -26,14 +26,14 @@ echo "Starting build container"
 CONTAINER_ID=$(docker run -d ${NAME}-build:${TAG})
 
 echo "Running build in container with id $CONTAINER_ID"
-docker exec -it $CONTAINER_ID npm run build
+docker exec -t $CONTAINER_ID npm run build
 echo "Build done."
 
 echo "Copying statically built files to local dist directory"
 docker cp $CONTAINER_ID:/opt/bridge-gui-vue/dist/ .
 
 echo "Creating server container from static files"
-docker build -i ${NAME}:${TAG} -f ./dockerfiles/serve.dockerfile .
+docker build -t ${NAME}:${TAG} -f ./dockerfiles/serve.dockerfile .
 echo "Server container creation done."
 
 if [[ $result != 0 ]]; then
