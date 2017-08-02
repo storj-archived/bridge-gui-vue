@@ -72,7 +72,7 @@ class Client {
     const storj = new Storj({
       bridge: this._bridgeURL,
       key: privateKey,
-      protocol: https
+      protocol: 'https'
     });
 
     const keypair = storj.generateKeyPair(privateKey);
