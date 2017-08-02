@@ -44,7 +44,8 @@ class Client {
 
       const baseOpts = {
         baseURL: this._baseURL,
-        method: method.toLowerCase()
+        method: method.toLowerCase(),
+        protocol: 'https'
       };
 
       if (isGetOrDel) {
