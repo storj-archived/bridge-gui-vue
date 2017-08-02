@@ -64,6 +64,7 @@ class Client {
         .then((result) => resolve(result))
         .catch((err) => {
           console.log('testing error: ', err);
+          console.log('baseOpts', baseOpts);
           reject(err);
         });
     });
@@ -89,7 +90,7 @@ class Client {
     const signedContract = keypair.sign(contract, { compact: false });
 
     const query = isGetOrDel ? `?${payload}` : ``;
-
+    console.log('path ', path);
     const opts = {
       url: path + query,
       headers: {
@@ -103,6 +104,8 @@ class Client {
 
   _basicAuth (method, path, params, credentials, isGetOrDel) {
     const query = isGetOrDel ? `?${qs.stringify(params)}` : ``;
+
+    console.log('path ', path);
 
     const opts = {
       url: path + query,
