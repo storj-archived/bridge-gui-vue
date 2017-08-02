@@ -99,6 +99,7 @@ class Client {
       }
     };
 
+    console.log('ecdsa opts: ', opts);
     return opts;
   }
 
