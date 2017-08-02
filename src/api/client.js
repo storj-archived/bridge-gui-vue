@@ -71,7 +71,8 @@ class Client {
   _ecdsa (method, path, params, privateKey, isGetOrDel) {
     const storj = new Storj({
       bridge: this._bridgeURL,
-      key: privateKey
+      key: privateKey,
+      protocol: https
     });
 
     const keypair = storj.generateKeyPair(privateKey);
