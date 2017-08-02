@@ -105,8 +105,8 @@ class Client {
   _basicAuth (method, path, params, credentials, isGetOrDel) {
     const query = isGetOrDel ? `?${qs.stringify(params)}` : ``;
 
-    console.log('path ', path);
-
+    console.log('path ',  path);
+    
     const opts = {
       url: path + query,
       auth: {
@@ -114,7 +114,7 @@ class Client {
         pass: credentials.password
       }
     };
-
+    console.log('auth_opts: ', opts)
     return opts;
   }
 }
