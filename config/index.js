@@ -38,8 +38,8 @@ module.exports = {
   app: {
     NAME: 'storj-bridge-gui',
     BRIDGE_URL: process.env.NODE_ENV === 'development'
-      ? 'http://localhost:6382' : process.env.BRIDGE_URL,
+      ? 'http://localhost:6382' : 'https://api.staging.storj.io',
     BILLING_URL: process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000' : process.env.BILLING_URL
+      ? 'http://localhost:3000' : 'https://billing.staging.storj.io' 
   }
 }
