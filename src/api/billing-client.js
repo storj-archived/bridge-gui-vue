@@ -2,6 +2,7 @@ import axios from 'axios';
 import config from '../../config';
 import Client from './client';
 
+console.log('config', config);
 console.log('config.app.BRIDGE_URL', config.app.BRIDGE_URL);
 console.log('config.app.BILLING_URL', config.app.BILLING_URL);
 
