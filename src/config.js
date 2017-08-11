@@ -7,7 +7,7 @@ module.exports = {
     BILLING: process.env.BILLING_URL
   },
   BRIDGE_URL: process.env.NODE_ENV === 'development'
-    ? 'http://bridge-ssl-proxy' : 'https://api.storj.io',
+    ? 'http://bridge-ssl-proxy' : process.env.BRIDGE_URL,
   BILLING_URL: process.env.NODE_ENV === 'development'
-    ? 'localhost:3000/graphql' : 'https://billing.storj.io'
+    ? 'localhost:3000/graphql' : process.env.BILLING_URL
 };
