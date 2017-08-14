@@ -20,10 +20,11 @@ echo "Injecting secrets into Statically generated content"
   BILLING_URL \
   BRIDGE_URL
 
-echo "NODE_ENV=$NODE_ENV_VAL" > /var/www/.env
-echo "STRIPE_PUBLISHABLE_KEY=$STRIPE_PUBLISHABLE_KEY_VAL" > /var/www/.env
-echo "BILLING_URL=$BILLING_URL_VAL" > /var/www/.env
-echo "BRIDGE_URL=$BRIDGE_URL_VAL" > /var/www/.env
+touch /var/www/.env
+echo "NODE_ENV=$NODE_ENV_VAL" >> /var/www/.env
+echo "STRIPE_PUBLISHABLE_KEY=$STRIPE_PUBLISHABLE_KEY_VAL" >> /var/www/.env
+echo "BILLING_URL=$BILLING_URL_VAL" >> /var/www/.env
+echo "BRIDGE_URL=$BRIDGE_URL_VAL" >> /var/www/.env
 
 # Start Nginx to serve Bridge GUI
 echo "Serving Bridge GUI through Nginx"
