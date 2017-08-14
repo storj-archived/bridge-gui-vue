@@ -2,8 +2,7 @@ import axios from 'axios';
 import config from '../../config';
 import Client from './client';
 
-console.log('process.env.BILLING_URL ', process.env.BILLING_URL);
-console.log('config', config);
+console.log('billing URL', config.app.BILLING_URL);
 
 const billingClient = new Client({
   baseURL: config.app.BILLING_URL,
