@@ -9,6 +9,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 var BabiliPlugin = require('babili-webpack-plugin')
+var Dotenv = require('dotenv-webpack');
 
 var env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -28,10 +29,13 @@ var webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
-    // http://vuejs.github.io/vue-loader/en/workflow/production.html
-    new webpack.DefinePlugin({
-      'process.env': env
+    new Dotenv({
+      path: '../.env'
     }),
+    // http://vuejs.github.io/vue-loader/en/workflow/production.html
+    //new webpack.DefinePlugin({
+    //  'process.env': env
+    //}),
     // can't uglify es2015 stuff yet. Using babili
     // new webpack.optimize.UglifyJsPlugin({
     //   compress: {
