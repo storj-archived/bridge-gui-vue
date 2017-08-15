@@ -33,7 +33,8 @@ module.exports = merge(baseWebpackConfig, {
     }),
     new FriendlyErrorsPlugin(),
     new DotenvPlugin({
-      path: './.env'
+      path: './.env',
+      systemvars: true
     })
   ]
 })
