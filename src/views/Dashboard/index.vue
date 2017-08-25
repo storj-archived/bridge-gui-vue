@@ -10,12 +10,15 @@
         <span className="icon-bar"></span>
       </b-nav-toggle>
 
-      <router-link :to="'/dashboard'" class="navbar-brand">
+      <router-link :to="'/dashboard'" class="navbar-brand hidden-md-up">
         <img :src="storjLogo" alt="Storj" class="logo" />
       </router-link>
 
       <b-collapse is-nav id="nav_collapse">
         <b-nav is-nav-bar class="nav navbar-nav navbar-left">
+          <b-nav-item> 
+            <img :src="storjLogo" alt="Storj" class="logo nav-logo" />
+          </b-nav-item>
           <b-nav-item @click="navigateTo('Buckets')">Buckets</b-nav-item>
           <b-nav-item @click="navigateTo('Billing')">Billing</b-nav-item>
           <b-nav-item @click="navigateTo('Referrals')">Referrals</b-nav-item>
@@ -87,8 +90,17 @@ export default {
   }
 
   .dashboard > .navbar-default .navbar-nav {
-    margin-bottom: -4px;
     padding-bottom: 0;
+  }
+
+  .navbar-logo {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .nav-link {
+    margin: 0px;
+    padding: 0px;
   }
 
   .authenticated-views {
