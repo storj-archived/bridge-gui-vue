@@ -14,7 +14,7 @@ import Support from '@/views/Support';
 import Billing from '@/views/Billing';
 import Referrals from '@/views/Referrals';
 import { lStorage } from '@/utils';
-import analytics from '@/vendors/analytics';
+// import analytics from '@/vendors/analytics';
 
 Vue.use(Router);
 
@@ -124,7 +124,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from) => {
   if (navigator && navigator.doNotTrack !== '1') {
-    analytics.page(to.name);
+    // analytics.page(to.name);
   }
 });
 

@@ -17,7 +17,7 @@
       <b-collapse is-nav id="nav_collapse">
         <b-nav is-nav-bar class="nav navbar-nav navbar-left">
           <b-nav-item> 
-            <img :src="storjLogo" alt="Storj" class="logo nav-logo" />
+            <img :src="storjLogo" alt="Storj" class="logo nav-logo hidden-sm-down" />
           </b-nav-item>
           <b-nav-item @click="navigateTo('Buckets')">Buckets</b-nav-item>
           <b-nav-item @click="navigateTo('Billing')">Billing</b-nav-item>

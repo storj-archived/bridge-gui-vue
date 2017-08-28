@@ -33,8 +33,6 @@ class Client {
    */
   request (method, path, params = {}, credentials = {}) {
     return new Promise((resolve, reject) => {
-      console.log('this._bridgeURL', this._bridgeURL);
-      console.log('this._baseURL', this._baseURL);
       const privateKey = credentials.privateKey || lStorage.retrieve('privateKey');
       const isGetOrDel = ['GET', 'DELETE'].indexOf(method) !== -1 || false;
 
