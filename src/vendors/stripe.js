@@ -5,6 +5,7 @@ import errors from 'storj-service-error-types';
 import Promise from 'bluebird';
 
 Stripe.setPublishableKey(process.env.STRIPE_PUBLISHABLE_KEY);
+console.log('stripe publishable key: ', process.env.STRIPE_PUBLISHABLE_KEY);
 
 export const createStripeToken = function (opts) {
   return new Promise((resolve, reject) => {
