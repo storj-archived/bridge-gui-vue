@@ -1,12 +1,12 @@
 {
   "name": "bridge-gui-vue",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A web-based GUI for Storj Bridge",
   "author": "Barbara Liau <bj.liau@gmail.com>",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/barbaraliau/bridge-gui-vue"
+    "url": "https://github.com/Storj/bridge-gui-vue"
   },
   "license": "AGPL-3.0",
   "homepage": "https://app.storj.io",
