@@ -5,7 +5,6 @@ import errors from 'storj-service-error-types';
 import Promise from 'bluebird';
 
 Stripe.setPublishableKey(process.env.STRIPE_PUBLISHABLE_KEY);
-console.log('stripe publishable: ', process.env.STRIPE_PUBLISHABLE_KEY);
 
 export const createStripeToken = function (opts) {
   return new Promise((resolve, reject) => {
@@ -18,7 +17,6 @@ export const createStripeToken = function (opts) {
       address_zip: zip.value
     }, (status, response) => {
       if (response.error) {
-        console.error('CREATE STRIPE TOKEN ERR', response.error);
         return reject(new errors.InternalError(
           `Processing error: ${response.error.message}`
         ));

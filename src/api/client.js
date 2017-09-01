@@ -61,8 +61,6 @@ class Client {
       return this._httpClient(opts)
         .then((result) => resolve(result))
         .catch((err) => {
-          console.log('testing error: ', err);
-          console.log('baseOpts', baseOpts);
           reject(err);
         });
     });
@@ -88,7 +86,6 @@ class Client {
     const signedContract = keypair.sign(contract, { compact: false });
 
     const query = isGetOrDel ? `?${payload}` : ``;
-    console.log('path ', path);
     const opts = {
       url: path + query,
       headers: {
@@ -97,15 +94,11 @@ class Client {
       }
     };
 
-    console.log('ecdsa opts: ', opts);
     return opts;
   }
 
   _basicAuth (method, path, params, credentials, isGetOrDel) {
     const query = isGetOrDel ? `?${qs.stringify(params)}` : ``;
-
-    console.log('path ', path);
-
     const opts = {
       url: path + query,
       auth: {
@@ -113,7 +106,6 @@ class Client {
         pass: credentials.password
       }
     };
-    console.log('auth_opts: ', opts);
     return opts;
   }
 }

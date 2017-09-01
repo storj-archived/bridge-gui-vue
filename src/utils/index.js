@@ -188,7 +188,6 @@ export const getRange = function (billingDate = (new Date()).getDate(), offset =
     .valueOf();
 
   const endDate = (moment(startDate).add('1', 'month').valueOf());
-  // console.log('getRange startDate: endDate', startDate, endDate);
 
   return {
     startDate,
