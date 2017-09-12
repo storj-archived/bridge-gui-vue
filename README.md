@@ -70,9 +70,17 @@ If it's running correctly, you should see output like this:
 
 In another terminal window, navigate to `storj-dev/billing`
 
+Create a `.env file` for storing billing variables
+
+```sh
+$ touch .env
+```
+
+Paste your `STRIPE_KEY=strip_test_key` into the `.env` file.
+
 ```sh
 $ npm install
-$ STRIPE_TEST_KEY=your_stripe_test_key npm run start-dev
+$ npm run dev
 ```
 
 If it's running correctly, you should see output like this:
