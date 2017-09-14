@@ -3,7 +3,12 @@
     <div class="row">
       <div class="col">
         <h2 class="title float-left">Add Credit Card</h2>
-        <Sj-Crypto-Payment-Btn class="float-right"></Sj-Crypto-Payment-Btn>
+
+        <span class="float-right">
+        Add credit with
+        <Sj-Token-Payment-Btn></Sj-Token-Payment-Btn>
+        <Sj-Crypto-Payment-Btn></Sj-Crypto-Payment-Btn>
+        </span>
       </div>
     </div>
 
@@ -108,6 +113,7 @@
 
 <script>
 import SjCryptoPaymentBtn from '@/components/Sj-Crypto-Payment-Btn';
+import SjTokenPaymentBtn from '@/components/Sj-Token-Payment-Btn';
 import {
   validateCCNumber,
   validateCCForm,
@@ -119,7 +125,7 @@ import { mapActions } from 'vuex';
 export default {
   name: 'add-card-form',
 
-  components: { SjCryptoPaymentBtn },
+  components: { SjCryptoPaymentBtn, SjTokenPaymentBtn },
 
   data () {
     return {
