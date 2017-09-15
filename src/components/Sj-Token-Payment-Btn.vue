@@ -8,7 +8,7 @@
           :src="storjTokenIcon"
           alt="storjToken"
         />
-      <font color="#0275d8">STORJ</font>
+      <font class="btn-payment-text">STORJ</font>
     </b-button>
   </span>
 </template>
@@ -49,4 +49,9 @@ export default {
   height: 22px;
   margin-right: 0.3em;
 }
+
+.btn-payment-text {
+  color: #0275d8;
+}
+
 </style>

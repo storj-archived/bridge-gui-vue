@@ -8,7 +8,7 @@
           :src="bitcoinIcon"
           alt="bitcoin"
         />
-      <font color="#0275d8">bitcoin</font>
+      <font class="btn-payment-text">bitcoin</font>
     </b-button>
   </span>
 </template>
@@ -47,5 +47,9 @@ export default {
   width: 22px;
   height: 22px;
   margin-right: 0.3em;
+}
+
+.btn-payment-text {
+  color: #0275d8;
 }
 </style>
