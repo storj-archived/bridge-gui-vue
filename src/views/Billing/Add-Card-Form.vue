@@ -6,7 +6,6 @@
 
         <span class="float-right">
         Add credit with
-        <Sj-Token-Payment-Btn></Sj-Token-Payment-Btn>
         <Sj-Crypto-Payment-Btn></Sj-Crypto-Payment-Btn>
         </span>
       </div>
@@ -113,7 +112,6 @@
 
 <script>
 import SjCryptoPaymentBtn from '@/components/Sj-Crypto-Payment-Btn';
-import SjTokenPaymentBtn from '@/components/Sj-Token-Payment-Btn';
 import {
   validateCCNumber,
   validateCCForm,
@@ -125,7 +123,7 @@ import { mapActions } from 'vuex';
 export default {
   name: 'add-card-form',
 
-  components: { SjCryptoPaymentBtn, SjTokenPaymentBtn },
+  components: { SjCryptoPaymentBtn },
 
   data () {
     return {

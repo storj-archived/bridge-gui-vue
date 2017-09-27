@@ -3,7 +3,6 @@
     <div class="row">
       <div class="col">
         <h2 class="float-left title">Default Payment Method</h2>
-        <Sj-Token-Payment-Btn class="float-right"></Sj-Token-Payment-Btn>
         <Sj-Crypto-Payment-Btn class="float-right"></Sj-Crypto-Payment-Btn>
       </div>
     </div>
@@ -52,13 +51,12 @@
 
 <script>
 import SjCryptoPaymentBtn from '@/components/Sj-Crypto-Payment-Btn';
-import SjTokenPaymentBtn from '@/components/Sj-Token-Payment-Btn';
 import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'payment-panel',
 
-  components: { SjCryptoPaymentBtn, SjTokenPaymentBtn },
+  components: { SjCryptoPaymentBtn },
 
   data () {
     return {
