@@ -2,6 +2,15 @@
   <div class="crypto-payment-btn">
     <p>
       Add credit with
+      <b-button 
+        class="btn btn-payment"
+      >
+        <img class="btn-payment-icon-bitcoin"
+          :src="storjIcon"
+          alt="storj"
+        />
+        STORJ
+      </b-button> 
       <b-button
         href="https://bitpay.com/cart/add?itemId=JoY55YbAiBvdiV8EZVTmAw"
         target="_blank"
@@ -10,7 +19,7 @@
             :src="bitcoinIcon"
             alt="bitcoin"
           />
-        bitcoin
+       BTC 
       </b-button>
     </p>
   </div>
@@ -18,13 +27,15 @@
 
 <script>
 import bitcoinIcon from './../../static/img/icon-bitcoin.svg';
+import storjIcon from './../../static/img/logo-blue.svg';
 
 export default {
   name: 'sj-crypto-payment-btn',
 
   data () {
     return {
-      bitcoinIcon
+      bitcoinIcon,
+      storjIcon
     };
   }
 };
@@ -36,14 +47,16 @@ export default {
 }
 
 .crypto-payment-btn .btn-payment {
+  color: #0e0e0e;
   background: #fff;
-  padding: 0.4em 0.4em;
+  padding: 0.6em 0.6em;
   letter-spacing: 0;
   border-color: rgba(0, 0, 0, 0.10);
 }
 
 .crypto-payment-btn .btn-payment:hover {
   border-color: transparent;
+  background: #eee;
 }
 
 .btn-payment-icon-bitcoin {
