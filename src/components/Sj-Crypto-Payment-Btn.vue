@@ -2,8 +2,9 @@
   <div class="crypto-payment-btn">
     <p>
       Add credit with
-      <b-button 
+      <b-button v-b-modal.storj-modal
         class="btn btn-payment"
+        @click="handleStorjModal"
       >
         <img class="btn-payment-icon-bitcoin"
           :src="storjIcon"
@@ -22,12 +23,24 @@
        BTC 
       </b-button>
     </p>
+    <b-modal id="storj-modal" title="Pay with STORJ">
+      <h2>STORJ Wallet</h2>
+      <div id="storjQR">
+        <qrcode-vue :value="getStorjAddress()" :size="150" level="H"></qrcode-vue>
+      </div>
+      <div>
+        <b-card>
+          <p class="card-text">{{ getStorjAddress() }}</p>
+        </b-card>
+      </div>
+    </b-modal>
   </div>
 </template>
 
 <script>
 import bitcoinIcon from './../../static/img/icon-bitcoin.svg';
 import storjIcon from './../../static/img/logo-blue.svg';
+import QrcodeVue from 'qrcode.vue';
 
 export default {
   name: 'sj-crypto-payment-btn',
@@ -37,6 +50,17 @@ export default {
       bitcoinIcon,
       storjIcon
     };
+  },
+  components: {
+    QrcodeVue
+  },
+  methods: {
+    handleStorjModal () {
+      console.log('handleStorjModal click');
+    },
+    getStorjAddress () {
+      return 'testQR1234';
+    }
   }
 };
 </script>
