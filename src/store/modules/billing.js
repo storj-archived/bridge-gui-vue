@@ -7,7 +7,8 @@ import {
   SET_NEXT_BILLING_PERIOD,
   CLEAR_DEFAULT_PAYMENT_METHOD,
   MARK_RETRIEVED,
-  CLEAR_BILLING
+  CLEAR_BILLING,
+  SET_WALLETS
 } from '../mutation-types';
 // import errors from 'storj-service-error-types';
 import { createStripeToken } from '@/vendors/stripe';
@@ -19,6 +20,7 @@ const state = {
   retrieved: false,
   credits: [],
   debits: [],
+  wallets: {},
   defaultPaymentMethod: {},
   defaultPPId: '',
   billingDate: null,
@@ -58,6 +60,11 @@ const mutations = {
     state.retrieved = true;
   },
 
+  [SET_WALLETS] (state, wallets) {
+    state.wallets = wallets;
+    console.log('state.wallets', state.wallets);
+  },
+
   [CLEAR_BILLING] (state) {
     state.retrieved = false;
     state.credits = [];
@@ -83,6 +90,17 @@ const actions = {
       params.user = lStorage.retrieve('email');
       billingClient.request('GET', '/debits', params)
         .then((res) => resolve(commit(SET_DEBITS, res.data)))
+        .catch((err) => reject(err));
+    });
+  },
+
+  getWallets ({ commit }) {
+    return new Promise((resolve, reject) => {
+      billingClient.request('GET', '/pp/wallets')
+        .then((res) => {
+          console.log('get wallets response: ', res.data);
+          resolve(commit(SET_WALLETS, res.data));
+        })
         .catch((err) => reject(err));
     });
   },

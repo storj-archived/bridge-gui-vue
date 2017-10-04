@@ -20,10 +20,10 @@
         <Payment-Panel v-if="hasPaymentMethod"></Payment-Panel>
         <Add-Card-Form v-else></Add-Card-Form>
       </div>
-
-      <!-- <div class="row">
-        <Wallet-List></Wallet-List>
-      </div> -->
+     
+      <div class="row">
+        <Wallet-List :val="wallets"></Wallet-List>
+      </div>
 
       <div class="row">
         <Transaction-List></Transaction-List>
@@ -71,11 +71,12 @@ export default {
   computed: mapState({
     hasPaymentMethod: state => !isEmpty(state.billing.defaultPaymentMethod),
     retrieved: state => state.billing.retrieved,
-    period: state => state.billing.nextBillingPeriod
+    period: state => state.billing.nextBillingPeriod,
+    wallets: state => state.billing.wallets
   }),
 
   methods: {
-    ...mapActions([ 'getCredits', 'getDebits', 'getDefaultPP' ]),
+    ...mapActions([ 'getCredits', 'getDebits', 'getDefaultPP', 'getWallets' ]),
 
     loadBillingData () {
       const self = this;
@@ -84,6 +85,7 @@ export default {
           Promise.join(
             self.getCredits(),
             self.getDebits(),
+            self.getWallets(),
             function () {
               self.loading = false;
               self.$store.commit('MARK_RETRIEVED');
