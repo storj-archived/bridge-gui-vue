@@ -1,19 +1,16 @@
 <template lang="html">
-  <div class="crypto-payment-btn">
-    <p>
-      Add credit with
-      <b-button
-        href="https://bitpay.com/cart/add?itemId=JoY55YbAiBvdiV8EZVTmAw"
-        target="_blank"
-        class="btn btn-payment">
-          <img class="btn-payment-icon-bitcoin"
-            :src="bitcoinIcon"
-            alt="bitcoin"
-          />
-        bitcoin
-      </b-button>
-    </p>
-  </div>
+  <span class="crypto-payment-btn">
+    <b-button
+      href="https://bitpay.com/cart/add?itemId=JoY55YbAiBvdiV8EZVTmAw"
+      target="_blank"
+      class="btn btn-payment">
+        <img class="btn-payment-icon-bitcoin"
+          :src="bitcoinIcon"
+          alt="bitcoin"
+        />
+      <font class="btn-payment-text">bitcoin</font>
+    </b-button>
+  </span>
 </template>
 
 <script>
@@ -50,5 +47,9 @@ export default {
   width: 22px;
   height: 22px;
   margin-right: 0.3em;
+}
+
+.btn-payment-text {
+  color: #0275d8;
 }
 </style>
