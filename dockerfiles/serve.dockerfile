@@ -9,7 +9,7 @@ COPY ./dist /var/www/
 #COPY ./files/configs/nginx-default-ssl /etc/nginx/sites-available/default-ssl
 #RUN ln -s /etc/nginx/sites-available/default-ssl /etc/nginx/sites-enabled
 
-COPY ./files/configs/nginx-default /etc/nginx/sites-available/default
+COPY ./dockerfiles/files/configs/nginx-default /etc/nginx/sites-available/default
 COPY ./dockerfiles/files/scripts/inject_static_secrets /usr/local/bin/inject_static_secrets
 COPY ./dockerfiles/files/scripts/start-bridge-gui /usr/local/bin/start-bridge-gui
 
