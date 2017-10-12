@@ -36,7 +36,7 @@
 <script>
 import { mapState } from 'vuex';
 import { getSum, roundToGBAmount } from '@/utils';
-const avgHoursPerMonth = 703;
+const avgHoursPerMonth = 730;
 
 export default {
   name: 'usage-panel',
