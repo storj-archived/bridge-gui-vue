@@ -53,9 +53,8 @@ export default {
 
       const storage = getSum(this.debits, 'storage');
       const currentUsage = storage / avgHoursPerMonth;
-      const roundStorage = roundToGBAmount(currentUsage);
 
-      return roundStorage;
+      return currentUsage;
     },
 
     bandwidth () {
