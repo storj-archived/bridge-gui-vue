@@ -41,7 +41,7 @@ const router = new Router({
     /* Dashboard - requires authenticated user */
     {
       path: '/dashboard',
-      redirect: '/dashboard/buckets',
+      redirect: '/dashboard/billing',
       name: 'Dashboard',
       component: Dashboard,
       meta: { requiresAuth: true },

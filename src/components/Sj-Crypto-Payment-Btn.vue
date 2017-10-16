@@ -88,4 +88,8 @@ export default {
   height: 22px;
   margin-right: 0.3em;
 }
+
+.btn-payment-text {
+  color: #0275d8;
+}
 </style>
