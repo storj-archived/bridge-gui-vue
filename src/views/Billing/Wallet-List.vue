@@ -5,8 +5,12 @@
       <div class="row">
         <div class="col">
           <div class="content">
-            <h2>Storj Wallet</h2>          
-            <div> {{ val }} </div>
+            
+            <div class="col">
+              <button class="btn btn-primary">Pay with STORJ</button>
+            </div>
+
+            {{ wallets }}
 
           </div>
         </div>
@@ -16,9 +20,14 @@
 </template>
 
 <script>
+
 export default {
   name: 'wallet-list',
-  props: ['val']
+  props: ['wallets']
+  data () {
+    return {
+    };
+  }
 };
 </script>
 

@@ -19,7 +19,7 @@ import { lStorage } from '@/utils';
 Vue.use(Router);
 
 const router = new Router({
-  mode: 'hash',
+  mode: 'history',
   scrollBehavior: () => ({ y: 0 }),
   routes: [
     /* Open Authentication Routes */
