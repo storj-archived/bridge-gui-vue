@@ -19,7 +19,7 @@
             <img src="../../../../static/img/icon-bucket.svg" alt="">
           </td>
           <td class="bucket-label">
-            <a @click="navigateToBucket">{{ bucket.name }}</a>
+            <a>{{ bucket.name }}</a>
           </td>
           <td class="bucket-storage">{{ bucket.storage }} GB</td>
           <td class="bucket-transfer">{{ bucket.transfer }} GB</td>
