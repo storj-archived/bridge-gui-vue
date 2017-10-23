@@ -26,11 +26,11 @@
     <b-modal id="storj-modal" title="Pay with STORJ">
       <h2>STORJ Wallet</h2>
       <div id="storjQR">
-        <qrcode-vue :value="getStorjAddress()" :size="150" level="H"></qrcode-vue>
+        <qrcode-vue :value="wallets.storj" :size="150" level="H"></qrcode-vue>
       </div>
       <div>
         <b-card>
-          <p class="card-text">{{ getStorjAddress() }}</p>
+          <p class="card-text">{{ wallets.storj }}</p>
         </b-card>
       </div>
     </b-modal>
@@ -46,7 +46,7 @@ import QrcodeVue from 'qrcode.vue';
 export default {
   name: 'sj-crypto-payment-btn',
   computed: mapState({
-    wallets: state => state.billing.wallets
+    wallets: state => state.billing.wallets.wallets
   }),
   data () {
     return {
@@ -60,13 +60,10 @@ export default {
   methods: {
     handleStorjModal () {
       console.log('wallets: ', this.wallets);
-    },
-    getStorjAddress () {
-      this.$store.dispatch('getWallets');
     }
   },
   created () {
-    this.getStorjAddress();
+    this.$store.dispatch('getWallets');
   }
 };
 </script>

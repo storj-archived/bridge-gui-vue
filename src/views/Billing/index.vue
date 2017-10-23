@@ -20,11 +20,7 @@
         <Payment-Panel v-if="hasPaymentMethod"></Payment-Panel>
         <Add-Card-Form v-else></Add-Card-Form>
       </div>
-     
-      <div class="row">
-        <Wallet-List :val="wallets"></Wallet-List>
-      </div>
-
+      
       <div class="row">
         <Transaction-List></Transaction-List>
       </div>
@@ -37,7 +33,6 @@
 import BalancePanel from '@/views/Billing/Balance-Panel';
 import PaymentPanel from '@/views/Billing/Payment-Panel';
 import UsagePanel from '@/views/Billing/Usage-Panel';
-import WalletList from '@/views/Billing/Wallet-List';
 import TransactionList from '@/views/Billing/Transaction-List';
 import AddCardForm from '@/views/Billing/Add-Card-Form';
 import SjLoading from '@/components/Sj-Loading';
@@ -50,7 +45,6 @@ export default {
 
   components: {
     BalancePanel,
-    WalletList,
     PaymentPanel,
     UsagePanel,
     TransactionList,
