@@ -10,7 +10,7 @@
               <button class="btn btn-primary">Pay with STORJ</button>
             </div>
 
-            {{ wallets }}
+            <code>{{ wallets }}</code>
 
           </div>
         </div>
@@ -24,10 +24,6 @@
 export default {
   name: 'wallet-list',
   props: ['wallets']
-  data () {
-    return {
-    };
-  }
 };
 </script>
 

@@ -62,7 +62,6 @@ const mutations = {
 
   [SET_WALLETS] (state, wallets) {
     state.wallets = wallets;
-    console.log('state.wallets', state.wallets);
   },
 
   [CLEAR_BILLING] (state) {
@@ -94,12 +93,26 @@ const actions = {
     });
   },
 
+  createWallet ({ commit, dispatch }, currency) {
+    console.log('currency: ', currency);
+    return new Promise((resolve, reject) => {
+      billingClient.request('POST', '/pp/wallets', {
+        currency: currency
+      })
+      .then((res) => {
+        console.log('create_wallet: ', res.data);
+        dispatch('getWallets');
+        return resolve(res.data);
+      })
+      .catch((err) => reject(err));
+    });
+  },
+
   getWallets ({ commit }) {
     return new Promise((resolve, reject) => {
       billingClient.request('GET', '/pp/wallets')
         .then((res) => {
-          console.log('get wallets response: ', res.data);
-          resolve(commit(SET_WALLETS, res.data));
+          return resolve(commit(SET_WALLETS, res.data));
         })
         .catch((err) => reject(err));
     });

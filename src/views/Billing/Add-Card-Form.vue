@@ -5,8 +5,7 @@
         <h2 class="title float-left">Add Credit Card</h2>
 
         <span class="float-right">
-        Add credit with
-        <Sj-Crypto-Payment-Btn></Sj-Crypto-Payment-Btn>
+          <Sj-Crypto-Payment-Btn></Sj-Crypto-Payment-Btn>
         </span>
       </div>
     </div>

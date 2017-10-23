@@ -38,13 +38,16 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import bitcoinIcon from './../../static/img/icon-bitcoin.svg';
 import storjIcon from './../../static/img/logo-blue.svg';
 import QrcodeVue from 'qrcode.vue';
 
 export default {
   name: 'sj-crypto-payment-btn',
-
+  computed: mapState({
+    wallets: state => state.billing.wallets
+  }),
   data () {
     return {
       bitcoinIcon,
@@ -56,11 +59,14 @@ export default {
   },
   methods: {
     handleStorjModal () {
-      console.log('handleStorjModal click');
+      console.log('wallets: ', this.wallets);
     },
     getStorjAddress () {
-      return 'testQR1234';
+      this.$store.dispatch('getWallets');
     }
+  },
+  created () {
+    this.getStorjAddress();
   }
 };
 </script>
