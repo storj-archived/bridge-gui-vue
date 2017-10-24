@@ -4,10 +4,7 @@
       <b-card no-body>
         <b-card-header>
           <h5 class="row mb-4">
-            <span class="col-sm-6">
-              Bucket ID: {{ bucket.id }}
-            </span>
-            <span class="col-sm-6">
+            <span class="col-sm-12">
               Status: {{ bucket.status }}
             </span>
           </h5>

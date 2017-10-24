@@ -7,7 +7,7 @@
       <thead>
         <tr>
           <th class="hidden-xs">Bucket</th>
-          <th class="bucket-plan">Name</th>
+          <th class="bucket-plan">ID</th>
           <th class="bucket-storage">Storage</th>
           <th class="bucket-transfer">Transfer</th>
           <th class="bucket-status">Status</th>
@@ -19,7 +19,7 @@
             <img src="../../../../static/img/icon-bucket.svg" alt="">
           </td>
           <td class="bucket-label">
-            <a>{{ bucket.name }}</a>
+            <a class="text-uppercase">{{ bucket.id }}</a>
           </td>
           <td class="bucket-storage">{{ bucket.storage }} GB</td>
           <td class="bucket-transfer">{{ bucket.transfer }} GB</td>
