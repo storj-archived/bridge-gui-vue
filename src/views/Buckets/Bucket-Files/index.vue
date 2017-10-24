@@ -32,7 +32,6 @@
         <div v-show="error" class="col has-error"> {{ error }} </div>
       </div>
 
-      <Bucket-Details :bucket="bucket"></Bucket-Details>
       <Bucket-File-List :files="files"></Bucket-File-List>
       <Sj-Go-Back-Btn name="Buckets"></Sj-Go-Back-Btn>
     </div>
@@ -68,14 +67,13 @@
 import SjGoBackBtn from '@/components/Sj-Go-Back-Btn';
 import SjLoading from '@/components/Sj-Loading';
 import BucketFileList from './Bucket-File-List';
-import BucketDetails from './Bucket-Details';
 import { mapState, mapActions } from 'vuex';
 import Promise from 'bluebird';
 
 export default {
   name: 'bucket-files',
 
-  components: { SjGoBackBtn, SjLoading, BucketFileList, BucketDetails },
+  components: { SjGoBackBtn, SjLoading, BucketFileList },
 
   created () {
     const bucketId = this.$route.params.bucketId;
