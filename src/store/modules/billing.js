@@ -111,6 +111,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       billingClient.request('GET', '/pp/wallets')
         .then((res) => {
+          console.log('res.data: ', res.data);
           if (!res.data.length || !res.data) {
             return resolve(commit(SET_WALLETS, {
               wallets: {
