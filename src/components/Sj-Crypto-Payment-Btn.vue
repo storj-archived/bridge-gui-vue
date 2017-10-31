@@ -60,6 +60,7 @@ export default {
   methods: {
     handleStorjModal () {
       console.log('wallets: ', this.wallets);
+      this.$store.dispatch('createWallet', 'STORJ');
     }
   },
   created () {

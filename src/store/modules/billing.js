@@ -94,7 +94,6 @@ const actions = {
   },
 
   createWallet ({ commit, dispatch }, currency) {
-    console.log('currency: ', currency);
     return new Promise((resolve, reject) => {
       billingClient.request('POST', '/pp/wallets', {
         currency: currency
@@ -112,6 +111,15 @@ const actions = {
     return new Promise((resolve, reject) => {
       billingClient.request('GET', '/pp/wallets')
         .then((res) => {
+          if (!res.data.length || !res.data) {
+            return resolve(commit(SET_WALLETS, {
+              wallets: {
+                storj: '',
+                btc: '',
+                eth: ''
+              }
+            }));
+          }
           return resolve(commit(SET_WALLETS, res.data));
         })
         .catch((err) => reject(err));
