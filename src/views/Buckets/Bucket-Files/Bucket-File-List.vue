@@ -10,7 +10,7 @@
           <table class="table table-hover table-files">
             <thead>
               <tr>
-                <th>Name</th>
+                <th>ID</th>
                 <th>Size</th>
                 <th>Type</th>
               </tr>
@@ -19,7 +19,7 @@
               <tr v-for="file in files" :key="file.id">
                 <td>
                   <!-- file icon mimetype stuff -->
-                  <span>{{ file.filename }}</span>
+                  <span class="text-uppercase">{{ file.id }}</span>
                 </td>
                 <td>
                   <span>{{ file.size }}B</span>
