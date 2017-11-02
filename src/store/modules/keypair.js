@@ -88,6 +88,9 @@ const actions = {
 
       storj.removeKey(publicKey, function (err) {
         if (err) {
+          if (err.toString() === 'Error: Public key was not found') {
+            return resolve('Private key not found');
+          }
           return reject(new errors.InternalError(err.message));
         }
         commit(CLEAR_KEYS);

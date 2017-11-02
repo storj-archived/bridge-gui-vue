@@ -93,6 +93,7 @@ const actions = {
     });
   },
 
+<<<<<<< HEAD
   createWallet ({ commit, dispatch }, currency) {
     return new Promise((resolve, reject) => {
       billingClient.request('POST', '/pp/wallets', {
@@ -127,12 +128,12 @@ const actions = {
     });
   },
 
-  _setPaymentInfo ({ commit }, res) {
-    if (res && res.data && res.data.pp) {
-      commit(SET_DEFAULT_PAYMENT_METHOD, res.data.pp.defaultPaymentMethod);
-      commit(SET_BILLING_DATE, res.data.pp.billingDate);
-      commit(SET_DEFAULT_PP_ID, res.data.pp.id);
-      commit(SET_NEXT_BILLING_PERIOD, res.data.pp.nextBillingPeriod);
+  _setPaymentInfo ({ commit }, data) {
+    if (data && data.pp) {
+      commit(SET_DEFAULT_PAYMENT_METHOD, data.pp.defaultPaymentMethod);
+      commit(SET_BILLING_DATE, data.pp.billingDate);
+      commit(SET_DEFAULT_PP_ID, data.pp.id);
+      commit(SET_NEXT_BILLING_PERIOD, data.pp.nextBillingPeriod);
     } else {
       commit(SET_DEFAULT_PAYMENT_METHOD, {});
       commit(SET_BILLING_DATE, null);
@@ -163,7 +164,7 @@ const actions = {
             data: token,
             processor: opts.processor
           })
-          .then((res) => resolve(dispatch('_setPaymentInfo', res)))
+          .then((res) => resolve(dispatch('_setPaymentInfo', {...res.data})))
           .catch((err) => reject(err));
         })
         .catch((err) => reject(err));
@@ -174,7 +175,7 @@ const actions = {
   getDefaultPP ({ commit, dispatch }) {
     return new Promise((resolve, reject) => {
       billingClient.request('GET', '/pp/default')
-        .then((res) => resolve(dispatch('_setPaymentInfo', res)))
+        .then((res) => resolve(dispatch('_setPaymentInfo', {...res.data})))
         .catch((err) => reject(err));
     });
   }
