@@ -29,9 +29,16 @@
         <!-- <qrcode-vue :value="wallets.storj" :size="150" level="H"></qrcode-vue> --> 
       </div>
       <div>
-        <b-card>
-          <p class="card-text">{{ getTokenWallets('STORJ') }}</p>
-        </b-card>
+        <b-list-group>
+          <b-list-group-item v-for="(wallet, collapseKey) in storj" >
+            <b>{{ wallet.token }}</b>
+            <b>{{ wallet.name }}</b>
+            <p>{{ wallet.address }}</p>
+            <p>
+              <qrcode-vue :value="wallet.address" :size="150" level="H"></qrcode-vue> 
+            </p>
+          </b-list-group-item>
+        </b-list-group>
       </div>
     </b-modal>
   </div>
@@ -66,6 +73,7 @@ export default {
   },
   created () {
     this.$store.dispatch('getWallets');
+    this.storj = this.getTokenWallets('STORJ');
   }
 };
 </script>
