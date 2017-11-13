@@ -2,9 +2,9 @@
   <div class="crypto-payment-btn">
     <p>
       Add credit with
-      <b-button v-b-modal.storj-modal
+      <b-button 
+        v-b-modal.storj-modal
         class="btn btn-payment"
-        @click="handleStorjModal"
       >
         <img class="btn-payment-icon-bitcoin"
           :src="storjIcon"
@@ -16,11 +16,11 @@
         href="https://bitpay.com/cart/add?itemId=JoY55YbAiBvdiV8EZVTmAw"
         target="_blank"
         class="btn btn-payment">
-          <img class="btn-payment-icon-bitcoin"
-            :src="bitcoinIcon"
-            alt="bitcoin"
-          />
-       BTC 
+        <img class="btn-payment-icon-bitcoin"
+          :src="bitcoinIcon"
+          alt="bitcoin"
+        />
+        BTC 
       </b-button>
     </p>
     <b-modal id="storj-modal" title="Pay with STORJ">
@@ -65,8 +65,6 @@ export default {
     QrcodeVue
   },
   methods: {
-    handleStorjModal () {
-    },
     getTokenWallets (token) {
       return this.wallets.filter(wallet => wallet.token === token);
     }
