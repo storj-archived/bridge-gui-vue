@@ -7,7 +7,8 @@ import {
   SET_NEXT_BILLING_PERIOD,
   CLEAR_DEFAULT_PAYMENT_METHOD,
   MARK_RETRIEVED,
-  CLEAR_BILLING
+  CLEAR_BILLING,
+  SET_WALLETS
 } from '../mutation-types';
 // import errors from 'storj-service-error-types';
 import { createStripeToken } from '@/vendors/stripe';
@@ -19,6 +20,7 @@ const state = {
   retrieved: false,
   credits: [],
   debits: [],
+  wallets: {},
   defaultPaymentMethod: {},
   defaultPPId: '',
   billingDate: null,
@@ -58,6 +60,10 @@ const mutations = {
     state.retrieved = true;
   },
 
+  [SET_WALLETS] (state, wallets) {
+    state.wallets = wallets;
+  },
+
   [CLEAR_BILLING] (state) {
     state.retrieved = false;
     state.credits = [];
@@ -83,6 +89,40 @@ const actions = {
       params.user = lStorage.retrieve('email');
       billingClient.request('GET', '/debits', params)
         .then((res) => resolve(commit(SET_DEBITS, res.data)))
+        .catch((err) => reject(err));
+    });
+  },
+
+  createWallet ({ commit, dispatch }, currency) {
+    return new Promise((resolve, reject) => {
+      billingClient.request('POST', '/pp/wallets', {
+        currency: currency
+      })
+      .then((res) => {
+        console.log('create_wallet: ', res.data);
+        dispatch('getWallets');
+        return resolve(res.data);
+      })
+      .catch((err) => reject(err));
+    });
+  },
+
+  getWallets ({ commit }) {
+    return new Promise((resolve, reject) => {
+      billingClient.request('GET', '/pp/wallets')
+        .then((res) => {
+          console.log('res.data: ', res.data);
+          if (!res.data.length || !res.data) {
+            return resolve(commit(SET_WALLETS, {
+              wallets: {
+                storj: '',
+                btc: '',
+                eth: ''
+              }
+            }));
+          }
+          return resolve(commit(SET_WALLETS, res.data));
+        })
         .catch((err) => reject(err));
     });
   },

@@ -109,7 +109,6 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    // this route requires auth. check if authenticated
     const privateKey = lStorage.retrieve('privateKey');
 
     if (!privateKey) {
@@ -119,12 +118,6 @@ router.beforeEach((to, from, next) => {
     next();
   } else {
     next();
-  }
-});
-
-router.afterEach((to, from) => {
-  if (navigator && navigator.doNotTrack !== '1') {
-    // analytics.page(to.name);
   }
 });
 

@@ -52,7 +52,7 @@ export default {
   },
 
   methods: {
-    ...mapActions([ 'getMarketing' ])
+    ...mapActions([ 'getMarketing' ]) // this.getMarketing()
   }
 };
 </script>
