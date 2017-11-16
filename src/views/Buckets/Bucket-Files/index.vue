@@ -10,7 +10,7 @@
       <div class="row">
         <div class="header col col-sm-12">
           <h1 class="title float-left">
-            Files in {{ bucket.name }}
+            Files in <span class="text-uppercase">{{ bucket.id }}</span>
           </h1>
           <!-- NB: Waiting for updateBucketById method in storj.js -->
           <!-- <router-link :to="{

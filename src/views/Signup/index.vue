@@ -191,7 +191,8 @@ export default {
 
       const payload = {
         email: this.email,
-        password: sha256(this.initialPassword)
+        password: sha256(this.initialPassword),
+        redirect: 'https://app.storj.io/'
       };
 
       if (referralLink) {

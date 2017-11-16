@@ -99,7 +99,11 @@ export default {
     ...mapActions([ 'resetPassword' ]),
 
     handleSubmit () {
-      this.resetPassword({ email: this.email, password: sha256(this.password) })
+      this.resetPassword({
+        email: this.email,
+        password: sha256(this.password),
+        redirect: 'https://app.storj.io/'
+      })
         .then(() => {
           this.sent.success = true;
         })
