@@ -49,7 +49,7 @@
 <script>
 import { mapState } from 'vuex';
 import bitcoinIcon from './../../static/img/icon-bitcoin.svg';
-import storjIcon from './../../static/img/logo-blue.svg';
+import storjIcon from './../../static/img/icon-logo.png';
 import QrcodeVue from 'qrcode.vue';
 
 export default {
