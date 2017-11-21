@@ -31,6 +31,7 @@
                 <td>
                   <b>{{ transaction.type | capitalize }}</b>
                   {{ transaction.description | capitalize }}
+										<div class="badge" :class="{'badge-info': transaction.paid === false, 'badge-success': transaction.paid === true }">Paid</div>
                 </td>
                 <td :class="{ 'text-success': transaction.amount <= 0 }">
                   {{ transaction.amount | prettifyAmount | addDollarSign }}
