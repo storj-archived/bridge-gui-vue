@@ -30,8 +30,18 @@
                   v-model="initialPassword"
                 />
               </div>
+              
+              <div v-if="error" class="form-group">
+                <input
+                  type="password"
+                  class="form-control is-invalid"
+                  name="confirm-password"
+                  placeholder="Confirm Password"
+                  v-model="confirmPassword"
+                />
+              </div>
 
-              <div class="form-group">
+              <div v-else="error" class="form-group">
                 <input
                   type="password"
                   class="form-control"
