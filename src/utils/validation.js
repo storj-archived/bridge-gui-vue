@@ -2,7 +2,7 @@ const isEmpty = value => value === undefined || value === null || value === '';
 const join = (rules) => (value, data) => rules.map(rule => rule(value, data)).filter(error => !!error)[0];
 
 export function email (value) {
-  if (!isEmpty(value) && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+  if (isEmpty(value) ||  !isValidEmail(value)) {
     return 'Invalid email address';
   }
 }
