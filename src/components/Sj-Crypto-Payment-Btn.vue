@@ -26,12 +26,14 @@
     <b-modal id="storj-modal" title="Pay with STORJ">
       <h2>STORJ Wallet</h2>
       <div id="storjQR">
-        <!-- <qrcode-vue :value="wallets.storj" :size="150" level="H"></qrcode-vue> --> 
       </div>
       <div>
+        <b-button v-if="!this.wallets.length" @click="createWallet()">
+          Create a wallet
+        </b-button>
         <b-list-group>
-          <b-list-group-item v-for="(wallet, collapseKey) in storj" >
-            <b>{{ wallet.token }}</b>
+          <b-list-group-item v-for="(wallet, collapseKey) in getTokenWallets('STORJ')" >
+             <b>{{ wallet.token }}</b>
             <b>{{ wallet.name }}</b>
             <p>{{ wallet.address }}</p>
             <p>
@@ -47,7 +49,7 @@
 <script>
 import { mapState } from 'vuex';
 import bitcoinIcon from './../../static/img/icon-bitcoin.svg';
-import storjIcon from './../../static/img/logo-blue.svg';
+import storjIcon from './../../static/img/icon-logo.png';
 import QrcodeVue from 'qrcode.vue';
 
 export default {
@@ -58,7 +60,8 @@ export default {
   data () {
     return {
       bitcoinIcon,
-      storjIcon
+      storjIcon,
+      storj: []
     };
   },
   components: {
@@ -66,12 +69,24 @@ export default {
   },
   methods: {
     getTokenWallets (token) {
-      return this.wallets.filter(wallet => wallet.token === token);
+      if (this.wallets.length) {
+        return this.wallets.filter(wallet => wallet.token === token);
+      }
+    },
+    createWallet (token) {
+      const actions = [
+        this.$store.dispatch('createWallet', 'STORJ'),
+        this.$store.dispatch('getWallets')
+      ];
+
+      Promise.all(actions)
+        .then(() => {
+          this.storj = this.getTokenWallets('STORJ');
+        });
     }
   },
   created () {
     this.$store.dispatch('getWallets');
-    this.storj = this.getTokenWallets('STORJ');
   }
 };
 </script>

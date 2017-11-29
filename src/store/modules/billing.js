@@ -116,13 +116,7 @@ const actions = {
         .then((res) => {
           console.log('res.data: ', res.data);
           if (!res.data.length || !res.data) {
-            return resolve(commit(SET_WALLETS, {
-              wallets: {
-                storj: '',
-                btc: '',
-                eth: ''
-              }
-            }));
+            return resolve(commit(SET_WALLETS, {}));
           }
           return resolve(commit(SET_WALLETS, res.data));
         })
