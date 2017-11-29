@@ -2,7 +2,7 @@ const isEmpty = value => value === undefined || value === null || value === '';
 const join = (rules) => (value, data) => rules.map(rule => rule(value, data)).filter(error => !!error)[0];
 
 export function email (value) {
-  if (isEmpty(value) || !isValidEmail(value)) {
+  if (isEmpty(value) ||  !isValidEmail(value)) {
     return 'Invalid email address';
   }
 }
