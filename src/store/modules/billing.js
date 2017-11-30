@@ -86,7 +86,7 @@ const actions = {
 
   getDebits ({ commit, dispatch }, params = {}) {
     return new Promise((resolve, reject) => {
-      const dateRange = getRange();
+      const dateRange = getFirstAndLastDayOfCurrentMonth();
       params.user = lStorage.retrieve('email');
       params.startDate = dateRange.startDate;
       params.endDate = dateRange.endDate;
