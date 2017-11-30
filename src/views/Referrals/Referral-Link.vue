@@ -17,7 +17,7 @@
       <div class="row">
         <div class="col">
           <button
-            v-clipboard="getUrl"
+            v-clipboard="referralLink"
             class="btn btn-primary btn-block"
             @success="handleSuccess"
           >
@@ -48,12 +48,6 @@ export default {
   },
 
   methods: {
-    getUrl () {
-      const url = encodeURI(`app.storj.io/signup?referralLink=${this.props.referralLink}`);
-      console.log('URL: ', url);
-      return url;
-    },
-
     handleSuccess () {
       this.copied = true;
       setTimeout(() => {
