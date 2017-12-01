@@ -194,3 +194,20 @@ export const getRange = function (billingDate = (new Date()).getDate(), offset =
     endDate
   };
 };
+
+export const getFirstAndLastDayOfCurrentMonth = function() {
+  const currentDate = new Date();
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+
+  let  startDate = new Date(currentYear, currentMonth, 1);
+  let  endDate = new Date(currentYear, currentMonth + 1, 1);
+
+  startDate.setUTCHours(0, 0, 0);
+  endDate.setUTCHours(0, 0, 0);
+
+  return {
+    startDate,
+    endDate
+  };
+};

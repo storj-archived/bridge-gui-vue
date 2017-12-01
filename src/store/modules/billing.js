@@ -12,7 +12,7 @@ import {
 } from '../mutation-types';
 // import errors from 'storj-service-error-types';
 import { createStripeToken } from '@/vendors/stripe';
-import { lStorage } from '@/utils';
+import { lStorage, getRange } from '@/utils';
 import billingClient from '@/api/billing-client';
 
 // TODO: break out processors and payments into submodule of billing
@@ -86,7 +86,10 @@ const actions = {
 
   getDebits ({ commit, dispatch }, params = {}) {
     return new Promise((resolve, reject) => {
+      const dateRange = getFirstAndLastDayOfCurrentMonth();
       params.user = lStorage.retrieve('email');
+      params.startDate = dateRange.startDate;
+      params.endDate = dateRange.endDate;
       billingClient.request('GET', '/debits', params)
         .then((res) => resolve(commit(SET_DEBITS, res.data)))
         .catch((err) => reject(err));
