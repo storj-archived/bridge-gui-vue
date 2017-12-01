@@ -12,7 +12,7 @@ import {
 } from '../mutation-types';
 // import errors from 'storj-service-error-types';
 import { createStripeToken } from '@/vendors/stripe';
-import { lStorage, getRange } from '@/utils';
+import { lStorage, getFirstAndLastDayOfCurrentMonth } from '@/utils';
 import billingClient from '@/api/billing-client';
 
 // TODO: break out processors and payments into submodule of billing
