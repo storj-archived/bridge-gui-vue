@@ -16,13 +16,7 @@
 
 <script>
 export default {
-  name: 'app',
-
-  components: {
-  },
-
-  mounted () {
-  }
+  name: 'app'
 };
 </script>
 

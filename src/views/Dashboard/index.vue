@@ -3,11 +3,10 @@
     <!-- NAVBAR -->
     <b-navbar class="navbar-default" toggleable="sm">
 
-      <b-nav-toggle target="nav_collapse">
-        <icon class="nav-bars" name="bars"></icon>
-      </b-nav-toggle>
-
       <router-link :to="'/dashboard'" class="navbar-brand hidden-md-up">
+        <b-nav-toggle target="nav_collapse">
+          <icon class="nav-bars" name="bars"></icon>
+        </b-nav-toggle>
         <img :src="storjLogo" alt="Storj" class="mobile-logo" />
       </router-link>
 
@@ -98,8 +97,12 @@ export default {
   .mobile-logo {
     height: 40px;
     width: auto;
-    margin: 0px; 
+    margin: 0px 80px; 
     display: inline-block;
+  }
+
+  .navbar-brand {
+    margin: 5px;
   }
 
   .nav-link {
