@@ -1,7 +1,7 @@
 <template>
   <section class="dashboard">
     <!-- NAVBAR -->
-    <b-navbar class="navbar-default" toggleable>
+    <b-navbar class="navbar-default" toggleable="sm">
 
       <b-nav-toggle target="nav_collapse">
         <span className="sr-only">Toggle navigation</span>
@@ -15,7 +15,7 @@
       </router-link>
 
       <b-collapse is-nav id="nav_collapse">
-        <b-nav is-nav-bar class="nav navbar-nav navbar-left">
+        <b-nav class="nav navbar-nav navbar-left">
           <b-nav-item> 
             <img :src="storjLogo" alt="Storj" class="logo nav-logo hidden-sm-down" />
           </b-nav-item>
@@ -27,7 +27,7 @@
           <b-nav-item href="https://storj.readme.io/discuss">Support</b-nav-item>
         </b-nav>
 
-        <b-nav is-nav-bar class="ml-auto">
+        <b-nav is-nav class="ml-auto">
           <b-nav-item @click="handleClick">Logout</b-nav-item>
         </b-nav>
       </b-collapse>

@@ -5,7 +5,6 @@
       <b-button 
         v-b-modal.storj-modal
         class="btn btn-payment"
-        ok-only
       >
         <img class="btn-payment-icon-bitcoin"
           :src="storjIcon"
@@ -24,20 +23,20 @@
         BTC 
       </b-button>
     </p>
-    <b-modal id="storj-modal" title="Pay with STORJ">
-      <h2>STORJ Wallet</h2>
+    <b-modal :ok-only="true" id="storj-modal" title="Pay with STORJ">
       <div id="storjQR">
       </div>
       <div>
         <b-button v-if="!this.wallets.length" @click="createWallet()">
           Create a wallet
         </b-button>
-        <div v-if="this.wallets.length">
-          Your STORJ token payment may take up to an hour to be registered and confirmed on the network. You'll see the payment confirmed here in the Transactions list below once we've received your STORJ token payment.
+        <div v-if="this.wallets.length" class="disclaimer">
+          Your STORJ token payment may take up to an hour to be registered and confirmed on the network. 
+          You'll see the payment confirmed here in the Transactions list below once we've received your STORJ token payment.
         </div>
         <b-list-group>
           <b-list-group-item v-for="(wallet, collapseKey) in getTokenWallets('STORJ')" >
-             <b>{{ wallet.token }}</b>
+            <b>{{ wallet.token }}</b>
             <b>{{ wallet.name }}</b>
             <p>{{ wallet.address }}</p>
             <p>
@@ -121,5 +120,8 @@ export default {
 
 .btn-payment-text {
   color: #0275d8;
+}
+.disclaimer {
+  margin: 5px 0px;
 }
 </style>
