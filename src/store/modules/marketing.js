@@ -16,7 +16,7 @@ const mutations = {
   [SET_MARKETING] (state, marketing) {
     state.id = marketing._id;
     state.user = marketing.user;
-    state.referralLink = marketing.referralLink;
+    state.referralLink = 'https://app.storj.io/signup?referralLink=' + marketing.referralLink;
   },
 
   [CLEAR_MARKETING] (state) {
