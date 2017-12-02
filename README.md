@@ -76,11 +76,11 @@ Create a `.env file` for storing billing variables
 $ touch .env
 ```
 
-Paste your `STRIPE_KEY=strip_test_key` into the `.env` file.
+Paste your `STRIPE_KEY=stripe_test_key` into the `.env` file.
 
 ```sh
 $ npm install
-$ npm run dev
+$ npm run start:dev 
 ```
 
 If it's running correctly, you should see output like this:
