@@ -7,6 +7,7 @@ import store from './store';
 import router from './router';
 import { sync } from 'vuex-router-sync';
 
+import Icon from 'vue-awesome/components/Icon';
 import VueClipboards from 'vue-clipboards';
 // ES build is more efficient by reducing unneeded components with tree-shaking.
 // (Needs Webpack 2 or Rollup)
@@ -19,7 +20,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css';
 // Globally register components
 Vue.use(BootstrapVue);
 Vue.use(VueClipboards);
-
+Vue.component('icon', Icon);
 // sync the router with the vuex store.
 // this registers `store.state.route`
 sync(store, router);

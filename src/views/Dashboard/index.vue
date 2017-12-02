@@ -4,14 +4,11 @@
     <b-navbar class="navbar-default" toggleable="sm">
 
       <b-nav-toggle target="nav_collapse">
-        <span className="sr-only">Toggle navigation</span>
-        <span className="icon-bar"></span>
-        <span className="icon-bar"></span>
-        <span className="icon-bar"></span>
+        <icon class="nav-bars" name="bars"></icon>
       </b-nav-toggle>
 
       <router-link :to="'/dashboard'" class="navbar-brand hidden-md-up">
-        <img :src="storjLogo" alt="Storj" class="logo" />
+        <img :src="storjLogo" alt="Storj" class="mobile-logo" />
       </router-link>
 
       <b-collapse is-nav id="nav_collapse">
@@ -47,6 +44,7 @@
 </template>
 
 <script>
+import 'vue-awesome/icons/bars';
 import storjLogo from '../../../static/img/logo-blue.svg';
 import { mapActions } from 'vuex';
 
@@ -97,6 +95,13 @@ export default {
     margin: 0px;
   }
 
+  .mobile-logo {
+    height: 40px;
+    width: auto;
+    margin: 0px; 
+    display: inline-block;
+  }
+
   .nav-link {
     margin: 0px;
     padding: 0px;
@@ -114,6 +119,10 @@ export default {
 
   .nav-item:hover {
     cursor: pointer;
+  }
+
+  .nav-bars {
+    margin: 4px 0px 0px 0px;
   }
 </style>
 <!-- <style src="bootstrap/dist/css/bootstrap.css"></style>
