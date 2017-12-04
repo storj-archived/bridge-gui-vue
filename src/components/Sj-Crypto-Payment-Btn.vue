@@ -2,7 +2,7 @@
   <div class="crypto-payment-btn">
     <p>
       Add credit with
-      <b-button 
+      <b-button
         v-b-modal.storj-modal
         class="btn btn-payment"
       >
@@ -11,7 +11,7 @@
           alt="storj"
         />
         STORJ
-      </b-button> 
+      </b-button>
       <b-button
         href="https://bitpay.com/cart/add?itemId=JoY55YbAiBvdiV8EZVTmAw"
         target="_blank"
@@ -20,7 +20,7 @@
           :src="bitcoinIcon"
           alt="bitcoin"
         />
-        BTC 
+        BTC
       </b-button>
     </p>
     <b-modal :ok-only="true" id="storj-modal" title="Pay with STORJ">
@@ -31,8 +31,7 @@
           Create a wallet
         </b-button>
         <div v-if="this.wallets.length" class="disclaimer">
-          Your STORJ token payment may take up to an hour to be registered and confirmed on the network. 
-          You'll see the payment confirmed here in the Transactions list below once we've received your STORJ token payment.
+          Please send your STORJ payments to the address below. Sending any other token to this address will result in a loss of funds.
         </div>
         <b-list-group>
           <b-list-group-item v-for="(wallet, collapseKey) in getTokenWallets('STORJ')" >
@@ -40,10 +39,13 @@
             <b>{{ wallet.name }}</b>
             <p>{{ wallet.address }}</p>
             <p>
-              <qrcode-vue :value="wallet.address" :size="150" level="H"></qrcode-vue> 
+              <qrcode-vue :value="wallet.address" :size="150" level="H"></qrcode-vue>
             </p>
           </b-list-group-item>
         </b-list-group>
+        <div v-if="this.wallets.length" class="disclaimer">
+          Payments in STORJ may take up to an hour to to be confirmed and will show up in your Billing History once completed. You must refresh your billing page for new entries to appear.
+        </div>
       </div>
     </b-modal>
   </div>
