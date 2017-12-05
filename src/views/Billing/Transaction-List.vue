@@ -31,7 +31,15 @@
                 <td>
                   <b>{{ transaction.type | capitalize }}</b>
                   {{ transaction.description | capitalize }}
-										<div class="badge" :class="{'badge-info': transaction.paid === false, 'badge-success': transaction.paid === true }">Paid</div>
+                  
+                  <div class="badge" 
+                    :class="{
+                      'badge-info': transaction.paid === false, 
+                      'badge-success': transaction.paid === true 
+                    }"
+                  >
+                  {{ getMessage(transaction) }}
+                  </div>
                 </td>
                 <td :class="{ 'text-success': transaction.amount <= 0 }">
                   {{ transaction.amount | prettifyAmount | addDollarSign }}
@@ -74,6 +82,13 @@ export default {
   },
 
   methods: {
+    getMessage (tx) {
+      if (!tx.paid) {
+        return 'Pending';
+      }
+      return 'Paid';
+    },
+
     calculateTransactions () {
       let temp = [];
 
