@@ -41,7 +41,10 @@
                   {{ getMessage(transaction) }}
                   </div>
                 </td>
-                <td :class="{ 'text-success': transaction.amount <= 0 }">
+                <td :class="{ 
+                  'text-success': transaction.paid > 0, 
+                  'text-info': transaction.paid <= 0
+                }">
                   {{ transaction.amount | prettifyAmount | addDollarSign }}
                 </td>
               </tr>
