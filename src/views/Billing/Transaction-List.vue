@@ -12,7 +12,6 @@
           <div v-if="!transactions.length" class="text-center no-history">
             No billing history
           </div>
-
           <table v-else class="table table-hover">
             <thead>
               <tr>
@@ -26,12 +25,24 @@
                 v-for="transaction in transactions"
                 :key="transaction.id"
                 class="clickable-row"
+                v-b-toggle="transaction.id"
               >
                 <td>{{ transaction.created | dateFormat('long') }}</td>
                 <td>
                   <b>{{ transaction.type | capitalize }}</b>
                   {{ transaction.description | capitalize }}
-                  
+               
+                  <b-collapse class="transaction__detail" :id="transaction.id">
+                    <div><b>Transaction ID:</b>{{ transaction.id }}</div>
+                    <div><b>Invoiced Amount: </b>{{ transaction.invoiced_amount }} </div>
+                    <div><b>Paid Amount: </b>{{ transaction.paid_amount }}</div>
+                    <div><b>Status: </b>{{ getMessage(transaction) }}</div>
+                    <div><b>Processor: </b>{{ transaction.payment_processor | capitalize }}</div>
+                    <div><b>Date Received: </b>{{transaction.created | dateFormat('long') }}</div>
+                    <div><b>STORJ Paid: </b>{{ transaction.data.amount }} </div>
+                  </b-collapse>
+                  </b-card>
+   
                   <div class="badge" 
                     :class="{
                       'badge-info': transaction.paid === false, 
@@ -47,6 +58,7 @@
                 }">
                   {{ transaction.amount | prettifyAmount | addDollarSign }}
                 </td>
+               
               </tr>
             </tbody>
           </table>
@@ -101,7 +113,7 @@ export default {
           const transaction = {...credit};
           transaction.amount = -credit.paid_amount;
           transaction.type = `${credit.type} payment`;
-          transaction.description = `- Thank you! 🐶`;
+          transaction.description = `- Thank you!`;
           transaction.timestamp = moment.utc(credit.created).valueOf();
           return transaction;
         });
@@ -166,5 +178,15 @@ export default {
 
   .transaction-list .no-history {
     padding: 3rem 0;
+  }
+
+  .card {
+    cursor: pointer;
+  }
+
+  .transaction__detail {
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #eee;
   }
 </style>
