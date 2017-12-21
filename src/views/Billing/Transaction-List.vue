@@ -8,7 +8,6 @@
     <div class="row">
       <div class="col">
         <div class="table-response content">
-
           <div v-if="!transactions.length" class="text-center no-history">
             No billing history
           </div>
@@ -33,13 +32,27 @@
                   {{ transaction.description | capitalize }}
                
                   <b-collapse class="transaction__detail" :id="transaction.id">
-                    <div><b>Transaction ID:</b>{{ transaction.id }}</div>
-                    <div><b>Invoiced Amount: </b>{{ transaction.invoiced_amount }} </div>
-                    <div><b>Paid Amount: </b>{{ transaction.paid_amount }}</div>
-                    <div><b>Status: </b>{{ getMessage(transaction) }}</div>
-                    <div><b>Processor: </b>{{ transaction.payment_processor | capitalize }}</div>
-                    <div><b>Date Received: </b>{{transaction.created | dateFormat('long') }}</div>
-                    <div><b>STORJ Paid: </b>{{ transaction.data.amount }} </div>
+                    <div>
+                      <h3>Transaction Info</h3>
+                    </div>
+                    <div class=""><b>ID: </b>{{ transaction.id }}</div>
+                    <div class=""><b>Invoiced Amount: </b>{{ transaction.invoiced_amount }} </div>
+                    <div class=""><b>Paid Amount: </b>{{ transaction.paid_amount }}</div>
+                    <div class=""><b>Status: </b>{{ getMessage(transaction) }}</div>
+                    <div class=""><b>Processor: </b>{{ transaction.payment_processor | capitalize }}</div>
+                    <div class=""><b>Date Received: </b>{{transaction.created | dateFormat('long') }}</div>
+                    <!-- 
+                    <div class="crypto" 
+                      v-if="transaction.payment_processor === 'coinpayments'">
+                      <div>
+                        <h3>Crypto Info</h3>
+                        <div><b>Wallet Address: </br> {{ }}</div>
+                        <div><b>USD Price: </br> {{ }}</div>
+                        <div><b>Token Paid: </br> {{ }}</div>
+                        <div><b>Confirms: </br> {{}} </div>
+                      </div>
+                    </div>
+                    --> 
                   </b-collapse>
                   </b-card>
    
@@ -49,7 +62,7 @@
                       'badge-success': transaction.paid === true 
                     }"
                   >
-                  {{ getMessage(transaction) }}
+                    {{ getMessage(transaction) }}
                   </div>
                 </td>
                 <td :class="{ 
@@ -58,7 +71,6 @@
                 }">
                   {{ transaction.amount | prettifyAmount | addDollarSign }}
                 </td>
-               
               </tr>
             </tbody>
           </table>
@@ -185,8 +197,16 @@ export default {
   }
 
   .transaction__detail {
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
-    background-color: #eee;
+    border-color: #eee;
+
+    h3 {
+      font-size: 20px;
+    }
+  }
+
+  .crypto {
+    margin: 10px 0px;
   }
 </style>
