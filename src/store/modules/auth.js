@@ -71,6 +71,9 @@ const actions = {
     });
   },
 
+  /*
+   * #resetPassword
+   */
   resetPassword ({ commit, dispatch }, credentials) {
     return new Promise((resolve, reject) => {
       axios
@@ -80,9 +83,16 @@ const actions = {
     });
   },
 
-  confirmPasswordReset ({ commit }, password) {
-    const token = this.$route.params.token;
-    return axios.post(`${config.app.BRIDGE_URL}/resets/${token}`)
+  /*
+   * #confirmPasswordReset
+   * - password: SHA-256 hash of password
+   * - token: reset token user received from email
+   */
+  confirmPasswordReset ({ commit }, { password, token }) {
+    console.log('confirmPasswordreset', password, token);
+    return axios.post(`${config.app.BRIDGE_URL}/resets/${token}`, {
+      password
+    })
       .then((res) => console.log(res))
       .catch((err) => console.error(err));
   },
