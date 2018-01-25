@@ -74,9 +74,7 @@ const actions = {
   resetPassword ({ commit, dispatch }, credentials) {
     return new Promise((resolve, reject) => {
       axios
-        .patch(`${config.app.BRIDGE_URL}/users/${credentials.email}`, {
-          password: credentials.password
-        })
+        .patch(`${config.app.BRIDGE_URL}/users/${credentials.email}`)
         .then(() => resolve())
         .catch((err) => reject(err));
     });
