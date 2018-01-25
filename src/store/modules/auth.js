@@ -80,6 +80,13 @@ const actions = {
     });
   },
 
+  confirmPasswordReset ({ commit }, password) {
+    const token = this.$route.params.token;
+    return axios.post(`${config.app.BRIDGE_URL}/resets/${token}`)
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
+  },
+
   /**
   * Verifies Storj is authenticated until an isAuthenticated method is
   * implemented on storj.js

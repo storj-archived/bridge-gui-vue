@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Login from '@/views/Login';
 import Signup from '@/views/Signup';
 import PasswordReset from '@/views/Password-Reset';
+import PasswordSet from '@/views/Password-Reset/password-set';
 import NotFound from '@/views/Not-Found';
 import Dashboard from '@/views/Dashboard';
 import Buckets from '@/views/Buckets';
@@ -37,6 +38,11 @@ const router = new Router({
       path: '/password-reset',
       name: 'Password-Reset',
       component: PasswordReset
+    },
+    {
+      path: '/password-set/:token',
+      name: 'Password-Set',
+      component: PasswordSet
     },
     /* Dashboard - requires authenticated user */
     {
