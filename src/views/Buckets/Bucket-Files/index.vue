@@ -109,7 +109,7 @@ export default {
         })
         .catch((err) => {
           this.submitting = false;
-          this.$root.$emit('hide::modal', 'deleteBucketModal');
+          this.$root.$emit('bv::hide::modal', 'deleteBucketModal');
           this.error = err;
         });
     }
