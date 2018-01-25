@@ -84,15 +84,16 @@ const actions = {
   },
 
   /*
-   * #confirmPasswordReset
+   * #confirmPasswordReset - sends the hashed password and a reset token
+   * to the bridge.
    * - password: SHA-256 hash of password
    * - token: reset token user received from email
    */
   confirmPasswordReset ({ commit }, { password, token }) {
-    console.log('confirmPasswordreset', password, token);
-    return axios.post(`${config.app.BRIDGE_URL}/resets/${token}`, {
-      password
-    })
+    return axios
+      .post(`${config.app.BRIDGE_URL}/resets/${token}`, {
+        password
+      })
       .then((res) => console.log(res))
       .catch((err) => console.error(err));
   },

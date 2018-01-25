@@ -40,7 +40,7 @@ const router = new Router({
       component: PasswordReset
     },
     {
-      path: '/password-set/:token',
+      path: '/confirm/:token',
       name: 'Password-Set',
       component: PasswordSet
     },

@@ -1,7 +1,7 @@
 <template lang="html">
   <section class="container login">
-    <Nav-Authentication></Nav-Authentication>
-    <div class="container auth">
+    <b-img center src="../../../static/img/logo-blue.svg" class="logo"/>
+    <div v-if="!reset.success" class="container auth">
       <div class="row justify-content-center">
 
         <h2 v-if="submitting" class="loading"> Loading . . . </h2>
@@ -19,9 +19,6 @@
             <form>
 
               <div class="form-group">
-                <div v-show="errors.password" class="input-error">
-                  {{ errors.password }}
-                </div>
                 <input
                   type="password"
                   class="form-control"
@@ -32,21 +29,22 @@
               </div>
 
               <div class="form-group">
-                <div v-show="errors.password" class="input-error">
-                  {{ errors.password }}
-                </div>
                 <input
                   type="password"
                   class="form-control"
                   name="passwordConfirm"
-                  placeholder="Password Confirm"
+                  placeholder="Confirm Password"
                   v-model="passwordConfirm"
                 />
               </div>
 
+              <div v-show="errors.password" class="input-error">
+                {{ errors.password }}
+              </div>
+
               <div class="form-group">
                 <button
-                  :disabled="submitting"
+                  :disabled="!valid"
                   type="submit"
                   class="btn btn-block btn-green"
                   @click.prevent="handleSubmit"
@@ -61,18 +59,30 @@
         </div>
       </div>
     </div>
+    <Message-Page v-else :title="reset.title" :message="reset.message">
+    </Message-Page>
   </section>
 </template>
 <script>
 import { sha256 } from '@/utils';
-import router from '@/router';
 import NavAuthentication from '@/components/Nav-Authentication.vue';
+import MessagePage from '@/components/Message-Page';
 
 export default {
   name: 'password-set',
-  components: { NavAuthentication },
+  components: { NavAuthentication, MessagePage },
   data () {
     return {
+      reset: {
+        success: false,
+        title: 'Password Reset Successful',
+        message: `
+          Your password was successfully reset. 
+          Login with your new password now and update your 
+          password in any password managers you use.
+          You'll now be redirected back to the login page.
+        `
+      },
       errors: {
         password: ''
       },
@@ -81,23 +91,49 @@ export default {
       submitting: false
     };
   },
+  computed: {
+    valid: function () {
+      if (!this.password) {
+        return false;
+      }
+
+      if (this.password.length < 8) {
+        this.errors.password = 'Password must be 8 or more characters long.';
+        return false;
+      }
+
+      if (this.passwordConfirm !== this.password) {
+        this.errors.password = 'Passwords must match.';
+        return false;
+      }
+
+      this.errors.password = '';
+      return true;
+    }
+  },
   methods: {
     handleSubmit () {
       this.submitting = true;
-      // NB: add some password validation
       const token = this.$route.params.token;
       this.$store.dispatch('confirmPasswordReset', {
         token: token,
         password: sha256(this.passwordConfirm)
       })
       .then(() => {
+        this.reset.success = true;
         this.submitting = false;
-        console.log('password reset successful');
-        router.push({ name: 'login' });
+        setTimeout(() => {
+          this.$router.push('/login');
+        }, 10000);
       });
     }
   }
 };
 </script>
-<style></style>
+<style>
+.logo {
+  margin: 3em auto;
+  width: 200px;
+}
+</style>
 
