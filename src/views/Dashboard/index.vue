@@ -21,6 +21,7 @@
           <b-nav-item href="https://storj.readme.io/">Documentation</b-nav-item>
           <b-nav-item href="https://storj.github.io/bridge">API</b-nav-item>
           <b-nav-item href="https://storj.readme.io/discuss">Support</b-nav-item>
+          <b-nav-item @click="navigateTo('Settings')">Settings</b-nav-item>
         </b-nav>
 
         <b-nav is-nav class="ml-auto">

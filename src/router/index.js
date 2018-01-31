@@ -13,6 +13,7 @@ import CreateBucket from '@/views/Buckets/Create-Bucket';
 import BucketFiles from '@/views/Buckets/Bucket-Files';
 import Support from '@/views/Support';
 import Billing from '@/views/Billing';
+import Settings from '@/views/Settings';
 import Referrals from '@/views/Referrals';
 import { lStorage } from '@/utils';
 // import analytics from '@/vendors/analytics';
@@ -94,6 +95,11 @@ const router = new Router({
           path: 'referrals',
           name: 'Referrals',
           component: Referrals
+        },
+        {
+          path: 'settings',
+          name: 'Settings',
+          component: Settings
         }
       ]
     },
