@@ -8,7 +8,7 @@ TAG=$2
 echo "Building with NAME: ${NAME} and TAG: ${TAG}"
 
 # We need to pass in the version portion of the tag so we can tag both the serve and build containers
-BUILD_OUTPUT=$(docker build --build-arg BRIDGE_URL=https://api.storj.io --build-arg BILLING_URL=https://billing.storj.io -t ${NAME}-build:${TAG} -f ./dockerfiles/build.dockerfile .)
+BUILD_OUTPUT=$(docker build --build-arg BRIDGE_URL=https://api.storj.io --build-arg BILLING_URL=https://billing.prod.storj.io -t ${NAME}-build:${TAG} -f ./dockerfiles/build.dockerfile .)
 result=$?
 
 if [[ $result != 0 ]]; then
