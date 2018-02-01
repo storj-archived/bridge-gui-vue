@@ -44,7 +44,7 @@
           </b-list-group-item>
         </b-list-group>
         <div v-if="this.wallets.length" class="disclaimer">
-          Payments in STORJ may take up to an hour to to be confirmed and will show up in your Billing History once completed. You must refresh your billing page for new entries to appear.
+          Payments in STORJ may take up to an hour to be confirmed and will show up in your Billing History once completed. You must refresh your billing page for new entries to appear.
         </div>
       </div>
     </b-modal>
