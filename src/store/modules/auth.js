@@ -71,15 +71,31 @@ const actions = {
     });
   },
 
+  /*
+   * #resetPassword
+   */
   resetPassword ({ commit, dispatch }, credentials) {
     return new Promise((resolve, reject) => {
       axios
-        .patch(`${config.app.BRIDGE_URL}/users/${credentials.email}`, {
-          password: credentials.password
-        })
+        .patch(`${config.app.BRIDGE_URL}/users/${credentials.email}`)
         .then(() => resolve())
         .catch((err) => reject(err));
     });
+  },
+
+  /*
+   * #confirmPasswordReset - sends the hashed password and a reset token
+   * to the bridge.
+   * - password: SHA-256 hash of password
+   * - token: reset token user received from email
+   */
+  confirmPasswordReset ({ commit }, { password, token }) {
+    return axios
+      .post(`${config.app.BRIDGE_URL}/resets/${token}`, {
+        password
+      })
+      .then((res) => console.log(res))
+      .catch((err) => console.error(err));
   },
 
   /**
