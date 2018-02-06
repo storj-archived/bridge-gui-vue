@@ -65,12 +65,11 @@
 </template>
 <script>
 import { sha256 } from '@/utils';
-import NavAuthentication from '@/components/Nav-Authentication.vue';
 import MessagePage from '@/components/Message-Page';
 
 export default {
   name: 'password-set',
-  components: { NavAuthentication, MessagePage },
+  components: { MessagePage },
   data () {
     return {
       reset: {
