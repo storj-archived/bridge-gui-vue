@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Login from '@/views/Login';
 import Signup from '@/views/Signup';
 import PasswordReset from '@/views/Password-Reset';
+import PasswordSet from '@/views/Password-Reset/password-set';
 import NotFound from '@/views/Not-Found';
 import Dashboard from '@/views/Dashboard';
 import Buckets from '@/views/Buckets';
@@ -12,6 +13,7 @@ import CreateBucket from '@/views/Buckets/Create-Bucket';
 import BucketFiles from '@/views/Buckets/Bucket-Files';
 import Support from '@/views/Support';
 import Billing from '@/views/Billing';
+import Settings from '@/views/Settings';
 import Referrals from '@/views/Referrals';
 import { lStorage } from '@/utils';
 // import analytics from '@/vendors/analytics';
@@ -37,6 +39,11 @@ const router = new Router({
       path: '/password-reset',
       name: 'Password-Reset',
       component: PasswordReset
+    },
+    {
+      path: '/resets/:token',
+      name: 'Password-Set',
+      component: PasswordSet
     },
     /* Dashboard - requires authenticated user */
     {
@@ -88,6 +95,11 @@ const router = new Router({
           path: 'referrals',
           name: 'Referrals',
           component: Referrals
+        },
+        {
+          path: 'settings',
+          name: 'Settings',
+          component: Settings
         }
       ]
     },

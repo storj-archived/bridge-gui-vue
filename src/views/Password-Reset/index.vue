@@ -13,7 +13,7 @@
             <form>
 
               <p class="form-group">
-                Enter your email address and a new password below, and we'll send you instructions on how to complete your password reset.
+                Enter your email address below, and we'll send you instructions on how to complete your password reset.
               </p>
 
               <div class="form-group">
@@ -27,23 +27,13 @@
               </div>
 
               <div class="form-group">
-                <input
-                  type="password"
-                  class="form-control password"
-                  name="password"
-                  placeholder="Password"
-                  v-model="password"
-                />
-              </div>
-
-              <div class="form-group">
                 <button
-                  :disabled="this.email && this.password ? false : true"
+                  :disabled="this.email ? false : true"
                   type="submit"
                   @click.prevent="handleSubmit"
                   class="btn btn-block btn-green submit"
                 >
-                  Reset My Password
+                  Submit
                 </button>
               </div>
 
@@ -74,7 +64,6 @@
 import NavAuthentication from '@/components/Nav-Authentication';
 import MessagePage from '@/components/Message-Page';
 import { mapActions } from 'vuex';
-import { sha256 } from '@/utils';
 
 export default {
   name: 'password-reset',
@@ -84,7 +73,6 @@ export default {
   data () {
     return {
       email: '',
-      password: '',
       error: '',
       sent: {
         success: false,
@@ -101,7 +89,6 @@ export default {
     handleSubmit () {
       this.resetPassword({
         email: this.email,
-        password: sha256(this.password),
         redirect: 'https://app.storj.io/'
       })
         .then(() => {

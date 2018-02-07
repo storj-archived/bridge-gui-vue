@@ -30,7 +30,7 @@
                   v-model="initialPassword"
                 />
               </div>
-              
+
               <div v-if="error" class="form-group">
                 <input
                   type="password"
@@ -230,11 +230,11 @@ export default {
     },
 
     openEula () {
-      this.$root.$emit('show::modal', 'eulaModal');
+      this.$root.$emit('bv::show::modal', 'eulaModal');
     },
 
     closeEula () {
-      this.$root.$emit('hide::modal', 'eulaModal');
+      this.$root.$emit('bv::hide::modal', 'eulaModal');
     }
   }
 };

@@ -85,7 +85,7 @@
             <div class="row">
               <div class="col">
                 <button
-                  :disabled="!okToSubmit || submitting"
+                  :disabled="!checkValidation"
                   class="btn btn-block btn-green"
                   type="submit"
                   @click.prevent="handleSubmit"
@@ -143,6 +143,14 @@ export default {
     };
   },
 
+  computed: {
+    checkValidation: function () {
+      console.log('checking validation', this.validateForm());
+      this.validateForm();
+      return this.okToSubmit;
+    }
+  },
+
   methods: {
     ...mapActions([ 'addPaymentMethod' ]),
 
@@ -163,6 +171,7 @@ export default {
 
     validateForm () {
       this.okToSubmit = validateCCForm(this.fields);
+      return validateCCForm(this.fields);
     },
 
     handleSubmit () {
