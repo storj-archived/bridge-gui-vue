@@ -5,5 +5,8 @@ module.exports = {
   BRIDGE_URL: process.env.NODE_ENV === 'development'
     ? 'http://bridge-ssl-proxy' : process.env.BRIDGE_URL,
   BILLING_URL: process.env.NODE_ENV === 'development'
-    ? 'localhost:3000/graphql' : process.env.BILLING_URL
+    ? 'localhost:3000/graphql' : process.env.BILLING_URL,
+  RESET_PASSWORD_REDIRECT_URL: process.env.NODE_ENV === 'development'
+    ? 'https://app.staging.storj.io'
+    : 'https://app.storj.io'
 };

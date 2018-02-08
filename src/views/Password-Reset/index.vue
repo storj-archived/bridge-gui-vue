@@ -64,6 +64,7 @@
 import NavAuthentication from '@/components/Nav-Authentication';
 import MessagePage from '@/components/Message-Page';
 import { mapActions } from 'vuex';
+import { RESET_PASSWORD_REDIRECT_URL } from '../../config';
 
 export default {
   name: 'password-reset',
@@ -89,7 +90,7 @@ export default {
     handleSubmit () {
       this.resetPassword({
         email: this.email,
-        redirect: 'https://app.storj.io/'
+        url: RESET_PASSWORD_REDIRECT_URL
       })
         .then(() => {
           this.sent.success = true;
