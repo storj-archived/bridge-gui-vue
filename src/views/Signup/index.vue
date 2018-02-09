@@ -7,11 +7,21 @@
           <div class="content">
             <h1 class="title text-center form-group">Sign Up</h1>
 
-            <NewReferralUserBanner v-if="showReferralBanner">
+            <!-- <NewReferralUserBanner v-if="showReferralBanner">
             </NewReferralUserBanner>
 
             <NewUserBanner v-else :referralPartner="referralPartner">
             </NewUserBanner>
+
+              --> 
+ 
+            <div
+              class="alert alert-info text-center"
+              role="alert"
+              data-alert-cookie="alert_new_user"
+            >
+              In order to better support our existing customers, sign ups for the Storj platform are currently on hold while we implement our new network architecture. We encourage you to sign up, but activation of user accounts will be delayed until further notice. If you wish to be eligible for beta access to the new network, sign up now and your email will be placed into a queue for access.
+            </div>
 
             <form>
               <b-form-input
