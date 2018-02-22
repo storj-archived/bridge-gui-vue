@@ -29,7 +29,6 @@
                 <td>{{ transaction.created | dateFormat('long') }}</td>
                 <td>
                   <b>{{ transaction.type | capitalize }}</b>
-                  {{ transaction.description | capitalize }}
                
                   <b-collapse class="transaction__detail" :id="transaction.id">
                     <div>
@@ -41,18 +40,6 @@
                     <div class=""><b>Status: </b>{{ getMessage(transaction) }}</div>
                     <div class=""><b>Processor: </b>{{ transaction.payment_processor | capitalize }}</div>
                     <div class=""><b>Date Received: </b>{{transaction.created | dateFormat('long') }}</div>
-                    <!-- 
-                    <div class="crypto" 
-                      v-if="transaction.payment_processor === 'coinpayments'">
-                      <div>
-                        <h3>Crypto Info</h3>
-                        <div><b>Wallet Address: </br> {{ }}</div>
-                        <div><b>USD Price: </br> {{ }}</div>
-                        <div><b>Token Paid: </br> {{ }}</div>
-                        <div><b>Confirms: </br> {{}} </div>
-                      </div>
-                    </div>
-                    --> 
                   </b-collapse>
                   </b-card>
    
@@ -197,7 +184,7 @@ export default {
   }
 
   .transaction__detail {
-    padding: 10px;
+    padding: 10px 0px;
     border-radius: 5px;
     border-color: #eee;
 
