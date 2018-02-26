@@ -5,7 +5,7 @@
       <div class="row justify-content-center">
         <div class="col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12 text-center">
           <div class="content">
-            <h1 class="title text-center form-group">Sign Up</h1>
+            <h1 class="title text-center form-group">Join the waitlist</h1>
 
             <!-- <NewReferralUserBanner v-if="showReferralBanner">
             </NewReferralUserBanner>
@@ -15,13 +15,14 @@
 
               --> 
  
-            <div
+            <!-- <div
               class="alert alert-info text-center"
               role="alert"
               data-alert-cookie="alert_new_user"
             >
-              In order to better support our existing customers, sign ups for the Storj platform are currently on hold while we implement our new network architecture. We encourage you to sign up, but activation of user accounts will be delayed until further notice. If you wish to be eligible for beta access to the new network, sign up now and your email will be placed into a queue for access.
+                        
             </div>
+            --> 
 
             <form>
               <b-form-input
@@ -68,7 +69,7 @@
                   @click.prevent="handleSubmit"
                   class="btn btn-block btn-green"
                 >
-                  Sign Up
+                  Join 
                 </button>
               </div>
 
