@@ -162,10 +162,9 @@ export default {
       eulaError: '',
       signup: {
         success: false,
-        title: 'Success!',
-        message: `Thanks for signing up! We'll soon send a confirmation email.
-        Please follow the activation link to begin using Storj and
-        unlock your credit!`
+        title: 'Thanks for joining the waitlist!',
+        message: `Watch for an email from the Storj Labs team notifying you when we begin activating new accounts. Learn more about the pause on our <a href="https://blog.storj.io/post/169896892413/getting-from-petabytes-to-exabytes-the-road-ahead">blog.<a/> Once your registration is finalized, you will receive one year of free service — up to 25GB of storage and bandwidth every month. While you wait, follow us on Twitter at <a href="https://twitter.com/storjproject"
+        target="_blank">@storjproject</a> or join <a href="https://storj.io/community.html">our community chat</a> for the latest updates from the Storj Labs team. `
       }
     };
   },
