@@ -7,14 +7,11 @@
           <div class="content">
             <h1 class="title text-center form-group">Join the waitlist</h1>
 
-            <!-- <NewReferralUserBanner v-if="showReferralBanner">
+            <NewReferralUserBanner v-if="showReferralBanner">
             </NewReferralUserBanner>
-
+            
             <NewUserBanner v-else :referralPartner="referralPartner">
             </NewUserBanner>
-
-              --> 
- 
             <!-- <div
               class="alert alert-info text-center"
               role="alert"
