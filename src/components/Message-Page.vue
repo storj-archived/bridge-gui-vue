@@ -3,9 +3,7 @@
     <div class="content form-horizontal">
       <h1 class="title text-center form-group">{{ title }}</h1>
       <div class="row">
-        <p class="col text-center">
-          {{ message }}
-        </p>
+        <p class="col text-center" v-html="message"></p>
       </div>
       </div>
     </section>
