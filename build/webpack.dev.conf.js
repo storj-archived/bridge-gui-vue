@@ -21,6 +21,9 @@ module.exports = merge(baseWebpackConfig, {
   // cheap-module-eval-source-map is faster for development
   devtool: '#cheap-module-eval-source-map',
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': require('../config/dev.env')
+    }),
     // https://github.com/glenjamin/webpack-hot-middleware#installation--usage
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
@@ -30,10 +33,5 @@ module.exports = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true
     }),
-    new FriendlyErrorsPlugin(),
-    new DotenvPlugin({
-      path: './.env',
-      systemvars: true
-    })
-  ]
+    new FriendlyErrorsPlugin()]
 })

@@ -29,6 +29,9 @@ var webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env': require('../config/prod.env')
+    }),
     // can't uglify es2015 stuff yet. Using babili
     // new webpack.optimize.UglifyJsPlugin({
     //   compress: {
