@@ -29,10 +29,6 @@ var webpackConfig = merge(baseWebpackConfig, {
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
   },
   plugins: [
-    new Dotenv({
-      path: '../.env',
-      systemvars: true
-    }),
     // can't uglify es2015 stuff yet. Using babili
     // new webpack.optimize.UglifyJsPlugin({
     //   compress: {
