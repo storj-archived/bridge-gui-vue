@@ -5,16 +5,12 @@
     data-alert-cookie="alert_new_user"
   >
     <span>
-      <p><strong>New User Bonus!</strong></p>
-
       <p v-if="referralPartner">
         You've been referred by
         <strong>{{ referralPartner | capitalize }}!</strong>
       </p>
       <p>
-        Sign up now to unlock <b>one year of free
-        service</b> — up to 25GB of storage and bandwidth
-        every month!
+        We are rearchitecting our network to scale from petabytes to exabytes. Because we are committed to supporting our current users, we are throttling user sign ups until we are ready for more traffic. 
       </p>
     </span>
   </div>
