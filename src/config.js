@@ -1,4 +1,3 @@
-console.log('building configs with ', process.env)
 module.exports = {
   // Don't need any of the config vars from bridge-gui because none of this
   // is server-side rendered

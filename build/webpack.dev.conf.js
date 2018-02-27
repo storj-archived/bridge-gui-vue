@@ -33,5 +33,9 @@ module.exports = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true
     }),
-    new FriendlyErrorsPlugin()]
+    new FriendlyErrorsPlugin(),
+    new DotenvPlugin({
+      path: './.env',
+      systemvars: true
+    })]
 })
