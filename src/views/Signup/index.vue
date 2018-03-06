@@ -66,7 +66,7 @@
                   @click.prevent="handleSubmit"
                   class="btn btn-block btn-green"
                 >
-                  Join 
+                  Create Account 
                 </button>
               </div>
 
@@ -162,8 +162,8 @@ export default {
       eulaError: '',
       signup: {
         success: false,
-        title: 'Thanks for joining the waitlist!',
-        message: `Watch for an email from the Storj Labs team notifying you when we begin activating new accounts. Learn more about the pause on our <a href="https://blog.storj.io/post/169896892413/getting-from-petabytes-to-exabytes-the-road-ahead">blog.<a/> Once your registration is finalized, you will receive one year of free service — up to 25GB of storage and bandwidth every month. While you wait, follow us on Twitter at <a href="https://twitter.com/storjproject"
+        title: 'Success! Account created.',
+        message: `Watch for an email with your activation link once we are ready to add new users to the network. Learn more about our new architecture on our <a href="https://blog.storj.io/post/169896892413/getting-from-petabytes-to-exabytes-the-road-ahead">blog.<a/> Once your registration is finalized, you will receive one year of free service — up to 25GB of storage and bandwidth every month. While you wait, follow us on Twitter at <a href="https://twitter.com/storjproject"
         target="_blank">@storjproject</a> or join <a href="https://storj.io/community.html">our community chat</a> for the latest updates from the Storj Labs team. `
       }
     };

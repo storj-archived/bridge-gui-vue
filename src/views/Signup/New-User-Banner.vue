@@ -10,7 +10,7 @@
         <strong>{{ referralPartner | capitalize }}!</strong>
       </p>
       <p>
-        We are rearchitecting our network to scale from petabytes to exabytes. Because we are committed to supporting our current users, we are throttling user sign ups until we are ready for more traffic. 
+        Create an account and we’ll send you an activation email when the network is ready for your data. 
       </p>
     </span>
   </div>
