@@ -10,7 +10,7 @@
         <strong>{{ referralPartner | capitalize }}!</strong>
       </p>
       <p>
-        As we build the network, we’d love to learn from you.  Create an account and help us test the new network.
+        Due to extreme demand, we are limiting new account activation as we build the next generation of our network. Creating an account will enroll you to be considered for testing on our existing network as well as access to the new network. You will receive an email shortly with further details.
       </p>
     </span>
   </div>
