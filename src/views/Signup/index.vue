@@ -5,21 +5,13 @@
       <div class="row justify-content-center">
         <div class="col-lg-6 col-lg-push-3 col-md-8 col-md-push-2 col-xs-12 text-center">
           <div class="content">
-            <h1 class="title text-center form-group">Join the waitlist</h1>
+            <h1 class="title text-center form-group">Pre-register</h1>
 
             <NewReferralUserBanner v-if="showReferralBanner">
             </NewReferralUserBanner>
             
             <NewUserBanner v-else :referralPartner="referralPartner">
             </NewUserBanner>
-            <!-- <div
-              class="alert alert-info text-center"
-              role="alert"
-              data-alert-cookie="alert_new_user"
-            >
-                        
-            </div>
-            --> 
 
             <form>
               <b-form-input

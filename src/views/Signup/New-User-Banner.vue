@@ -10,7 +10,7 @@
         <strong>{{ referralPartner | capitalize }}!</strong>
       </p>
       <p>
-        Create an account and we’ll send you an activation email when the network is ready for your data. 
+        As we build the network, we’d love to learn from you.  Create an account and help us test the new network.
       </p>
     </span>
   </div>
