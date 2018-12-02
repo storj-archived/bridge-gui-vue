@@ -15,6 +15,10 @@
             <h1 class="title text-center form-group">
               Login
             </h1>
+            <disclaimer">
+            </disclaimer>
+
+            
 
             <form>
               <div class="form-group">
@@ -88,11 +92,13 @@ import NavAuthentication from '@/components/Nav-Authentication.vue';
 import { mapActions } from 'vuex';
 import * as validate from '@/utils/validation';
 import { debounce } from 'lodash';
+import disclaimer from './disclaimer';
+
 
 export default {
   name: 'login',
 
-  components: { NavAuthentication },
+  components: { NavAuthentication,disclaimer },
 
   data () {
     return {
