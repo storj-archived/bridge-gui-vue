@@ -15,8 +15,12 @@
             <h1 class="title text-center form-group">
               Login
             </h1>
-            <disclaimer>
-            </disclaimer>
+              <div class="alert alert-info text-center">
+                <span>
+                  <p>This login interface is only for renters (developers) storing data on the Storj network. Storage node operators (farmers) run Storj Share without logging into an account.
+                  </p>
+                </span>
+              </div>
 
             
 
@@ -92,13 +96,12 @@ import NavAuthentication from '@/components/Nav-Authentication.vue';
 import { mapActions } from 'vuex';
 import * as validate from '@/utils/validation';
 import { debounce } from 'lodash';
-import disclaimer from './disclaimer';
 
 
 export default {
   name: 'login',
 
-  components: { NavAuthentication,disclaimer },
+  components: { NavAuthentication},
 
   data () {
     return {
