@@ -15,7 +15,7 @@
             <h1 class="title text-center form-group">
               Login
             </h1>
-            <disclaimer">
+            <disclaimer>
             </disclaimer>
 
             
