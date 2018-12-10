@@ -78,12 +78,6 @@
             </div>
           </div>
 
-          <p>
-            Don't have an account?
-            <router-link :to="{ name: 'Signup' }">
-              Sign Up
-            </router-link>
-          </p>
 
         </div>
       </div>
