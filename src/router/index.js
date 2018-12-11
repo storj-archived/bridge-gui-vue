@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Login from '@/views/Login';
-import Signup from '@/views/Signup';
+// import Signup from '@/views/Signup';
 import PasswordReset from '@/views/Password-Reset';
 import PasswordSet from '@/views/Password-Reset/password-set';
 import NotFound from '@/views/Not-Found';
@@ -30,11 +30,11 @@ const router = new Router({
       name: 'Login',
       component: Login
     },
-    {
-      path: '/signup',
-      name: 'Signup',
-      component: Signup
-    },
+    // {
+    //   path: '/signup',
+    //   name: 'Signup',
+    //   component: Signup
+    // },
     {
       path: '/password-reset',
       name: 'Password-Reset',
