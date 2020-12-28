@@ -11,7 +11,7 @@ import Promise from 'bluebird';
  * @params {Object} opts.httpClient - your choice of client to make http calls
  *  (i.e. axios, ajax)
  *
- * Reference: https://github.com/Storj/bridge/blob/master/doc/auth.md
+ * Reference: https://github.com/Storj/bridge/blob/main/doc/auth.md
  */
 
 class Client {
